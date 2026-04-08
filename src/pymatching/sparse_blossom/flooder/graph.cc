@@ -111,6 +111,87 @@ void MatchingGraph::add_boundary_edge(
         edges_to_implied_weights_unconverted[u].begin(), 1, implied_weights_for_other_edges);
 }
 
+void MatchingGraph::update_edges(
+    const std::vector<size_t>& u_nodes,
+    const std::vector<size_t>& v_nodes,
+    const std::vector<signed_weight_int>& weights) {
+
+    if (u_nodes.size() != v_nodes.size() || u_nodes.size() != weights.size()) {
+        throw std::invalid_argument("Input vectors must have the same length.");
+    }
+
+    for (size_t i = 0; i < u_nodes.size(); ++i) {
+        size_t u = u_nodes[i];
+        size_t v = v_nodes[i];
+        signed_weight_int new_weight = weights[i];
+
+        if (std::max(u, v) + 1 > nodes.size()) {
+            throw std::invalid_argument(
+                "Node exceeds number of nodes in graph (" + 
+                std::to_string(num_nodes) + ").");
+        }
+
+        if (u == v) continue; // Ignore self-loops, standard in PyMatching
+
+        // 1. Find and update the weight in u's neighbor list
+        bool found_u = false;
+        for (size_t j = 0; j < nodes[u].neighbors.size(); ++j) {
+            if (nodes[u].neighbors[j] == &(nodes[v])) {
+                nodes[u].neighbor_weights[j] = std::abs(new_weight);
+                found_u = true;
+                break;
+            }
+        }
+
+        // 2. Find and update the weight in v's neighbor list
+        bool found_v = false;
+        for (size_t j = 0; j < nodes[v].neighbors.size(); ++j) {
+            if (nodes[v].neighbors[j] == &(nodes[u])) {
+                nodes[v].neighbor_weights[j] = std::abs(new_weight);
+                found_v = true;
+                break;
+            }
+        }
+
+        if (!found_u || !found_v) {
+            throw std::invalid_argument(
+                "Edge (" + std::to_string(u) + ", " + std::to_string(v) + 
+                ") does not exist. update_edges can only modify existing edges."
+            );
+        }
+    }
+}
+
+void MatchingGraph::update_boundary_edges(
+    const std::vector<size_t>& u_nodes,
+    const std::vector<signed_weight_int>& weights) {
+
+    if (u_nodes.size() != weights.size()) {
+        throw std::invalid_argument("Input vectors must have the same length.");
+    }
+
+    for (size_t i = 0; i < u_nodes.size(); ++i) {
+        size_t u = u_nodes[i];
+        signed_weight_int new_weight = weights[i];
+
+        if (u + 1 > nodes.size()) {
+            throw std::invalid_argument(
+                "Node " + std::to_string(u) + " exceeds number of nodes in graph.");
+        }
+
+        auto& n = nodes[u];
+        
+        // In PyMatching, the boundary edge is ALWAYS stored at index 0 with a nullptr.
+        if (n.neighbors.empty() || n.neighbors[0] != nullptr) {
+            throw std::invalid_argument(
+                "Boundary edge does not exist for node " + std::to_string(u)
+            );
+        }
+
+        n.neighbor_weights[0] = std::abs(new_weight);
+    }
+}
+
 MatchingGraph::MatchingGraph(size_t num_nodes, size_t num_observables)
     : negative_weight_sum(0), num_nodes(num_nodes), num_observables(num_observables), normalising_constant(0) {
     nodes.resize(num_nodes);
