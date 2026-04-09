@@ -88,6 +88,8 @@ void pm_pybind::pybind_user_graph_methods(py::module &m, py::class_<pm::UserGrap
     g.def(py::init<>());
     g.def(py::init<size_t>(), "num_nodes"_a);
     g.def(py::init<size_t, size_t>(), "num_nodes"_a, "num_fault_ids"_a);
+    g.def("update_edges", &pm::UserGraph::update_edges, "Updates weights of multiple existing edges");
+    g.def("update_boundary_edges", &pm::UserGraph::update_boundary_edges, "Updates boundary edges");
     g.def(
         "add_edge",
         [](pm::UserGraph &self,

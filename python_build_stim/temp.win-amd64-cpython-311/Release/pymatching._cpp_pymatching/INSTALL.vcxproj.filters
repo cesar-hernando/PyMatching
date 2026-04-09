@@ -1,0 +1,13 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="18.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <CustomBuild Include="C:\Users\cesar\Documents\Python\master-thesis\PyMatching\python_build_stim\temp.win-amd64-cpython-311\Release\pymatching._cpp_pymatching\CMakeFiles\f16af7ac5529d5f4bc79f7d3d51c8f07\INSTALL_force.rule">
+      <Filter>CMake Rules</Filter>
+    </CustomBuild>
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="CMake Rules">
+      <UniqueIdentifier>{FCE61240-1F88-37D9-9BD9-7C6645AEFE30}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+</Project>

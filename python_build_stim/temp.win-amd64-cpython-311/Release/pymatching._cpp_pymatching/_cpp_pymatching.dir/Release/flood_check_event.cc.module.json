@@ -1,0 +1,13 @@
+{
+    "version": 1,
+    "revision": 0,
+    "rules": [
+        {
+            "primary-output": "_cpp_pymatching.dir\\Release\\flood_check_event.obj",
+            "outputs": [
+                "_cpp_pymatching.dir\\Release\\"
+            ],
+            "requires": []
+        }
+    ]
+}

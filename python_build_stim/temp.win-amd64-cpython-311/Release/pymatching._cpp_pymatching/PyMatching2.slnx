@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Solution>
+	<Configurations>
+		<BuildType Name="Debug"/>
+		<BuildType Name="Release"/>
+		<BuildType Name="MinSizeRel"/>
+		<BuildType Name="RelWithDebInfo"/>
+		<Platform Name="x64"/>
+	</Configurations>
+	<Project Path="ALL_BUILD.vcxproj" Type="8bc9ceb8-8b4a-11d0-8d11-00a0c91bc942" Id="2f84d785-d7cf-3c59-a1e0-936662275be8" DefaultStartup="true">
+		<BuildDependency Project="ZERO_CHECK.vcxproj"/>
+		<BuildDependency Project="_cpp_pymatching.vcxproj"/>
+		<BuildDependency Project="_deps/googletest-build/googlemock/gmock.vcxproj"/>
+		<BuildDependency Project="_deps/googletest-build/googlemock/gmock_main.vcxproj"/>
+		<BuildDependency Project="_deps/googletest-build/googletest/gtest.vcxproj"/>
+		<BuildDependency Project="_deps/googletest-build/googletest/gtest_main.vcxproj"/>
+		<BuildDependency Project="libpymatching.vcxproj"/>
+		<BuildDependency Project="_deps/stim-build/libstim.vcxproj"/>
+		<BuildDependency Project="pymatching.vcxproj"/>
+		<BuildDependency Project="pymatching_perf.vcxproj"/>
+		<BuildDependency Project="pymatching_tests.vcxproj"/>
+		<BuildDependency Project="_deps/stim-build/stim.vcxproj"/>
+		<BuildDependency Project="_deps/stim-build/stim_perf.vcxproj"/>
+	</Project>
+	<Project Path="INSTALL.vcxproj" Type="8bc9ceb8-8b4a-11d0-8d11-00a0c91bc942" Id="a217e5c0-d174-307d-a496-3b50b19c97a4">
+		<BuildDependency Project="ALL_BUILD.vcxproj"/>
+		<BuildDependency Project="ZERO_CHECK.vcxproj"/>
+		<Build Solution="Debug|*" Project="false"/>
+		<Build Solution="Release|*" Project="false"/>
+		<Build Solution="MinSizeRel|*" Project="false"/>
+		<Build Solution="RelWithDebInfo|*" Project="false"/>
+	</Project>
+	<Project Path="RUN_TESTS.vcxproj" Type="8bc9ceb8-8b4a-11d0-8d11-00a0c91bc942" Id="d92c0280-9a36-305e-9933-4dd934150cfc">
+		<BuildDependency Project="ZERO_CHECK.vcxproj"/>
+		<Build Solution="Debug|*" Project="false"/>
+		<Build Solution="Release|*" Project="false"/>
+		<Build Solution="MinSizeRel|*" Project="false"/>
+		<Build Solution="RelWithDebInfo|*" Project="false"/>
+	</Project>
+	<Project Path="ZERO_CHECK.vcxproj" Type="8bc9ceb8-8b4a-11d0-8d11-00a0c91bc942" Id="b2023950-a4e3-39db-b8bc-8b5f1ff6cc09"/>
+	<Project Path="_cpp_pymatching.vcxproj" Type="8bc9ceb8-8b4a-11d0-8d11-00a0c91bc942" Id="394b731e-bde8-361c-86f5-45ea9eca57fd">
+		<BuildDependency Project="ZERO_CHECK.vcxproj"/>
+		<BuildDependency Project="_deps/stim-build/libstim.vcxproj"/>
+	</Project>
+	<Project Path="_deps/googletest-build/googlemock/gmock.vcxproj" Type="8bc9ceb8-8b4a-11d0-8d11-00a0c91bc942" Id="5105a94e-e0b6-3214-a1da-64d5154a1573">
+		<BuildDependency Project="ZERO_CHECK.vcxproj"/>
+	</Project>
+	<Project Path="_deps/googletest-build/googlemock/gmock_main.vcxproj" Type="8bc9ceb8-8b4a-11d0-8d11-00a0c91bc942" Id="74baea7b-7afb-3cf3-a22e-3e09133408c3">
+		<BuildDependency Project="ZERO_CHECK.vcxproj"/>
+	</Project>
+	<Project Path="_deps/googletest-build/googletest/gtest.vcxproj" Type="8bc9ceb8-8b4a-11d0-8d11-00a0c91bc942" Id="9608dc31-5571-3b8c-adba-9320e233dcc8">
+		<BuildDependency Project="ZERO_CHECK.vcxproj"/>
+	</Project>
+	<Project Path="_deps/googletest-build/googletest/gtest_main.vcxproj" Type="8bc9ceb8-8b4a-11d0-8d11-00a0c91bc942" Id="6b30daf3-1182-3317-95d3-843c49ba39b7">
+		<BuildDependency Project="ZERO_CHECK.vcxproj"/>
+		<BuildDependency Project="_deps/googletest-build/googletest/gtest.vcxproj"/>
+	</Project>
+	<Project Path="libpymatching.vcxproj" Type="8bc9ceb8-8b4a-11d0-8d11-00a0c91bc942" Id="a77eebf6-c4e3-381f-ae9b-5d94579e14c3">
+		<BuildDependency Project="ZERO_CHECK.vcxproj"/>
+		<BuildDependency Project="_deps/stim-build/libstim.vcxproj"/>
+	</Project>
+	<Project Path="_deps/stim-build/libstim.vcxproj" Type="8bc9ceb8-8b4a-11d0-8d11-00a0c91bc942" Id="8917bc54-3c7a-387a-8d9d-05dbb7c21ff4">
+		<BuildDependency Project="ZERO_CHECK.vcxproj"/>
+	</Project>
+	<Project Path="pymatching.vcxproj" Type="8bc9ceb8-8b4a-11d0-8d11-00a0c91bc942" Id="f1f07b91-55c2-361b-88a3-89dff54e074c">
+		<BuildDependency Project="ZERO_CHECK.vcxproj"/>
+		<BuildDependency Project="_deps/stim-build/libstim.vcxproj"/>
+	</Project>
+	<Project Path="pymatching_perf.vcxproj" Type="8bc9ceb8-8b4a-11d0-8d11-00a0c91bc942" Id="67bbd902-5255-3dff-a5a1-3b948d3a75c1">
+		<BuildDependency Project="ZERO_CHECK.vcxproj"/>
+		<BuildDependency Project="_deps/stim-build/libstim.vcxproj"/>
+	</Project>
+	<Project Path="pymatching_tests.vcxproj" Type="8bc9ceb8-8b4a-11d0-8d11-00a0c91bc942" Id="41ba9f05-e08c-3ac8-a7c4-0ee1cbcc2152">
+		<BuildDependency Project="ZERO_CHECK.vcxproj"/>
+		<BuildDependency Project="_deps/googletest-build/googlemock/gmock_main.vcxproj"/>
+		<BuildDependency Project="_deps/googletest-build/googletest/gtest.vcxproj"/>
+		<BuildDependency Project="_deps/googletest-build/googletest/gtest_main.vcxproj"/>
+		<BuildDependency Project="_deps/stim-build/libstim.vcxproj"/>
+	</Project>
+	<Project Path="_deps/stim-build/stim.vcxproj" Type="8bc9ceb8-8b4a-11d0-8d11-00a0c91bc942" Id="6fedd81c-8068-3193-ba7b-011273dfc3de">
+		<BuildDependency Project="ZERO_CHECK.vcxproj"/>
+	</Project>
+	<Project Path="_deps/stim-build/stim_perf.vcxproj" Type="8bc9ceb8-8b4a-11d0-8d11-00a0c91bc942" Id="76501bbd-b3f1-3907-9e5e-8871a1032003">
+		<BuildDependency Project="ZERO_CHECK.vcxproj"/>
+	</Project>
+</Solution>

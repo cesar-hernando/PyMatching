@@ -1,0 +1,10 @@
+^C:\USERS\CESAR\DOCUMENTS\PYTHON\MASTER-THESIS\PYMATCHING\PYTHON_BUILD_STIM\TEMP.WIN-AMD64-CPYTHON-311\RELEASE\PYMATCHING._CPP_PYMATCHING\CMAKEFILES\F16AF7AC5529D5F4BC79F7D3D51C8F07\GENERATE.STAMP.RULE
+setlocal
+C:\Users\cesar\AppData\Local\Temp\build-env-sziw9giy\Lib\site-packages\cmake\data\bin\cmake.exe -SC:/Users/cesar/Documents/Python/master-thesis/PyMatching -BC:/Users/cesar/Documents/Python/master-thesis/PyMatching/python_build_stim/temp.win-amd64-cpython-311/Release/pymatching._cpp_pymatching --check-stamp-list CMakeFiles/generate.stamp.list --vs-solution-file C:/Users/cesar/Documents/Python/master-thesis/PyMatching/python_build_stim/temp.win-amd64-cpython-311/Release/pymatching._cpp_pymatching/PyMatching2.slnx
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal & call :cmErrorLevel %errorlevel% & goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd

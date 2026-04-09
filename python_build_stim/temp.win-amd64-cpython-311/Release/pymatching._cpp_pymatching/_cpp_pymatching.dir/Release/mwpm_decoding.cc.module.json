@@ -1,0 +1,13 @@
+{
+    "version": 1,
+    "revision": 0,
+    "rules": [
+        {
+            "primary-output": "_cpp_pymatching.dir\\Release\\mwpm_decoding.obj",
+            "outputs": [
+                "_cpp_pymatching.dir\\Release\\"
+            ],
+            "requires": []
+        }
+    ]
+}

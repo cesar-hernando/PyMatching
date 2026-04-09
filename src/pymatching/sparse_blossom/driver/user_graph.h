@@ -95,6 +95,8 @@ class UserGraph {
     std::set<size_t> get_boundary();
     size_t get_num_observables();
     void set_min_num_observables(size_t num_observables);
+    void update_edges(const std::vector<int64_t>& nodes1, const std::vector<int64_t>& nodes2, const std::vector<double>& weights);
+    void update_boundary_edges(const std::vector<int64_t>& nodes, const std::vector<double>& weights);
     size_t get_num_nodes();
     size_t get_num_detectors();
     size_t get_num_edges();

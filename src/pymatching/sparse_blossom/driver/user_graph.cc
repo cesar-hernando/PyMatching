@@ -544,3 +544,86 @@ void pm::UserGraph::populate_implied_edge_weights(
         }
     }
 }
+
+void pm::UserGraph::update_edges(
+    const std::vector<int64_t>& nodes1, 
+    const std::vector<int64_t>& nodes2, 
+    const std::vector<double>& weights) {
+    
+    if (nodes1.size() != nodes2.size() || nodes1.size() != weights.size()) {
+        throw std::invalid_argument("update_edges: lengths must match.");
+    }
+
+    // 1. Update the UserGraph's internal record (High-level data)
+    for (size_t i = 0; i < nodes1.size(); i++) {
+        int64_t u = nodes1[i], v = nodes2[i];
+        double new_weight = weights[i];
+        for (auto& edge : edges) {
+            if ((edge.node1 == u && edge.node2 == v) || (edge.node1 == v && edge.node2 == u)) {
+                edge.weight = new_weight;
+                break;
+            }
+        }
+    }
+
+    // 2. Prepare the manual conversion for the low-level MatchingGraph
+    if (!_mwpm_needs_updating) {
+        // We MUST convert int64_t to size_t and double to signed_weight_int explicitly
+        std::vector<size_t> u_converted;
+        std::vector<size_t> v_converted;
+        std::vector<pm::signed_weight_int> w_converted;
+
+        u_converted.reserve(nodes1.size());
+        v_converted.reserve(nodes2.size());
+        w_converted.reserve(weights.size());
+
+        double scale = _mwpm.flooder.graph.normalising_constant;
+
+        for (size_t i = 0; i < nodes1.size(); ++i) {
+            u_converted.push_back((size_t)nodes1[i]);
+            v_converted.push_back((size_t)nodes2[i]);
+            w_converted.push_back((pm::signed_weight_int)std::round(weights[i] * scale));
+        }
+
+        // Now the types match the low-level method signature exactly
+        _mwpm.flooder.graph.update_edges(u_converted, v_converted, w_converted);
+    }
+}
+
+void pm::UserGraph::update_boundary_edges(
+    const std::vector<int64_t>& nodes, 
+    const std::vector<double>& weights) {
+    
+    if (nodes.size() != weights.size()) {
+        throw std::invalid_argument("update_boundary_edges: lengths must match.");
+    }
+
+    for (size_t i = 0; i < nodes.size(); i++) {
+        int64_t u = nodes[i];
+        double new_weight = weights[i];
+        for (auto& edge : edges) {
+            if ((edge.node1 == u && edge.node2 == SIZE_MAX) || (edge.node2 == u && edge.node1 == SIZE_MAX)) {
+                edge.weight = new_weight;
+                break;
+            }
+        }
+    }
+
+    if (!_mwpm_needs_updating) {
+        std::vector<size_t> n_converted;
+        std::vector<pm::signed_weight_int> w_converted;
+
+        n_converted.reserve(nodes.size());
+        w_converted.reserve(weights.size());
+
+        double scale = _mwpm.flooder.graph.normalising_constant;
+
+        for (size_t i = 0; i < nodes.size(); ++i) {
+            n_converted.push_back((size_t)nodes[i]);
+            w_converted.push_back((pm::signed_weight_int)std::round(weights[i] * scale));
+        }
+
+        _mwpm.flooder.graph.update_boundary_edges(n_converted, w_converted);
+    }
+}
+
