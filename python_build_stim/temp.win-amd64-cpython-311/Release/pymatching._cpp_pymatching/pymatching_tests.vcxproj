@@ -1,0 +1,500 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="18.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <PreferredToolArchitecture>x64</PreferredToolArchitecture>
+  </PropertyGroup>
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|x64">
+      <Configuration>Debug</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|x64">
+      <Configuration>Release</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="MinSizeRel|x64">
+      <Configuration>MinSizeRel</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="RelWithDebInfo|x64">
+      <Configuration>RelWithDebInfo</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <ProjectGuid>{CC2233B8-EFB0-3D58-A8CA-7DAB40880CA4}</ProjectGuid>
+    <Keyword>Win32Proj</Keyword>
+    <WindowsTargetPlatformVersion>10.0.26100.0</WindowsTargetPlatformVersion>
+    <Platform>x64</Platform>
+    <ProjectName>pymatching_tests</ProjectName>
+    <VCProjectUpgraderObjectName>NoUpgrade</VCProjectUpgraderObjectName>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <CharacterSet>MultiByte</CharacterSet>
+    <PlatformToolset>v145</PlatformToolset>
+    <EnableAsan>true</EnableAsan>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <CharacterSet>MultiByte</CharacterSet>
+    <PlatformToolset>v145</PlatformToolset>
+    <EnableAsan>true</EnableAsan>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <CharacterSet>MultiByte</CharacterSet>
+    <PlatformToolset>v145</PlatformToolset>
+    <EnableAsan>true</EnableAsan>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <CharacterSet>MultiByte</CharacterSet>
+    <PlatformToolset>v145</PlatformToolset>
+    <EnableAsan>true</EnableAsan>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup>
+    <_ProjectFileVersion>10.0.20506.1</_ProjectFileVersion>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">C:\Users\cesar\Documents\Python\master-thesis\PyMatching-add-on\PyMatching\python_build_stim\temp.win-amd64-cpython-311\Release\pymatching._cpp_pymatching\Debug\</OutDir>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">pymatching_tests.dir\Debug\</IntDir>
+    <TargetName Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">pymatching_tests</TargetName>
+    <TargetExt Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">.exe</TargetExt>
+    <LinkIncremental Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</LinkIncremental>
+    <GenerateManifest Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</GenerateManifest>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='Release|x64'">C:\Users\cesar\Documents\Python\master-thesis\PyMatching-add-on\PyMatching\python_build_stim\temp.win-amd64-cpython-311\Release\pymatching._cpp_pymatching\Release\</OutDir>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='Release|x64'">pymatching_tests.dir\Release\</IntDir>
+    <TargetName Condition="'$(Configuration)|$(Platform)'=='Release|x64'">pymatching_tests</TargetName>
+    <TargetExt Condition="'$(Configuration)|$(Platform)'=='Release|x64'">.exe</TargetExt>
+    <LinkIncremental Condition="'$(Configuration)|$(Platform)'=='Release|x64'">false</LinkIncremental>
+    <GenerateManifest Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</GenerateManifest>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">C:\Users\cesar\Documents\Python\master-thesis\PyMatching-add-on\PyMatching\python_build_stim\temp.win-amd64-cpython-311\Release\pymatching._cpp_pymatching\MinSizeRel\</OutDir>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">pymatching_tests.dir\MinSizeRel\</IntDir>
+    <TargetName Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">pymatching_tests</TargetName>
+    <TargetExt Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">.exe</TargetExt>
+    <LinkIncremental Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">false</LinkIncremental>
+    <GenerateManifest Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">true</GenerateManifest>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">C:\Users\cesar\Documents\Python\master-thesis\PyMatching-add-on\PyMatching\python_build_stim\temp.win-amd64-cpython-311\Release\pymatching._cpp_pymatching\RelWithDebInfo\</OutDir>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">pymatching_tests.dir\RelWithDebInfo\</IntDir>
+    <TargetName Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">pymatching_tests</TargetName>
+    <TargetExt Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">.exe</TargetExt>
+    <LinkIncremental Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">true</LinkIncremental>
+    <GenerateManifest Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">true</GenerateManifest>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <ClCompile>
+      <AdditionalIncludeDirectories>C:\Users\cesar\Documents\Python\master-thesis\PyMatching-add-on\PyMatching\src;C:\Users\cesar\Documents\Python\master-thesis\PyMatching-add-on\PyMatching\python_build_stim\temp.win-amd64-cpython-311\Release\pymatching._cpp_pymatching\_deps\stim-src\src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalOptions>%(AdditionalOptions) /external:I "C:/Users/cesar/Documents/Python/master-thesis/PyMatching-add-on/PyMatching/python_build_stim/temp.win-amd64-cpython-311/Release/pymatching._cpp_pymatching/_deps/googletest-src/googletest/include" /external:I "C:/Users/cesar/Documents/Python/master-thesis/PyMatching-add-on/PyMatching/python_build_stim/temp.win-amd64-cpython-311/Release/pymatching._cpp_pymatching/_deps/googletest-src/googletest" /external:I "C:/Users/cesar/Documents/Python/master-thesis/PyMatching-add-on/PyMatching/python_build_stim/temp.win-amd64-cpython-311/Release/pymatching._cpp_pymatching/_deps/googletest-src/googlemock/include" /external:I "C:/Users/cesar/Documents/Python/master-thesis/PyMatching-add-on/PyMatching/python_build_stim/temp.win-amd64-cpython-311/Release/pymatching._cpp_pymatching/_deps/googletest-src/googlemock" -fsanitize=address -g -fsanitize=undefined -fno-omit-frame-pointer -coverage</AdditionalOptions>
+      <AssemblerListingLocation>$(IntDir)</AssemblerListingLocation>
+      <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
+      <BufferSecurityCheck></BufferSecurityCheck>
+      <CallingConvention></CallingConvention>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+      <ExceptionHandling>Sync</ExceptionHandling>
+      <ExternalWarningLevel>TurnOffAllWarnings</ExternalWarningLevel>
+      <FloatingPointModel></FloatingPointModel>
+      <ForceConformanceInForLoopScope></ForceConformanceInForLoopScope>
+      <InlineFunctionExpansion>Disabled</InlineFunctionExpansion>
+      <LanguageStandard>stdcpp20</LanguageStandard>
+      <MinimalRebuild></MinimalRebuild>
+      <Optimization>Disabled</Optimization>
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+      <RemoveUnreferencedCodeData></RemoveUnreferencedCodeData>
+      <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
+      <RuntimeTypeInfo>true</RuntimeTypeInfo>
+      <SupportJustMyCode></SupportJustMyCode>
+      <TreatWChar_tAsBuiltInType></TreatWChar_tAsBuiltInType>
+      <UseFullPaths>false</UseFullPaths>
+      <PreprocessorDefinitions>%(PreprocessorDefinitions);WIN32;_WINDOWS;CMAKE_INTDIR="Debug"</PreprocessorDefinitions>
+      <ObjectFileName>$(IntDir)</ObjectFileName>
+      <ScanSourceForModuleDependencies>false</ScanSourceForModuleDependencies>
+    </ClCompile>
+    <ResourceCompile>
+      <PreprocessorDefinitions>%(PreprocessorDefinitions);WIN32;_DEBUG;_WINDOWS;CMAKE_INTDIR=\"Debug\"</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>C:\Users\cesar\Documents\Python\master-thesis\PyMatching-add-on\PyMatching\src;C:\Users\cesar\Documents\Python\master-thesis\PyMatching-add-on\PyMatching\python_build_stim\temp.win-amd64-cpython-311\Release\pymatching._cpp_pymatching\_deps\stim-src\src;C:\Users\cesar\Documents\Python\master-thesis\PyMatching-add-on\PyMatching\python_build_stim\temp.win-amd64-cpython-311\Release\pymatching._cpp_pymatching\_deps\googletest-src\googletest\include;C:\Users\cesar\Documents\Python\master-thesis\PyMatching-add-on\PyMatching\python_build_stim\temp.win-amd64-cpython-311\Release\pymatching._cpp_pymatching\_deps\googletest-src\googletest;C:\Users\cesar\Documents\Python\master-thesis\PyMatching-add-on\PyMatching\python_build_stim\temp.win-amd64-cpython-311\Release\pymatching._cpp_pymatching\_deps\googletest-src\googlemock\include;C:\Users\cesar\Documents\Python\master-thesis\PyMatching-add-on\PyMatching\python_build_stim\temp.win-amd64-cpython-311\Release\pymatching._cpp_pymatching\_deps\googletest-src\googlemock;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+    </ResourceCompile>
+    <Midl>
+      <AdditionalIncludeDirectories>C:\Users\cesar\Documents\Python\master-thesis\PyMatching-add-on\PyMatching\src;C:\Users\cesar\Documents\Python\master-thesis\PyMatching-add-on\PyMatching\python_build_stim\temp.win-amd64-cpython-311\Release\pymatching._cpp_pymatching\_deps\stim-src\src;C:\Users\cesar\Documents\Python\master-thesis\PyMatching-add-on\PyMatching\python_build_stim\temp.win-amd64-cpython-311\Release\pymatching._cpp_pymatching\_deps\googletest-src\googletest\include;C:\Users\cesar\Documents\Python\master-thesis\PyMatching-add-on\PyMatching\python_build_stim\temp.win-amd64-cpython-311\Release\pymatching._cpp_pymatching\_deps\googletest-src\googletest;C:\Users\cesar\Documents\Python\master-thesis\PyMatching-add-on\PyMatching\python_build_stim\temp.win-amd64-cpython-311\Release\pymatching._cpp_pymatching\_deps\googletest-src\googlemock\include;C:\Users\cesar\Documents\Python\master-thesis\PyMatching-add-on\PyMatching\python_build_stim\temp.win-amd64-cpython-311\Release\pymatching._cpp_pymatching\_deps\googletest-src\googlemock;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <OutputDirectory>$(ProjectDir)/$(IntDir)</OutputDirectory>
+      <HeaderFileName>%(Filename).h</HeaderFileName>
+      <TypeLibraryName>%(Filename).tlb</TypeLibraryName>
+      <InterfaceIdentifierFileName>%(Filename)_i.c</InterfaceIdentifierFileName>
+      <ProxyFileName>%(Filename)_p.c</ProxyFileName>
+    </Midl>
+    <PostBuildEvent>
+      <Message></Message>
+      <Command>setlocal
+C:\Users\cesar\AppData\Local\Temp\build-env-bgi8iq1u\Lib\site-packages\cmake\data\bin\cmake.exe -D TEST_TARGET=pymatching_tests -D TEST_EXECUTABLE=C:/Users/cesar/Documents/Python/master-thesis/PyMatching-add-on/PyMatching/python_build_stim/temp.win-amd64-cpython-311/Release/pymatching._cpp_pymatching/Debug/pymatching_tests.exe -D TEST_EXECUTOR= -D TEST_WORKING_DIR=C:/Users/cesar/Documents/Python/master-thesis/PyMatching-add-on/PyMatching/python_build_stim/temp.win-amd64-cpython-311/Release/pymatching._cpp_pymatching -D TEST_EXTRA_ARGS= -D TEST_PROPERTIES= -D TEST_PREFIX= -D TEST_SUFFIX= -D TEST_FILTER= -D NO_PRETTY_TYPES=FALSE -D NO_PRETTY_VALUES=FALSE -D TEST_LIST=pymatching_tests_TESTS -D CTEST_FILE=C:/Users/cesar/Documents/Python/master-thesis/PyMatching-add-on/PyMatching/python_build_stim/temp.win-amd64-cpython-311/Release/pymatching._cpp_pymatching/pymatching_tests[1]_tests.cmake -D TEST_DISCOVERY_TIMEOUT=5 -D TEST_DISCOVERY_EXTRA_ARGS= -D TEST_XML_OUTPUT_DIR= -P C:/Users/cesar/AppData/Local/Temp/build-env-bgi8iq1u/Lib/site-packages/cmake/data/share/cmake-4.3/Modules/GoogleTestAddTests.cmake
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd</Command>
+    </PostBuildEvent>
+    <Link>
+      <AdditionalDependencies>lib\Debug\gtest_main.lib;lib\Debug\gmock_main.lib;_deps\stim-build\out\Debug\libstim.lib;lib\Debug\gtest.lib;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;comdlg32.lib;advapi32.lib</AdditionalDependencies>
+      <AdditionalLibraryDirectories>%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalOptions>%(AdditionalOptions) /machine:x64 -fsanitize=address -fsanitize=undefined -coverage</AdditionalOptions>
+      <DataExecutionPrevention></DataExecutionPrevention>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <IgnoreSpecificDefaultLibraries>%(IgnoreSpecificDefaultLibraries)</IgnoreSpecificDefaultLibraries>
+      <ImageHasSafeExceptionHandlers></ImageHasSafeExceptionHandlers>
+      <ImportLibrary>C:/Users/cesar/Documents/Python/master-thesis/PyMatching-add-on/PyMatching/python_build_stim/temp.win-amd64-cpython-311/Release/pymatching._cpp_pymatching/Debug/pymatching_tests.lib</ImportLibrary>
+      <LinkErrorReporting></LinkErrorReporting>
+      <ProgramDataBaseFile>C:/Users/cesar/Documents/Python/master-thesis/PyMatching-add-on/PyMatching/python_build_stim/temp.win-amd64-cpython-311/Release/pymatching._cpp_pymatching/Debug/pymatching_tests.pdb</ProgramDataBaseFile>
+      <RandomizedBaseAddress></RandomizedBaseAddress>
+      <SubSystem>Console</SubSystem>
+    </Link>
+    <ProjectReference>
+      <LinkLibraryDependencies>false</LinkLibraryDependencies>
+    </ProjectReference>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <ClCompile>
+      <AdditionalIncludeDirectories>C:\Users\cesar\Documents\Python\master-thesis\PyMatching-add-on\PyMatching\src;C:\Users\cesar\Documents\Python\master-thesis\PyMatching-add-on\PyMatching\python_build_stim\temp.win-amd64-cpython-311\Release\pymatching._cpp_pymatching\_deps\stim-src\src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalOptions>%(AdditionalOptions) /external:I "C:/Users/cesar/Documents/Python/master-thesis/PyMatching-add-on/PyMatching/python_build_stim/temp.win-amd64-cpython-311/Release/pymatching._cpp_pymatching/_deps/googletest-src/googletest/include" /external:I "C:/Users/cesar/Documents/Python/master-thesis/PyMatching-add-on/PyMatching/python_build_stim/temp.win-amd64-cpython-311/Release/pymatching._cpp_pymatching/_deps/googletest-src/googletest" /external:I "C:/Users/cesar/Documents/Python/master-thesis/PyMatching-add-on/PyMatching/python_build_stim/temp.win-amd64-cpython-311/Release/pymatching._cpp_pymatching/_deps/googletest-src/googlemock/include" /external:I "C:/Users/cesar/Documents/Python/master-thesis/PyMatching-add-on/PyMatching/python_build_stim/temp.win-amd64-cpython-311/Release/pymatching._cpp_pymatching/_deps/googletest-src/googlemock" -fsanitize=address -g -fsanitize=undefined -fno-omit-frame-pointer -coverage</AdditionalOptions>
+      <AssemblerListingLocation>$(IntDir)</AssemblerListingLocation>
+      <BasicRuntimeChecks>Default</BasicRuntimeChecks>
+      <BufferSecurityCheck></BufferSecurityCheck>
+      <CallingConvention></CallingConvention>
+      <ExceptionHandling>Sync</ExceptionHandling>
+      <ExternalWarningLevel>TurnOffAllWarnings</ExternalWarningLevel>
+      <FloatingPointModel></FloatingPointModel>
+      <ForceConformanceInForLoopScope></ForceConformanceInForLoopScope>
+      <InlineFunctionExpansion>AnySuitable</InlineFunctionExpansion>
+      <LanguageStandard>stdcpp20</LanguageStandard>
+      <MinimalRebuild></MinimalRebuild>
+      <Optimization>MaxSpeed</Optimization>
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+      <RemoveUnreferencedCodeData></RemoveUnreferencedCodeData>
+      <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
+      <RuntimeTypeInfo>true</RuntimeTypeInfo>
+      <SupportJustMyCode></SupportJustMyCode>
+      <TreatWChar_tAsBuiltInType></TreatWChar_tAsBuiltInType>
+      <UseFullPaths>false</UseFullPaths>
+      <PreprocessorDefinitions>%(PreprocessorDefinitions);WIN32;_WINDOWS;NDEBUG;CMAKE_INTDIR="Release"</PreprocessorDefinitions>
+      <ObjectFileName>$(IntDir)</ObjectFileName>
+      <DebugInformationFormat>
+      </DebugInformationFormat>
+      <ScanSourceForModuleDependencies>false</ScanSourceForModuleDependencies>
+    </ClCompile>
+    <ResourceCompile>
+      <PreprocessorDefinitions>%(PreprocessorDefinitions);WIN32;_WINDOWS;NDEBUG;CMAKE_INTDIR=\"Release\"</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>C:\Users\cesar\Documents\Python\master-thesis\PyMatching-add-on\PyMatching\src;C:\Users\cesar\Documents\Python\master-thesis\PyMatching-add-on\PyMatching\python_build_stim\temp.win-amd64-cpython-311\Release\pymatching._cpp_pymatching\_deps\stim-src\src;C:\Users\cesar\Documents\Python\master-thesis\PyMatching-add-on\PyMatching\python_build_stim\temp.win-amd64-cpython-311\Release\pymatching._cpp_pymatching\_deps\googletest-src\googletest\include;C:\Users\cesar\Documents\Python\master-thesis\PyMatching-add-on\PyMatching\python_build_stim\temp.win-amd64-cpython-311\Release\pymatching._cpp_pymatching\_deps\googletest-src\googletest;C:\Users\cesar\Documents\Python\master-thesis\PyMatching-add-on\PyMatching\python_build_stim\temp.win-amd64-cpython-311\Release\pymatching._cpp_pymatching\_deps\googletest-src\googlemock\include;C:\Users\cesar\Documents\Python\master-thesis\PyMatching-add-on\PyMatching\python_build_stim\temp.win-amd64-cpython-311\Release\pymatching._cpp_pymatching\_deps\googletest-src\googlemock;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+    </ResourceCompile>
+    <Midl>
+      <AdditionalIncludeDirectories>C:\Users\cesar\Documents\Python\master-thesis\PyMatching-add-on\PyMatching\src;C:\Users\cesar\Documents\Python\master-thesis\PyMatching-add-on\PyMatching\python_build_stim\temp.win-amd64-cpython-311\Release\pymatching._cpp_pymatching\_deps\stim-src\src;C:\Users\cesar\Documents\Python\master-thesis\PyMatching-add-on\PyMatching\python_build_stim\temp.win-amd64-cpython-311\Release\pymatching._cpp_pymatching\_deps\googletest-src\googletest\include;C:\Users\cesar\Documents\Python\master-thesis\PyMatching-add-on\PyMatching\python_build_stim\temp.win-amd64-cpython-311\Release\pymatching._cpp_pymatching\_deps\googletest-src\googletest;C:\Users\cesar\Documents\Python\master-thesis\PyMatching-add-on\PyMatching\python_build_stim\temp.win-amd64-cpython-311\Release\pymatching._cpp_pymatching\_deps\googletest-src\googlemock\include;C:\Users\cesar\Documents\Python\master-thesis\PyMatching-add-on\PyMatching\python_build_stim\temp.win-amd64-cpython-311\Release\pymatching._cpp_pymatching\_deps\googletest-src\googlemock;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <OutputDirectory>$(ProjectDir)/$(IntDir)</OutputDirectory>
+      <HeaderFileName>%(Filename).h</HeaderFileName>
+      <TypeLibraryName>%(Filename).tlb</TypeLibraryName>
+      <InterfaceIdentifierFileName>%(Filename)_i.c</InterfaceIdentifierFileName>
+      <ProxyFileName>%(Filename)_p.c</ProxyFileName>
+    </Midl>
+    <PostBuildEvent>
+      <Message></Message>
+      <Command>setlocal
+C:\Users\cesar\AppData\Local\Temp\build-env-bgi8iq1u\Lib\site-packages\cmake\data\bin\cmake.exe -D TEST_TARGET=pymatching_tests -D TEST_EXECUTABLE=C:/Users/cesar/Documents/Python/master-thesis/PyMatching-add-on/PyMatching/python_build_stim/temp.win-amd64-cpython-311/Release/pymatching._cpp_pymatching/Release/pymatching_tests.exe -D TEST_EXECUTOR= -D TEST_WORKING_DIR=C:/Users/cesar/Documents/Python/master-thesis/PyMatching-add-on/PyMatching/python_build_stim/temp.win-amd64-cpython-311/Release/pymatching._cpp_pymatching -D TEST_EXTRA_ARGS= -D TEST_PROPERTIES= -D TEST_PREFIX= -D TEST_SUFFIX= -D TEST_FILTER= -D NO_PRETTY_TYPES=FALSE -D NO_PRETTY_VALUES=FALSE -D TEST_LIST=pymatching_tests_TESTS -D CTEST_FILE=C:/Users/cesar/Documents/Python/master-thesis/PyMatching-add-on/PyMatching/python_build_stim/temp.win-amd64-cpython-311/Release/pymatching._cpp_pymatching/pymatching_tests[1]_tests.cmake -D TEST_DISCOVERY_TIMEOUT=5 -D TEST_DISCOVERY_EXTRA_ARGS= -D TEST_XML_OUTPUT_DIR= -P C:/Users/cesar/AppData/Local/Temp/build-env-bgi8iq1u/Lib/site-packages/cmake/data/share/cmake-4.3/Modules/GoogleTestAddTests.cmake
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd</Command>
+    </PostBuildEvent>
+    <Link>
+      <AdditionalDependencies>lib\Release\gtest_main.lib;lib\Release\gmock_main.lib;_deps\stim-build\out\Release\libstim.lib;lib\Release\gtest.lib;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;comdlg32.lib;advapi32.lib</AdditionalDependencies>
+      <AdditionalLibraryDirectories>%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalOptions>%(AdditionalOptions) /machine:x64 -fsanitize=address -fsanitize=undefined -coverage</AdditionalOptions>
+      <DataExecutionPrevention></DataExecutionPrevention>
+      <GenerateDebugInformation>false</GenerateDebugInformation>
+      <IgnoreSpecificDefaultLibraries>%(IgnoreSpecificDefaultLibraries)</IgnoreSpecificDefaultLibraries>
+      <ImageHasSafeExceptionHandlers></ImageHasSafeExceptionHandlers>
+      <ImportLibrary>C:/Users/cesar/Documents/Python/master-thesis/PyMatching-add-on/PyMatching/python_build_stim/temp.win-amd64-cpython-311/Release/pymatching._cpp_pymatching/Release/pymatching_tests.lib</ImportLibrary>
+      <LinkErrorReporting></LinkErrorReporting>
+      <ProgramDataBaseFile>C:/Users/cesar/Documents/Python/master-thesis/PyMatching-add-on/PyMatching/python_build_stim/temp.win-amd64-cpython-311/Release/pymatching._cpp_pymatching/Release/pymatching_tests.pdb</ProgramDataBaseFile>
+      <RandomizedBaseAddress></RandomizedBaseAddress>
+      <SubSystem>Console</SubSystem>
+    </Link>
+    <ProjectReference>
+      <LinkLibraryDependencies>false</LinkLibraryDependencies>
+    </ProjectReference>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">
+    <ClCompile>
+      <AdditionalIncludeDirectories>C:\Users\cesar\Documents\Python\master-thesis\PyMatching-add-on\PyMatching\src;C:\Users\cesar\Documents\Python\master-thesis\PyMatching-add-on\PyMatching\python_build_stim\temp.win-amd64-cpython-311\Release\pymatching._cpp_pymatching\_deps\stim-src\src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalOptions>%(AdditionalOptions) /external:I "C:/Users/cesar/Documents/Python/master-thesis/PyMatching-add-on/PyMatching/python_build_stim/temp.win-amd64-cpython-311/Release/pymatching._cpp_pymatching/_deps/googletest-src/googletest/include" /external:I "C:/Users/cesar/Documents/Python/master-thesis/PyMatching-add-on/PyMatching/python_build_stim/temp.win-amd64-cpython-311/Release/pymatching._cpp_pymatching/_deps/googletest-src/googletest" /external:I "C:/Users/cesar/Documents/Python/master-thesis/PyMatching-add-on/PyMatching/python_build_stim/temp.win-amd64-cpython-311/Release/pymatching._cpp_pymatching/_deps/googletest-src/googlemock/include" /external:I "C:/Users/cesar/Documents/Python/master-thesis/PyMatching-add-on/PyMatching/python_build_stim/temp.win-amd64-cpython-311/Release/pymatching._cpp_pymatching/_deps/googletest-src/googlemock" -fsanitize=address -g -fsanitize=undefined -fno-omit-frame-pointer -coverage</AdditionalOptions>
+      <AssemblerListingLocation>$(IntDir)</AssemblerListingLocation>
+      <BasicRuntimeChecks>Default</BasicRuntimeChecks>
+      <BufferSecurityCheck></BufferSecurityCheck>
+      <CallingConvention></CallingConvention>
+      <ExceptionHandling>Sync</ExceptionHandling>
+      <ExternalWarningLevel>TurnOffAllWarnings</ExternalWarningLevel>
+      <FloatingPointModel></FloatingPointModel>
+      <ForceConformanceInForLoopScope></ForceConformanceInForLoopScope>
+      <InlineFunctionExpansion>OnlyExplicitInline</InlineFunctionExpansion>
+      <LanguageStandard>stdcpp20</LanguageStandard>
+      <MinimalRebuild></MinimalRebuild>
+      <Optimization>MinSpace</Optimization>
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+      <RemoveUnreferencedCodeData></RemoveUnreferencedCodeData>
+      <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
+      <RuntimeTypeInfo>true</RuntimeTypeInfo>
+      <SupportJustMyCode></SupportJustMyCode>
+      <TreatWChar_tAsBuiltInType></TreatWChar_tAsBuiltInType>
+      <UseFullPaths>false</UseFullPaths>
+      <PreprocessorDefinitions>%(PreprocessorDefinitions);WIN32;_WINDOWS;NDEBUG;CMAKE_INTDIR="MinSizeRel"</PreprocessorDefinitions>
+      <ObjectFileName>$(IntDir)</ObjectFileName>
+      <DebugInformationFormat>
+      </DebugInformationFormat>
+      <ScanSourceForModuleDependencies>false</ScanSourceForModuleDependencies>
+    </ClCompile>
+    <ResourceCompile>
+      <PreprocessorDefinitions>%(PreprocessorDefinitions);WIN32;_WINDOWS;NDEBUG;CMAKE_INTDIR=\"MinSizeRel\"</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>C:\Users\cesar\Documents\Python\master-thesis\PyMatching-add-on\PyMatching\src;C:\Users\cesar\Documents\Python\master-thesis\PyMatching-add-on\PyMatching\python_build_stim\temp.win-amd64-cpython-311\Release\pymatching._cpp_pymatching\_deps\stim-src\src;C:\Users\cesar\Documents\Python\master-thesis\PyMatching-add-on\PyMatching\python_build_stim\temp.win-amd64-cpython-311\Release\pymatching._cpp_pymatching\_deps\googletest-src\googletest\include;C:\Users\cesar\Documents\Python\master-thesis\PyMatching-add-on\PyMatching\python_build_stim\temp.win-amd64-cpython-311\Release\pymatching._cpp_pymatching\_deps\googletest-src\googletest;C:\Users\cesar\Documents\Python\master-thesis\PyMatching-add-on\PyMatching\python_build_stim\temp.win-amd64-cpython-311\Release\pymatching._cpp_pymatching\_deps\googletest-src\googlemock\include;C:\Users\cesar\Documents\Python\master-thesis\PyMatching-add-on\PyMatching\python_build_stim\temp.win-amd64-cpython-311\Release\pymatching._cpp_pymatching\_deps\googletest-src\googlemock;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+    </ResourceCompile>
+    <Midl>
+      <AdditionalIncludeDirectories>C:\Users\cesar\Documents\Python\master-thesis\PyMatching-add-on\PyMatching\src;C:\Users\cesar\Documents\Python\master-thesis\PyMatching-add-on\PyMatching\python_build_stim\temp.win-amd64-cpython-311\Release\pymatching._cpp_pymatching\_deps\stim-src\src;C:\Users\cesar\Documents\Python\master-thesis\PyMatching-add-on\PyMatching\python_build_stim\temp.win-amd64-cpython-311\Release\pymatching._cpp_pymatching\_deps\googletest-src\googletest\include;C:\Users\cesar\Documents\Python\master-thesis\PyMatching-add-on\PyMatching\python_build_stim\temp.win-amd64-cpython-311\Release\pymatching._cpp_pymatching\_deps\googletest-src\googletest;C:\Users\cesar\Documents\Python\master-thesis\PyMatching-add-on\PyMatching\python_build_stim\temp.win-amd64-cpython-311\Release\pymatching._cpp_pymatching\_deps\googletest-src\googlemock\include;C:\Users\cesar\Documents\Python\master-thesis\PyMatching-add-on\PyMatching\python_build_stim\temp.win-amd64-cpython-311\Release\pymatching._cpp_pymatching\_deps\googletest-src\googlemock;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <OutputDirectory>$(ProjectDir)/$(IntDir)</OutputDirectory>
+      <HeaderFileName>%(Filename).h</HeaderFileName>
+      <TypeLibraryName>%(Filename).tlb</TypeLibraryName>
+      <InterfaceIdentifierFileName>%(Filename)_i.c</InterfaceIdentifierFileName>
+      <ProxyFileName>%(Filename)_p.c</ProxyFileName>
+    </Midl>
+    <PostBuildEvent>
+      <Message></Message>
+      <Command>setlocal
+C:\Users\cesar\AppData\Local\Temp\build-env-bgi8iq1u\Lib\site-packages\cmake\data\bin\cmake.exe -D TEST_TARGET=pymatching_tests -D TEST_EXECUTABLE=C:/Users/cesar/Documents/Python/master-thesis/PyMatching-add-on/PyMatching/python_build_stim/temp.win-amd64-cpython-311/Release/pymatching._cpp_pymatching/MinSizeRel/pymatching_tests.exe -D TEST_EXECUTOR= -D TEST_WORKING_DIR=C:/Users/cesar/Documents/Python/master-thesis/PyMatching-add-on/PyMatching/python_build_stim/temp.win-amd64-cpython-311/Release/pymatching._cpp_pymatching -D TEST_EXTRA_ARGS= -D TEST_PROPERTIES= -D TEST_PREFIX= -D TEST_SUFFIX= -D TEST_FILTER= -D NO_PRETTY_TYPES=FALSE -D NO_PRETTY_VALUES=FALSE -D TEST_LIST=pymatching_tests_TESTS -D CTEST_FILE=C:/Users/cesar/Documents/Python/master-thesis/PyMatching-add-on/PyMatching/python_build_stim/temp.win-amd64-cpython-311/Release/pymatching._cpp_pymatching/pymatching_tests[1]_tests.cmake -D TEST_DISCOVERY_TIMEOUT=5 -D TEST_DISCOVERY_EXTRA_ARGS= -D TEST_XML_OUTPUT_DIR= -P C:/Users/cesar/AppData/Local/Temp/build-env-bgi8iq1u/Lib/site-packages/cmake/data/share/cmake-4.3/Modules/GoogleTestAddTests.cmake
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd</Command>
+    </PostBuildEvent>
+    <Link>
+      <AdditionalDependencies>lib\MinSizeRel\gtest_main.lib;lib\MinSizeRel\gmock_main.lib;_deps\stim-build\out\MinSizeRel\libstim.lib;lib\MinSizeRel\gtest.lib;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;comdlg32.lib;advapi32.lib</AdditionalDependencies>
+      <AdditionalLibraryDirectories>%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalOptions>%(AdditionalOptions) /machine:x64 -fsanitize=address -fsanitize=undefined -coverage</AdditionalOptions>
+      <DataExecutionPrevention></DataExecutionPrevention>
+      <GenerateDebugInformation>false</GenerateDebugInformation>
+      <IgnoreSpecificDefaultLibraries>%(IgnoreSpecificDefaultLibraries)</IgnoreSpecificDefaultLibraries>
+      <ImageHasSafeExceptionHandlers></ImageHasSafeExceptionHandlers>
+      <ImportLibrary>C:/Users/cesar/Documents/Python/master-thesis/PyMatching-add-on/PyMatching/python_build_stim/temp.win-amd64-cpython-311/Release/pymatching._cpp_pymatching/MinSizeRel/pymatching_tests.lib</ImportLibrary>
+      <LinkErrorReporting></LinkErrorReporting>
+      <ProgramDataBaseFile>C:/Users/cesar/Documents/Python/master-thesis/PyMatching-add-on/PyMatching/python_build_stim/temp.win-amd64-cpython-311/Release/pymatching._cpp_pymatching/MinSizeRel/pymatching_tests.pdb</ProgramDataBaseFile>
+      <RandomizedBaseAddress></RandomizedBaseAddress>
+      <SubSystem>Console</SubSystem>
+    </Link>
+    <ProjectReference>
+      <LinkLibraryDependencies>false</LinkLibraryDependencies>
+    </ProjectReference>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">
+    <ClCompile>
+      <AdditionalIncludeDirectories>C:\Users\cesar\Documents\Python\master-thesis\PyMatching-add-on\PyMatching\src;C:\Users\cesar\Documents\Python\master-thesis\PyMatching-add-on\PyMatching\python_build_stim\temp.win-amd64-cpython-311\Release\pymatching._cpp_pymatching\_deps\stim-src\src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalOptions>%(AdditionalOptions) /external:I "C:/Users/cesar/Documents/Python/master-thesis/PyMatching-add-on/PyMatching/python_build_stim/temp.win-amd64-cpython-311/Release/pymatching._cpp_pymatching/_deps/googletest-src/googletest/include" /external:I "C:/Users/cesar/Documents/Python/master-thesis/PyMatching-add-on/PyMatching/python_build_stim/temp.win-amd64-cpython-311/Release/pymatching._cpp_pymatching/_deps/googletest-src/googletest" /external:I "C:/Users/cesar/Documents/Python/master-thesis/PyMatching-add-on/PyMatching/python_build_stim/temp.win-amd64-cpython-311/Release/pymatching._cpp_pymatching/_deps/googletest-src/googlemock/include" /external:I "C:/Users/cesar/Documents/Python/master-thesis/PyMatching-add-on/PyMatching/python_build_stim/temp.win-amd64-cpython-311/Release/pymatching._cpp_pymatching/_deps/googletest-src/googlemock" -fsanitize=address -g -fsanitize=undefined -fno-omit-frame-pointer -coverage</AdditionalOptions>
+      <AssemblerListingLocation>$(IntDir)</AssemblerListingLocation>
+      <BasicRuntimeChecks>Default</BasicRuntimeChecks>
+      <BufferSecurityCheck></BufferSecurityCheck>
+      <CallingConvention></CallingConvention>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+      <ExceptionHandling>Sync</ExceptionHandling>
+      <ExternalWarningLevel>TurnOffAllWarnings</ExternalWarningLevel>
+      <FloatingPointModel></FloatingPointModel>
+      <ForceConformanceInForLoopScope></ForceConformanceInForLoopScope>
+      <InlineFunctionExpansion>OnlyExplicitInline</InlineFunctionExpansion>
+      <LanguageStandard>stdcpp20</LanguageStandard>
+      <MinimalRebuild></MinimalRebuild>
+      <Optimization>MaxSpeed</Optimization>
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+      <RemoveUnreferencedCodeData></RemoveUnreferencedCodeData>
+      <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
+      <RuntimeTypeInfo>true</RuntimeTypeInfo>
+      <SupportJustMyCode></SupportJustMyCode>
+      <TreatWChar_tAsBuiltInType></TreatWChar_tAsBuiltInType>
+      <UseFullPaths>false</UseFullPaths>
+      <PreprocessorDefinitions>%(PreprocessorDefinitions);WIN32;_WINDOWS;NDEBUG;CMAKE_INTDIR="RelWithDebInfo"</PreprocessorDefinitions>
+      <ObjectFileName>$(IntDir)</ObjectFileName>
+      <ScanSourceForModuleDependencies>false</ScanSourceForModuleDependencies>
+    </ClCompile>
+    <ResourceCompile>
+      <PreprocessorDefinitions>%(PreprocessorDefinitions);WIN32;_WINDOWS;NDEBUG;CMAKE_INTDIR=\"RelWithDebInfo\"</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>C:\Users\cesar\Documents\Python\master-thesis\PyMatching-add-on\PyMatching\src;C:\Users\cesar\Documents\Python\master-thesis\PyMatching-add-on\PyMatching\python_build_stim\temp.win-amd64-cpython-311\Release\pymatching._cpp_pymatching\_deps\stim-src\src;C:\Users\cesar\Documents\Python\master-thesis\PyMatching-add-on\PyMatching\python_build_stim\temp.win-amd64-cpython-311\Release\pymatching._cpp_pymatching\_deps\googletest-src\googletest\include;C:\Users\cesar\Documents\Python\master-thesis\PyMatching-add-on\PyMatching\python_build_stim\temp.win-amd64-cpython-311\Release\pymatching._cpp_pymatching\_deps\googletest-src\googletest;C:\Users\cesar\Documents\Python\master-thesis\PyMatching-add-on\PyMatching\python_build_stim\temp.win-amd64-cpython-311\Release\pymatching._cpp_pymatching\_deps\googletest-src\googlemock\include;C:\Users\cesar\Documents\Python\master-thesis\PyMatching-add-on\PyMatching\python_build_stim\temp.win-amd64-cpython-311\Release\pymatching._cpp_pymatching\_deps\googletest-src\googlemock;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+    </ResourceCompile>
+    <Midl>
+      <AdditionalIncludeDirectories>C:\Users\cesar\Documents\Python\master-thesis\PyMatching-add-on\PyMatching\src;C:\Users\cesar\Documents\Python\master-thesis\PyMatching-add-on\PyMatching\python_build_stim\temp.win-amd64-cpython-311\Release\pymatching._cpp_pymatching\_deps\stim-src\src;C:\Users\cesar\Documents\Python\master-thesis\PyMatching-add-on\PyMatching\python_build_stim\temp.win-amd64-cpython-311\Release\pymatching._cpp_pymatching\_deps\googletest-src\googletest\include;C:\Users\cesar\Documents\Python\master-thesis\PyMatching-add-on\PyMatching\python_build_stim\temp.win-amd64-cpython-311\Release\pymatching._cpp_pymatching\_deps\googletest-src\googletest;C:\Users\cesar\Documents\Python\master-thesis\PyMatching-add-on\PyMatching\python_build_stim\temp.win-amd64-cpython-311\Release\pymatching._cpp_pymatching\_deps\googletest-src\googlemock\include;C:\Users\cesar\Documents\Python\master-thesis\PyMatching-add-on\PyMatching\python_build_stim\temp.win-amd64-cpython-311\Release\pymatching._cpp_pymatching\_deps\googletest-src\googlemock;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <OutputDirectory>$(ProjectDir)/$(IntDir)</OutputDirectory>
+      <HeaderFileName>%(Filename).h</HeaderFileName>
+      <TypeLibraryName>%(Filename).tlb</TypeLibraryName>
+      <InterfaceIdentifierFileName>%(Filename)_i.c</InterfaceIdentifierFileName>
+      <ProxyFileName>%(Filename)_p.c</ProxyFileName>
+    </Midl>
+    <PostBuildEvent>
+      <Message></Message>
+      <Command>setlocal
+C:\Users\cesar\AppData\Local\Temp\build-env-bgi8iq1u\Lib\site-packages\cmake\data\bin\cmake.exe -D TEST_TARGET=pymatching_tests -D TEST_EXECUTABLE=C:/Users/cesar/Documents/Python/master-thesis/PyMatching-add-on/PyMatching/python_build_stim/temp.win-amd64-cpython-311/Release/pymatching._cpp_pymatching/RelWithDebInfo/pymatching_tests.exe -D TEST_EXECUTOR= -D TEST_WORKING_DIR=C:/Users/cesar/Documents/Python/master-thesis/PyMatching-add-on/PyMatching/python_build_stim/temp.win-amd64-cpython-311/Release/pymatching._cpp_pymatching -D TEST_EXTRA_ARGS= -D TEST_PROPERTIES= -D TEST_PREFIX= -D TEST_SUFFIX= -D TEST_FILTER= -D NO_PRETTY_TYPES=FALSE -D NO_PRETTY_VALUES=FALSE -D TEST_LIST=pymatching_tests_TESTS -D CTEST_FILE=C:/Users/cesar/Documents/Python/master-thesis/PyMatching-add-on/PyMatching/python_build_stim/temp.win-amd64-cpython-311/Release/pymatching._cpp_pymatching/pymatching_tests[1]_tests.cmake -D TEST_DISCOVERY_TIMEOUT=5 -D TEST_DISCOVERY_EXTRA_ARGS= -D TEST_XML_OUTPUT_DIR= -P C:/Users/cesar/AppData/Local/Temp/build-env-bgi8iq1u/Lib/site-packages/cmake/data/share/cmake-4.3/Modules/GoogleTestAddTests.cmake
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd</Command>
+    </PostBuildEvent>
+    <Link>
+      <AdditionalDependencies>lib\RelWithDebInfo\gtest_main.lib;lib\RelWithDebInfo\gmock_main.lib;_deps\stim-build\out\RelWithDebInfo\libstim.lib;lib\RelWithDebInfo\gtest.lib;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;comdlg32.lib;advapi32.lib</AdditionalDependencies>
+      <AdditionalLibraryDirectories>%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalOptions>%(AdditionalOptions) /machine:x64 -fsanitize=address -fsanitize=undefined -coverage</AdditionalOptions>
+      <DataExecutionPrevention></DataExecutionPrevention>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <IgnoreSpecificDefaultLibraries>%(IgnoreSpecificDefaultLibraries)</IgnoreSpecificDefaultLibraries>
+      <ImageHasSafeExceptionHandlers></ImageHasSafeExceptionHandlers>
+      <ImportLibrary>C:/Users/cesar/Documents/Python/master-thesis/PyMatching-add-on/PyMatching/python_build_stim/temp.win-amd64-cpython-311/Release/pymatching._cpp_pymatching/RelWithDebInfo/pymatching_tests.lib</ImportLibrary>
+      <LinkErrorReporting></LinkErrorReporting>
+      <ProgramDataBaseFile>C:/Users/cesar/Documents/Python/master-thesis/PyMatching-add-on/PyMatching/python_build_stim/temp.win-amd64-cpython-311/Release/pymatching._cpp_pymatching/RelWithDebInfo/pymatching_tests.pdb</ProgramDataBaseFile>
+      <RandomizedBaseAddress></RandomizedBaseAddress>
+      <SubSystem>Console</SubSystem>
+    </Link>
+    <ProjectReference>
+      <LinkLibraryDependencies>false</LinkLibraryDependencies>
+    </ProjectReference>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <CustomBuild Include="C:\Users\cesar\Documents\Python\master-thesis\PyMatching-add-on\PyMatching\CMakeLists.txt">
+      <UseUtf8Encoding>Always</UseUtf8Encoding>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Building Custom Rule C:/Users/cesar/Documents/Python/master-thesis/PyMatching-add-on/PyMatching/CMakeLists.txt</Message>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">setlocal
+C:\Users\cesar\AppData\Local\Temp\build-env-bgi8iq1u\Lib\site-packages\cmake\data\bin\cmake.exe -SC:/Users/cesar/Documents/Python/master-thesis/PyMatching-add-on/PyMatching -BC:/Users/cesar/Documents/Python/master-thesis/PyMatching-add-on/PyMatching/python_build_stim/temp.win-amd64-cpython-311/Release/pymatching._cpp_pymatching --check-stamp-file C:/Users/cesar/Documents/Python/master-thesis/PyMatching-add-on/PyMatching/python_build_stim/temp.win-amd64-cpython-311/Release/pymatching._cpp_pymatching/CMakeFiles/generate.stamp
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd</Command>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">C:\Users\cesar\AppData\Local\Temp\build-env-bgi8iq1u\Lib\site-packages\cmake\data\share\cmake-4.3\Modules\CMakeCInformation.cmake;C:\Users\cesar\AppData\Local\Temp\build-env-bgi8iq1u\Lib\site-packages\cmake\data\share\cmake-4.3\Modules\CMakeCXXInformation.cmake;C:\Users\cesar\AppData\Local\Temp\build-env-bgi8iq1u\Lib\site-packages\cmake\data\share\cmake-4.3\Modules\CMakeCommonLanguageInclude.cmake;C:\Users\cesar\AppData\Local\Temp\build-env-bgi8iq1u\Lib\site-packages\cmake\data\share\cmake-4.3\Modules\CMakeGenericSystem.cmake;C:\Users\cesar\AppData\Local\Temp\build-env-bgi8iq1u\Lib\site-packages\cmake\data\share\cmake-4.3\Modules\CMakeInitializeConfigs.cmake;C:\Users\cesar\AppData\Local\Temp\build-env-bgi8iq1u\Lib\site-packages\cmake\data\share\cmake-4.3\Modules\CMakeLanguageInformation.cmake;C:\Users\cesar\AppData\Local\Temp\build-env-bgi8iq1u\Lib\site-packages\cmake\data\share\cmake-4.3\Modules\CMakeRCInformation.cmake;C:\Users\cesar\AppData\Local\Temp\build-env-bgi8iq1u\Lib\site-packages\cmake\data\share\cmake-4.3\Modules\CMakeSystemSpecificInformation.cmake;C:\Users\cesar\AppData\Local\Temp\build-env-bgi8iq1u\Lib\site-packages\cmake\data\share\cmake-4.3\Modules\CMakeSystemSpecificInitialize.cmake;C:\Users\cesar\AppData\Local\Temp\build-env-bgi8iq1u\Lib\site-packages\cmake\data\share\cmake-4.3\Modules\Compiler\CMakeCommonCompilerMacros.cmake;C:\Users\cesar\AppData\Local\Temp\build-env-bgi8iq1u\Lib\site-packages\cmake\data\share\cmake-4.3\Modules\Compiler\MSVC-C.cmake;C:\Users\cesar\AppData\Local\Temp\build-env-bgi8iq1u\Lib\site-packages\cmake\data\share\cmake-4.3\Modules\Compiler\MSVC-CXX.cmake;C:\Users\cesar\AppData\Local\Temp\build-env-bgi8iq1u\Lib\site-packages\cmake\data\share\cmake-4.3\Modules\Compiler\MSVC.cmake;C:\Users\cesar\AppData\Local\Temp\build-env-bgi8iq1u\Lib\site-packages\cmake\data\share\cmake-4.3\Modules\ExternalProject\shared_internal_commands.cmake;C:\Users\cesar\AppData\Local\Temp\build-env-bgi8iq1u\Lib\site-packages\cmake\data\share\cmake-4.3\Modules\FetchContent.cmake;C:\Users\cesar\AppData\Local\Temp\build-env-bgi8iq1u\Lib\site-packages\cmake\data\share\cmake-4.3\Modules\FetchContent\CMakeLists.cmake.in;C:\Users\cesar\AppData\Local\Temp\build-env-bgi8iq1u\Lib\site-packages\cmake\data\share\cmake-4.3\Modules\FindGit.cmake;C:\Users\cesar\AppData\Local\Temp\build-env-bgi8iq1u\Lib\site-packages\cmake\data\share\cmake-4.3\Modules\FindPackageHandleStandardArgs.cmake;C:\Users\cesar\AppData\Local\Temp\build-env-bgi8iq1u\Lib\site-packages\cmake\data\share\cmake-4.3\Modules\FindPackageMessage.cmake;C:\Users\cesar\AppData\Local\Temp\build-env-bgi8iq1u\Lib\site-packages\cmake\data\share\cmake-4.3\Modules\GoogleTest.cmake;C:\Users\cesar\AppData\Local\Temp\build-env-bgi8iq1u\Lib\site-packages\cmake\data\share\cmake-4.3\Modules\Internal\CMakeCLinkerInformation.cmake;C:\Users\cesar\AppData\Local\Temp\build-env-bgi8iq1u\Lib\site-packages\cmake\data\share\cmake-4.3\Modules\Internal\CMakeCXXLinkerInformation.cmake;C:\Users\cesar\AppData\Local\Temp\build-env-bgi8iq1u\Lib\site-packages\cmake\data\share\cmake-4.3\Modules\Internal\CMakeCommonLinkerInformation.cmake;C:\Users\cesar\AppData\Local\Temp\build-env-bgi8iq1u\Lib\site-packages\cmake\data\share\cmake-4.3\Modules\Linker\MSVC-C.cmake;C:\Users\cesar\AppData\Local\Temp\build-env-bgi8iq1u\Lib\site-packages\cmake\data\share\cmake-4.3\Modules\Linker\MSVC-CXX.cmake;C:\Users\cesar\AppData\Local\Temp\build-env-bgi8iq1u\Lib\site-packages\cmake\data\share\cmake-4.3\Modules\Linker\MSVC.cmake;C:\Users\cesar\AppData\Local\Temp\build-env-bgi8iq1u\Lib\site-packages\cmake\data\share\cmake-4.3\Modules\Platform\Linker\Windows-MSVC-C.cmake;C:\Users\cesar\AppData\Local\Temp\build-env-bgi8iq1u\Lib\site-packages\cmake\data\share\cmake-4.3\Modules\Platform\Linker\Windows-MSVC-CXX.cmake;C:\Users\cesar\AppData\Local\Temp\build-env-bgi8iq1u\Lib\site-packages\cmake\data\share\cmake-4.3\Modules\Platform\Linker\Windows-MSVC.cmake;C:\Users\cesar\AppData\Local\Temp\build-env-bgi8iq1u\Lib\site-packages\cmake\data\share\cmake-4.3\Modules\Platform\Windows-Initialize.cmake;C:\Users\cesar\AppData\Local\Temp\build-env-bgi8iq1u\Lib\site-packages\cmake\data\share\cmake-4.3\Modules\Platform\Windows-MSVC-C.cmake;C:\Users\cesar\AppData\Local\Temp\build-env-bgi8iq1u\Lib\site-packages\cmake\data\share\cmake-4.3\Modules\Platform\Windows-MSVC-CXX.cmake;C:\Users\cesar\AppData\Local\Temp\build-env-bgi8iq1u\Lib\site-packages\cmake\data\share\cmake-4.3\Modules\Platform\Windows-MSVC.cmake;C:\Users\cesar\AppData\Local\Temp\build-env-bgi8iq1u\Lib\site-packages\cmake\data\share\cmake-4.3\Modules\Platform\Windows.cmake;C:\Users\cesar\AppData\Local\Temp\build-env-bgi8iq1u\Lib\site-packages\cmake\data\share\cmake-4.3\Modules\Platform\WindowsPaths.cmake;C:\Users\cesar\Documents\Python\master-thesis\PyMatching-add-on\PyMatching\python_build_stim\temp.win-amd64-cpython-311\Release\pymatching._cpp_pymatching\CMakeFiles\4.3.1\CMakeCCompiler.cmake;C:\Users\cesar\Documents\Python\master-thesis\PyMatching-add-on\PyMatching\python_build_stim\temp.win-amd64-cpython-311\Release\pymatching._cpp_pymatching\CMakeFiles\4.3.1\CMakeCXXCompiler.cmake;C:\Users\cesar\Documents\Python\master-thesis\PyMatching-add-on\PyMatching\python_build_stim\temp.win-amd64-cpython-311\Release\pymatching._cpp_pymatching\CMakeFiles\4.3.1\CMakeRCCompiler.cmake;C:\Users\cesar\Documents\Python\master-thesis\PyMatching-add-on\PyMatching\python_build_stim\temp.win-amd64-cpython-311\Release\pymatching._cpp_pymatching\CMakeFiles\4.3.1\CMakeSystem.cmake;%(AdditionalInputs)</AdditionalInputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">C:\Users\cesar\Documents\Python\master-thesis\PyMatching-add-on\PyMatching\python_build_stim\temp.win-amd64-cpython-311\Release\pymatching._cpp_pymatching\CMakeFiles\generate.stamp</Outputs>
+      <LinkObjects Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</LinkObjects>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Building Custom Rule C:/Users/cesar/Documents/Python/master-thesis/PyMatching-add-on/PyMatching/CMakeLists.txt</Message>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Release|x64'">setlocal
+C:\Users\cesar\AppData\Local\Temp\build-env-bgi8iq1u\Lib\site-packages\cmake\data\bin\cmake.exe -SC:/Users/cesar/Documents/Python/master-thesis/PyMatching-add-on/PyMatching -BC:/Users/cesar/Documents/Python/master-thesis/PyMatching-add-on/PyMatching/python_build_stim/temp.win-amd64-cpython-311/Release/pymatching._cpp_pymatching --check-stamp-file C:/Users/cesar/Documents/Python/master-thesis/PyMatching-add-on/PyMatching/python_build_stim/temp.win-amd64-cpython-311/Release/pymatching._cpp_pymatching/CMakeFiles/generate.stamp
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd</Command>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">C:\Users\cesar\AppData\Local\Temp\build-env-bgi8iq1u\Lib\site-packages\cmake\data\share\cmake-4.3\Modules\CMakeCInformation.cmake;C:\Users\cesar\AppData\Local\Temp\build-env-bgi8iq1u\Lib\site-packages\cmake\data\share\cmake-4.3\Modules\CMakeCXXInformation.cmake;C:\Users\cesar\AppData\Local\Temp\build-env-bgi8iq1u\Lib\site-packages\cmake\data\share\cmake-4.3\Modules\CMakeCommonLanguageInclude.cmake;C:\Users\cesar\AppData\Local\Temp\build-env-bgi8iq1u\Lib\site-packages\cmake\data\share\cmake-4.3\Modules\CMakeGenericSystem.cmake;C:\Users\cesar\AppData\Local\Temp\build-env-bgi8iq1u\Lib\site-packages\cmake\data\share\cmake-4.3\Modules\CMakeInitializeConfigs.cmake;C:\Users\cesar\AppData\Local\Temp\build-env-bgi8iq1u\Lib\site-packages\cmake\data\share\cmake-4.3\Modules\CMakeLanguageInformation.cmake;C:\Users\cesar\AppData\Local\Temp\build-env-bgi8iq1u\Lib\site-packages\cmake\data\share\cmake-4.3\Modules\CMakeRCInformation.cmake;C:\Users\cesar\AppData\Local\Temp\build-env-bgi8iq1u\Lib\site-packages\cmake\data\share\cmake-4.3\Modules\CMakeSystemSpecificInformation.cmake;C:\Users\cesar\AppData\Local\Temp\build-env-bgi8iq1u\Lib\site-packages\cmake\data\share\cmake-4.3\Modules\CMakeSystemSpecificInitialize.cmake;C:\Users\cesar\AppData\Local\Temp\build-env-bgi8iq1u\Lib\site-packages\cmake\data\share\cmake-4.3\Modules\Compiler\CMakeCommonCompilerMacros.cmake;C:\Users\cesar\AppData\Local\Temp\build-env-bgi8iq1u\Lib\site-packages\cmake\data\share\cmake-4.3\Modules\Compiler\MSVC-C.cmake;C:\Users\cesar\AppData\Local\Temp\build-env-bgi8iq1u\Lib\site-packages\cmake\data\share\cmake-4.3\Modules\Compiler\MSVC-CXX.cmake;C:\Users\cesar\AppData\Local\Temp\build-env-bgi8iq1u\Lib\site-packages\cmake\data\share\cmake-4.3\Modules\Compiler\MSVC.cmake;C:\Users\cesar\AppData\Local\Temp\build-env-bgi8iq1u\Lib\site-packages\cmake\data\share\cmake-4.3\Modules\ExternalProject\shared_internal_commands.cmake;C:\Users\cesar\AppData\Local\Temp\build-env-bgi8iq1u\Lib\site-packages\cmake\data\share\cmake-4.3\Modules\FetchContent.cmake;C:\Users\cesar\AppData\Local\Temp\build-env-bgi8iq1u\Lib\site-packages\cmake\data\share\cmake-4.3\Modules\FetchContent\CMakeLists.cmake.in;C:\Users\cesar\AppData\Local\Temp\build-env-bgi8iq1u\Lib\site-packages\cmake\data\share\cmake-4.3\Modules\FindGit.cmake;C:\Users\cesar\AppData\Local\Temp\build-env-bgi8iq1u\Lib\site-packages\cmake\data\share\cmake-4.3\Modules\FindPackageHandleStandardArgs.cmake;C:\Users\cesar\AppData\Local\Temp\build-env-bgi8iq1u\Lib\site-packages\cmake\data\share\cmake-4.3\Modules\FindPackageMessage.cmake;C:\Users\cesar\AppData\Local\Temp\build-env-bgi8iq1u\Lib\site-packages\cmake\data\share\cmake-4.3\Modules\GoogleTest.cmake;C:\Users\cesar\AppData\Local\Temp\build-env-bgi8iq1u\Lib\site-packages\cmake\data\share\cmake-4.3\Modules\Internal\CMakeCLinkerInformation.cmake;C:\Users\cesar\AppData\Local\Temp\build-env-bgi8iq1u\Lib\site-packages\cmake\data\share\cmake-4.3\Modules\Internal\CMakeCXXLinkerInformation.cmake;C:\Users\cesar\AppData\Local\Temp\build-env-bgi8iq1u\Lib\site-packages\cmake\data\share\cmake-4.3\Modules\Internal\CMakeCommonLinkerInformation.cmake;C:\Users\cesar\AppData\Local\Temp\build-env-bgi8iq1u\Lib\site-packages\cmake\data\share\cmake-4.3\Modules\Linker\MSVC-C.cmake;C:\Users\cesar\AppData\Local\Temp\build-env-bgi8iq1u\Lib\site-packages\cmake\data\share\cmake-4.3\Modules\Linker\MSVC-CXX.cmake;C:\Users\cesar\AppData\Local\Temp\build-env-bgi8iq1u\Lib\site-packages\cmake\data\share\cmake-4.3\Modules\Linker\MSVC.cmake;C:\Users\cesar\AppData\Local\Temp\build-env-bgi8iq1u\Lib\site-packages\cmake\data\share\cmake-4.3\Modules\Platform\Linker\Windows-MSVC-C.cmake;C:\Users\cesar\AppData\Local\Temp\build-env-bgi8iq1u\Lib\site-packages\cmake\data\share\cmake-4.3\Modules\Platform\Linker\Windows-MSVC-CXX.cmake;C:\Users\cesar\AppData\Local\Temp\build-env-bgi8iq1u\Lib\site-packages\cmake\data\share\cmake-4.3\Modules\Platform\Linker\Windows-MSVC.cmake;C:\Users\cesar\AppData\Local\Temp\build-env-bgi8iq1u\Lib\site-packages\cmake\data\share\cmake-4.3\Modules\Platform\Windows-Initialize.cmake;C:\Users\cesar\AppData\Local\Temp\build-env-bgi8iq1u\Lib\site-packages\cmake\data\share\cmake-4.3\Modules\Platform\Windows-MSVC-C.cmake;C:\Users\cesar\AppData\Local\Temp\build-env-bgi8iq1u\Lib\site-packages\cmake\data\share\cmake-4.3\Modules\Platform\Windows-MSVC-CXX.cmake;C:\Users\cesar\AppData\Local\Temp\build-env-bgi8iq1u\Lib\site-packages\cmake\data\share\cmake-4.3\Modules\Platform\Windows-MSVC.cmake;C:\Users\cesar\AppData\Local\Temp\build-env-bgi8iq1u\Lib\site-packages\cmake\data\share\cmake-4.3\Modules\Platform\Windows.cmake;C:\Users\cesar\AppData\Local\Temp\build-env-bgi8iq1u\Lib\site-packages\cmake\data\share\cmake-4.3\Modules\Platform\WindowsPaths.cmake;C:\Users\cesar\Documents\Python\master-thesis\PyMatching-add-on\PyMatching\python_build_stim\temp.win-amd64-cpython-311\Release\pymatching._cpp_pymatching\CMakeFiles\4.3.1\CMakeCCompiler.cmake;C:\Users\cesar\Documents\Python\master-thesis\PyMatching-add-on\PyMatching\python_build_stim\temp.win-amd64-cpython-311\Release\pymatching._cpp_pymatching\CMakeFiles\4.3.1\CMakeCXXCompiler.cmake;C:\Users\cesar\Documents\Python\master-thesis\PyMatching-add-on\PyMatching\python_build_stim\temp.win-amd64-cpython-311\Release\pymatching._cpp_pymatching\CMakeFiles\4.3.1\CMakeRCCompiler.cmake;C:\Users\cesar\Documents\Python\master-thesis\PyMatching-add-on\PyMatching\python_build_stim\temp.win-amd64-cpython-311\Release\pymatching._cpp_pymatching\CMakeFiles\4.3.1\CMakeSystem.cmake;%(AdditionalInputs)</AdditionalInputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">C:\Users\cesar\Documents\Python\master-thesis\PyMatching-add-on\PyMatching\python_build_stim\temp.win-amd64-cpython-311\Release\pymatching._cpp_pymatching\CMakeFiles\generate.stamp</Outputs>
+      <LinkObjects Condition="'$(Configuration)|$(Platform)'=='Release|x64'">false</LinkObjects>
+      <Message Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">Building Custom Rule C:/Users/cesar/Documents/Python/master-thesis/PyMatching-add-on/PyMatching/CMakeLists.txt</Message>
+      <Command Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">setlocal
+C:\Users\cesar\AppData\Local\Temp\build-env-bgi8iq1u\Lib\site-packages\cmake\data\bin\cmake.exe -SC:/Users/cesar/Documents/Python/master-thesis/PyMatching-add-on/PyMatching -BC:/Users/cesar/Documents/Python/master-thesis/PyMatching-add-on/PyMatching/python_build_stim/temp.win-amd64-cpython-311/Release/pymatching._cpp_pymatching --check-stamp-file C:/Users/cesar/Documents/Python/master-thesis/PyMatching-add-on/PyMatching/python_build_stim/temp.win-amd64-cpython-311/Release/pymatching._cpp_pymatching/CMakeFiles/generate.stamp
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd</Command>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">C:\Users\cesar\AppData\Local\Temp\build-env-bgi8iq1u\Lib\site-packages\cmake\data\share\cmake-4.3\Modules\CMakeCInformation.cmake;C:\Users\cesar\AppData\Local\Temp\build-env-bgi8iq1u\Lib\site-packages\cmake\data\share\cmake-4.3\Modules\CMakeCXXInformation.cmake;C:\Users\cesar\AppData\Local\Temp\build-env-bgi8iq1u\Lib\site-packages\cmake\data\share\cmake-4.3\Modules\CMakeCommonLanguageInclude.cmake;C:\Users\cesar\AppData\Local\Temp\build-env-bgi8iq1u\Lib\site-packages\cmake\data\share\cmake-4.3\Modules\CMakeGenericSystem.cmake;C:\Users\cesar\AppData\Local\Temp\build-env-bgi8iq1u\Lib\site-packages\cmake\data\share\cmake-4.3\Modules\CMakeInitializeConfigs.cmake;C:\Users\cesar\AppData\Local\Temp\build-env-bgi8iq1u\Lib\site-packages\cmake\data\share\cmake-4.3\Modules\CMakeLanguageInformation.cmake;C:\Users\cesar\AppData\Local\Temp\build-env-bgi8iq1u\Lib\site-packages\cmake\data\share\cmake-4.3\Modules\CMakeRCInformation.cmake;C:\Users\cesar\AppData\Local\Temp\build-env-bgi8iq1u\Lib\site-packages\cmake\data\share\cmake-4.3\Modules\CMakeSystemSpecificInformation.cmake;C:\Users\cesar\AppData\Local\Temp\build-env-bgi8iq1u\Lib\site-packages\cmake\data\share\cmake-4.3\Modules\CMakeSystemSpecificInitialize.cmake;C:\Users\cesar\AppData\Local\Temp\build-env-bgi8iq1u\Lib\site-packages\cmake\data\share\cmake-4.3\Modules\Compiler\CMakeCommonCompilerMacros.cmake;C:\Users\cesar\AppData\Local\Temp\build-env-bgi8iq1u\Lib\site-packages\cmake\data\share\cmake-4.3\Modules\Compiler\MSVC-C.cmake;C:\Users\cesar\AppData\Local\Temp\build-env-bgi8iq1u\Lib\site-packages\cmake\data\share\cmake-4.3\Modules\Compiler\MSVC-CXX.cmake;C:\Users\cesar\AppData\Local\Temp\build-env-bgi8iq1u\Lib\site-packages\cmake\data\share\cmake-4.3\Modules\Compiler\MSVC.cmake;C:\Users\cesar\AppData\Local\Temp\build-env-bgi8iq1u\Lib\site-packages\cmake\data\share\cmake-4.3\Modules\ExternalProject\shared_internal_commands.cmake;C:\Users\cesar\AppData\Local\Temp\build-env-bgi8iq1u\Lib\site-packages\cmake\data\share\cmake-4.3\Modules\FetchContent.cmake;C:\Users\cesar\AppData\Local\Temp\build-env-bgi8iq1u\Lib\site-packages\cmake\data\share\cmake-4.3\Modules\FetchContent\CMakeLists.cmake.in;C:\Users\cesar\AppData\Local\Temp\build-env-bgi8iq1u\Lib\site-packages\cmake\data\share\cmake-4.3\Modules\FindGit.cmake;C:\Users\cesar\AppData\Local\Temp\build-env-bgi8iq1u\Lib\site-packages\cmake\data\share\cmake-4.3\Modules\FindPackageHandleStandardArgs.cmake;C:\Users\cesar\AppData\Local\Temp\build-env-bgi8iq1u\Lib\site-packages\cmake\data\share\cmake-4.3\Modules\FindPackageMessage.cmake;C:\Users\cesar\AppData\Local\Temp\build-env-bgi8iq1u\Lib\site-packages\cmake\data\share\cmake-4.3\Modules\GoogleTest.cmake;C:\Users\cesar\AppData\Local\Temp\build-env-bgi8iq1u\Lib\site-packages\cmake\data\share\cmake-4.3\Modules\Internal\CMakeCLinkerInformation.cmake;C:\Users\cesar\AppData\Local\Temp\build-env-bgi8iq1u\Lib\site-packages\cmake\data\share\cmake-4.3\Modules\Internal\CMakeCXXLinkerInformation.cmake;C:\Users\cesar\AppData\Local\Temp\build-env-bgi8iq1u\Lib\site-packages\cmake\data\share\cmake-4.3\Modules\Internal\CMakeCommonLinkerInformation.cmake;C:\Users\cesar\AppData\Local\Temp\build-env-bgi8iq1u\Lib\site-packages\cmake\data\share\cmake-4.3\Modules\Linker\MSVC-C.cmake;C:\Users\cesar\AppData\Local\Temp\build-env-bgi8iq1u\Lib\site-packages\cmake\data\share\cmake-4.3\Modules\Linker\MSVC-CXX.cmake;C:\Users\cesar\AppData\Local\Temp\build-env-bgi8iq1u\Lib\site-packages\cmake\data\share\cmake-4.3\Modules\Linker\MSVC.cmake;C:\Users\cesar\AppData\Local\Temp\build-env-bgi8iq1u\Lib\site-packages\cmake\data\share\cmake-4.3\Modules\Platform\Linker\Windows-MSVC-C.cmake;C:\Users\cesar\AppData\Local\Temp\build-env-bgi8iq1u\Lib\site-packages\cmake\data\share\cmake-4.3\Modules\Platform\Linker\Windows-MSVC-CXX.cmake;C:\Users\cesar\AppData\Local\Temp\build-env-bgi8iq1u\Lib\site-packages\cmake\data\share\cmake-4.3\Modules\Platform\Linker\Windows-MSVC.cmake;C:\Users\cesar\AppData\Local\Temp\build-env-bgi8iq1u\Lib\site-packages\cmake\data\share\cmake-4.3\Modules\Platform\Windows-Initialize.cmake;C:\Users\cesar\AppData\Local\Temp\build-env-bgi8iq1u\Lib\site-packages\cmake\data\share\cmake-4.3\Modules\Platform\Windows-MSVC-C.cmake;C:\Users\cesar\AppData\Local\Temp\build-env-bgi8iq1u\Lib\site-packages\cmake\data\share\cmake-4.3\Modules\Platform\Windows-MSVC-CXX.cmake;C:\Users\cesar\AppData\Local\Temp\build-env-bgi8iq1u\Lib\site-packages\cmake\data\share\cmake-4.3\Modules\Platform\Windows-MSVC.cmake;C:\Users\cesar\AppData\Local\Temp\build-env-bgi8iq1u\Lib\site-packages\cmake\data\share\cmake-4.3\Modules\Platform\Windows.cmake;C:\Users\cesar\AppData\Local\Temp\build-env-bgi8iq1u\Lib\site-packages\cmake\data\share\cmake-4.3\Modules\Platform\WindowsPaths.cmake;C:\Users\cesar\Documents\Python\master-thesis\PyMatching-add-on\PyMatching\python_build_stim\temp.win-amd64-cpython-311\Release\pymatching._cpp_pymatching\CMakeFiles\4.3.1\CMakeCCompiler.cmake;C:\Users\cesar\Documents\Python\master-thesis\PyMatching-add-on\PyMatching\python_build_stim\temp.win-amd64-cpython-311\Release\pymatching._cpp_pymatching\CMakeFiles\4.3.1\CMakeCXXCompiler.cmake;C:\Users\cesar\Documents\Python\master-thesis\PyMatching-add-on\PyMatching\python_build_stim\temp.win-amd64-cpython-311\Release\pymatching._cpp_pymatching\CMakeFiles\4.3.1\CMakeRCCompiler.cmake;C:\Users\cesar\Documents\Python\master-thesis\PyMatching-add-on\PyMatching\python_build_stim\temp.win-amd64-cpython-311\Release\pymatching._cpp_pymatching\CMakeFiles\4.3.1\CMakeSystem.cmake;%(AdditionalInputs)</AdditionalInputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">C:\Users\cesar\Documents\Python\master-thesis\PyMatching-add-on\PyMatching\python_build_stim\temp.win-amd64-cpython-311\Release\pymatching._cpp_pymatching\CMakeFiles\generate.stamp</Outputs>
+      <LinkObjects Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">false</LinkObjects>
+      <Message Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">Building Custom Rule C:/Users/cesar/Documents/Python/master-thesis/PyMatching-add-on/PyMatching/CMakeLists.txt</Message>
+      <Command Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">setlocal
+C:\Users\cesar\AppData\Local\Temp\build-env-bgi8iq1u\Lib\site-packages\cmake\data\bin\cmake.exe -SC:/Users/cesar/Documents/Python/master-thesis/PyMatching-add-on/PyMatching -BC:/Users/cesar/Documents/Python/master-thesis/PyMatching-add-on/PyMatching/python_build_stim/temp.win-amd64-cpython-311/Release/pymatching._cpp_pymatching --check-stamp-file C:/Users/cesar/Documents/Python/master-thesis/PyMatching-add-on/PyMatching/python_build_stim/temp.win-amd64-cpython-311/Release/pymatching._cpp_pymatching/CMakeFiles/generate.stamp
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd</Command>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">C:\Users\cesar\AppData\Local\Temp\build-env-bgi8iq1u\Lib\site-packages\cmake\data\share\cmake-4.3\Modules\CMakeCInformation.cmake;C:\Users\cesar\AppData\Local\Temp\build-env-bgi8iq1u\Lib\site-packages\cmake\data\share\cmake-4.3\Modules\CMakeCXXInformation.cmake;C:\Users\cesar\AppData\Local\Temp\build-env-bgi8iq1u\Lib\site-packages\cmake\data\share\cmake-4.3\Modules\CMakeCommonLanguageInclude.cmake;C:\Users\cesar\AppData\Local\Temp\build-env-bgi8iq1u\Lib\site-packages\cmake\data\share\cmake-4.3\Modules\CMakeGenericSystem.cmake;C:\Users\cesar\AppData\Local\Temp\build-env-bgi8iq1u\Lib\site-packages\cmake\data\share\cmake-4.3\Modules\CMakeInitializeConfigs.cmake;C:\Users\cesar\AppData\Local\Temp\build-env-bgi8iq1u\Lib\site-packages\cmake\data\share\cmake-4.3\Modules\CMakeLanguageInformation.cmake;C:\Users\cesar\AppData\Local\Temp\build-env-bgi8iq1u\Lib\site-packages\cmake\data\share\cmake-4.3\Modules\CMakeRCInformation.cmake;C:\Users\cesar\AppData\Local\Temp\build-env-bgi8iq1u\Lib\site-packages\cmake\data\share\cmake-4.3\Modules\CMakeSystemSpecificInformation.cmake;C:\Users\cesar\AppData\Local\Temp\build-env-bgi8iq1u\Lib\site-packages\cmake\data\share\cmake-4.3\Modules\CMakeSystemSpecificInitialize.cmake;C:\Users\cesar\AppData\Local\Temp\build-env-bgi8iq1u\Lib\site-packages\cmake\data\share\cmake-4.3\Modules\Compiler\CMakeCommonCompilerMacros.cmake;C:\Users\cesar\AppData\Local\Temp\build-env-bgi8iq1u\Lib\site-packages\cmake\data\share\cmake-4.3\Modules\Compiler\MSVC-C.cmake;C:\Users\cesar\AppData\Local\Temp\build-env-bgi8iq1u\Lib\site-packages\cmake\data\share\cmake-4.3\Modules\Compiler\MSVC-CXX.cmake;C:\Users\cesar\AppData\Local\Temp\build-env-bgi8iq1u\Lib\site-packages\cmake\data\share\cmake-4.3\Modules\Compiler\MSVC.cmake;C:\Users\cesar\AppData\Local\Temp\build-env-bgi8iq1u\Lib\site-packages\cmake\data\share\cmake-4.3\Modules\ExternalProject\shared_internal_commands.cmake;C:\Users\cesar\AppData\Local\Temp\build-env-bgi8iq1u\Lib\site-packages\cmake\data\share\cmake-4.3\Modules\FetchContent.cmake;C:\Users\cesar\AppData\Local\Temp\build-env-bgi8iq1u\Lib\site-packages\cmake\data\share\cmake-4.3\Modules\FetchContent\CMakeLists.cmake.in;C:\Users\cesar\AppData\Local\Temp\build-env-bgi8iq1u\Lib\site-packages\cmake\data\share\cmake-4.3\Modules\FindGit.cmake;C:\Users\cesar\AppData\Local\Temp\build-env-bgi8iq1u\Lib\site-packages\cmake\data\share\cmake-4.3\Modules\FindPackageHandleStandardArgs.cmake;C:\Users\cesar\AppData\Local\Temp\build-env-bgi8iq1u\Lib\site-packages\cmake\data\share\cmake-4.3\Modules\FindPackageMessage.cmake;C:\Users\cesar\AppData\Local\Temp\build-env-bgi8iq1u\Lib\site-packages\cmake\data\share\cmake-4.3\Modules\GoogleTest.cmake;C:\Users\cesar\AppData\Local\Temp\build-env-bgi8iq1u\Lib\site-packages\cmake\data\share\cmake-4.3\Modules\Internal\CMakeCLinkerInformation.cmake;C:\Users\cesar\AppData\Local\Temp\build-env-bgi8iq1u\Lib\site-packages\cmake\data\share\cmake-4.3\Modules\Internal\CMakeCXXLinkerInformation.cmake;C:\Users\cesar\AppData\Local\Temp\build-env-bgi8iq1u\Lib\site-packages\cmake\data\share\cmake-4.3\Modules\Internal\CMakeCommonLinkerInformation.cmake;C:\Users\cesar\AppData\Local\Temp\build-env-bgi8iq1u\Lib\site-packages\cmake\data\share\cmake-4.3\Modules\Linker\MSVC-C.cmake;C:\Users\cesar\AppData\Local\Temp\build-env-bgi8iq1u\Lib\site-packages\cmake\data\share\cmake-4.3\Modules\Linker\MSVC-CXX.cmake;C:\Users\cesar\AppData\Local\Temp\build-env-bgi8iq1u\Lib\site-packages\cmake\data\share\cmake-4.3\Modules\Linker\MSVC.cmake;C:\Users\cesar\AppData\Local\Temp\build-env-bgi8iq1u\Lib\site-packages\cmake\data\share\cmake-4.3\Modules\Platform\Linker\Windows-MSVC-C.cmake;C:\Users\cesar\AppData\Local\Temp\build-env-bgi8iq1u\Lib\site-packages\cmake\data\share\cmake-4.3\Modules\Platform\Linker\Windows-MSVC-CXX.cmake;C:\Users\cesar\AppData\Local\Temp\build-env-bgi8iq1u\Lib\site-packages\cmake\data\share\cmake-4.3\Modules\Platform\Linker\Windows-MSVC.cmake;C:\Users\cesar\AppData\Local\Temp\build-env-bgi8iq1u\Lib\site-packages\cmake\data\share\cmake-4.3\Modules\Platform\Windows-Initialize.cmake;C:\Users\cesar\AppData\Local\Temp\build-env-bgi8iq1u\Lib\site-packages\cmake\data\share\cmake-4.3\Modules\Platform\Windows-MSVC-C.cmake;C:\Users\cesar\AppData\Local\Temp\build-env-bgi8iq1u\Lib\site-packages\cmake\data\share\cmake-4.3\Modules\Platform\Windows-MSVC-CXX.cmake;C:\Users\cesar\AppData\Local\Temp\build-env-bgi8iq1u\Lib\site-packages\cmake\data\share\cmake-4.3\Modules\Platform\Windows-MSVC.cmake;C:\Users\cesar\AppData\Local\Temp\build-env-bgi8iq1u\Lib\site-packages\cmake\data\share\cmake-4.3\Modules\Platform\Windows.cmake;C:\Users\cesar\AppData\Local\Temp\build-env-bgi8iq1u\Lib\site-packages\cmake\data\share\cmake-4.3\Modules\Platform\WindowsPaths.cmake;C:\Users\cesar\Documents\Python\master-thesis\PyMatching-add-on\PyMatching\python_build_stim\temp.win-amd64-cpython-311\Release\pymatching._cpp_pymatching\CMakeFiles\4.3.1\CMakeCCompiler.cmake;C:\Users\cesar\Documents\Python\master-thesis\PyMatching-add-on\PyMatching\python_build_stim\temp.win-amd64-cpython-311\Release\pymatching._cpp_pymatching\CMakeFiles\4.3.1\CMakeCXXCompiler.cmake;C:\Users\cesar\Documents\Python\master-thesis\PyMatching-add-on\PyMatching\python_build_stim\temp.win-amd64-cpython-311\Release\pymatching._cpp_pymatching\CMakeFiles\4.3.1\CMakeRCCompiler.cmake;C:\Users\cesar\Documents\Python\master-thesis\PyMatching-add-on\PyMatching\python_build_stim\temp.win-amd64-cpython-311\Release\pymatching._cpp_pymatching\CMakeFiles\4.3.1\CMakeSystem.cmake;%(AdditionalInputs)</AdditionalInputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">C:\Users\cesar\Documents\Python\master-thesis\PyMatching-add-on\PyMatching\python_build_stim\temp.win-amd64-cpython-311\Release\pymatching._cpp_pymatching\CMakeFiles\generate.stamp</Outputs>
+      <LinkObjects Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">false</LinkObjects>
+    </CustomBuild>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="C:\Users\cesar\Documents\Python\master-thesis\PyMatching-add-on\PyMatching\src\pymatching\sparse_blossom\driver\namespaced_main.cc" />
+    <ClCompile Include="C:\Users\cesar\Documents\Python\master-thesis\PyMatching-add-on\PyMatching\src\pymatching\sparse_blossom\driver\mwpm_decoding.cc" />
+    <ClCompile Include="C:\Users\cesar\Documents\Python\master-thesis\PyMatching-add-on\PyMatching\src\pymatching\sparse_blossom\flooder\graph.cc" />
+    <ClCompile Include="C:\Users\cesar\Documents\Python\master-thesis\PyMatching-add-on\PyMatching\src\pymatching\sparse_blossom\flooder\detector_node.cc" />
+    <ClCompile Include="C:\Users\cesar\Documents\Python\master-thesis\PyMatching-add-on\PyMatching\src\pymatching\sparse_blossom\flooder_matcher_interop\compressed_edge.cc" />
+    <ClCompile Include="C:\Users\cesar\Documents\Python\master-thesis\PyMatching-add-on\PyMatching\src\pymatching\sparse_blossom\flooder\graph_fill_region.cc" />
+    <ClCompile Include="C:\Users\cesar\Documents\Python\master-thesis\PyMatching-add-on\PyMatching\src\pymatching\sparse_blossom\flooder\match.cc" />
+    <ClCompile Include="C:\Users\cesar\Documents\Python\master-thesis\PyMatching-add-on\PyMatching\src\pymatching\sparse_blossom\flooder\graph_flooder.cc" />
+    <ClCompile Include="C:\Users\cesar\Documents\Python\master-thesis\PyMatching-add-on\PyMatching\src\pymatching\sparse_blossom\matcher\alternating_tree.cc" />
+    <ClCompile Include="C:\Users\cesar\Documents\Python\master-thesis\PyMatching-add-on\PyMatching\src\pymatching\sparse_blossom\matcher\mwpm.cc" />
+    <ClCompile Include="C:\Users\cesar\Documents\Python\master-thesis\PyMatching-add-on\PyMatching\src\pymatching\sparse_blossom\flooder_matcher_interop\region_edge.cc" />
+    <ClCompile Include="C:\Users\cesar\Documents\Python\master-thesis\PyMatching-add-on\PyMatching\src\pymatching\sparse_blossom\flooder_matcher_interop\mwpm_event.cc" />
+    <ClCompile Include="C:\Users\cesar\Documents\Python\master-thesis\PyMatching-add-on\PyMatching\src\pymatching\sparse_blossom\tracker\flood_check_event.cc" />
+    <ClCompile Include="C:\Users\cesar\Documents\Python\master-thesis\PyMatching-add-on\PyMatching\src\pymatching\sparse_blossom\diagram\animation_main.cc" />
+    <ClCompile Include="C:\Users\cesar\Documents\Python\master-thesis\PyMatching-add-on\PyMatching\src\pymatching\sparse_blossom\diagram\mwpm_diagram.cc" />
+    <ClCompile Include="C:\Users\cesar\Documents\Python\master-thesis\PyMatching-add-on\PyMatching\src\pymatching\sparse_blossom\search\search_graph.cc" />
+    <ClCompile Include="C:\Users\cesar\Documents\Python\master-thesis\PyMatching-add-on\PyMatching\src\pymatching\sparse_blossom\search\search_detector_node.cc" />
+    <ClCompile Include="C:\Users\cesar\Documents\Python\master-thesis\PyMatching-add-on\PyMatching\src\pymatching\sparse_blossom\search\search_flooder.cc" />
+    <ClCompile Include="C:\Users\cesar\Documents\Python\master-thesis\PyMatching-add-on\PyMatching\src\pymatching\sparse_blossom\driver\user_graph.cc" />
+    <ClCompile Include="C:\Users\cesar\Documents\Python\master-thesis\PyMatching-add-on\PyMatching\src\pymatching\rand\rand_gen.cc" />
+    <ClCompile Include="C:\Users\cesar\Documents\Python\master-thesis\PyMatching-add-on\PyMatching\src\pymatching\sparse_blossom\driver\namespaced_main.test.cc" />
+    <ClCompile Include="C:\Users\cesar\Documents\Python\master-thesis\PyMatching-add-on\PyMatching\src\pymatching\sparse_blossom\driver\mwpm_decoding.test.cc" />
+    <ClCompile Include="C:\Users\cesar\Documents\Python\master-thesis\PyMatching-add-on\PyMatching\src\pymatching\sparse_blossom\flooder_matcher_interop\varying.test.cc" />
+    <ClCompile Include="C:\Users\cesar\Documents\Python\master-thesis\PyMatching-add-on\PyMatching\src\pymatching\sparse_blossom\flooder\graph.test.cc" />
+    <ClCompile Include="C:\Users\cesar\Documents\Python\master-thesis\PyMatching-add-on\PyMatching\src\pymatching\sparse_blossom\flooder\detector_node.test.cc" />
+    <ClCompile Include="C:\Users\cesar\Documents\Python\master-thesis\PyMatching-add-on\PyMatching\src\pymatching\sparse_blossom\flooder_matcher_interop\compressed_edge.test.cc" />
+    <ClCompile Include="C:\Users\cesar\Documents\Python\master-thesis\PyMatching-add-on\PyMatching\src\pymatching\sparse_blossom\flooder\graph_fill_region.test.cc" />
+    <ClCompile Include="C:\Users\cesar\Documents\Python\master-thesis\PyMatching-add-on\PyMatching\src\pymatching\sparse_blossom\flooder\match.test.cc" />
+    <ClCompile Include="C:\Users\cesar\Documents\Python\master-thesis\PyMatching-add-on\PyMatching\src\pymatching\sparse_blossom\flooder\graph_flooder.test.cc" />
+    <ClCompile Include="C:\Users\cesar\Documents\Python\master-thesis\PyMatching-add-on\PyMatching\src\pymatching\sparse_blossom\matcher\alternating_tree.test.cc" />
+    <ClCompile Include="C:\Users\cesar\Documents\Python\master-thesis\PyMatching-add-on\PyMatching\src\pymatching\sparse_blossom\matcher\mwpm.test.cc" />
+    <ClCompile Include="C:\Users\cesar\Documents\Python\master-thesis\PyMatching-add-on\PyMatching\src\pymatching\sparse_blossom\tracker\flood_check_event.test.cc" />
+    <ClCompile Include="C:\Users\cesar\Documents\Python\master-thesis\PyMatching-add-on\PyMatching\src\pymatching\sparse_blossom\tracker\radix_heap_queue.test.cc" />
+    <ClCompile Include="C:\Users\cesar\Documents\Python\master-thesis\PyMatching-add-on\PyMatching\src\pymatching\sparse_blossom\flooder_matcher_interop\mwpm_event.test.cc" />
+    <ClCompile Include="C:\Users\cesar\Documents\Python\master-thesis\PyMatching-add-on\PyMatching\src\pymatching\sparse_blossom\tracker\queued_event_tracker.test.cc" />
+    <ClCompile Include="C:\Users\cesar\Documents\Python\master-thesis\PyMatching-add-on\PyMatching\src\pymatching\sparse_blossom\tracker\cyclic.test.cc" />
+    <ClCompile Include="C:\Users\cesar\Documents\Python\master-thesis\PyMatching-add-on\PyMatching\src\pymatching\sparse_blossom\diagram\mwpm_diagram.test.cc" />
+    <ClCompile Include="C:\Users\cesar\Documents\Python\master-thesis\PyMatching-add-on\PyMatching\src\pymatching\sparse_blossom\search\search_graph.test.cc" />
+    <ClCompile Include="C:\Users\cesar\Documents\Python\master-thesis\PyMatching-add-on\PyMatching\src\pymatching\sparse_blossom\search\search_flooder.test.cc" />
+    <ClCompile Include="C:\Users\cesar\Documents\Python\master-thesis\PyMatching-add-on\PyMatching\src\pymatching\sparse_blossom\driver\user_graph.test.cc" />
+  </ItemGroup>
+  <ItemGroup />
+  <ItemGroup>
+    <ProjectReference Include="C:\Users\cesar\Documents\Python\master-thesis\PyMatching-add-on\PyMatching\python_build_stim\temp.win-amd64-cpython-311\Release\pymatching._cpp_pymatching\ZERO_CHECK.vcxproj">
+      <Project>{8E1A676F-567D-3A98-A505-92196E9E05D8}</Project>
+      <Name>ZERO_CHECK</Name>
+      <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\cesar\Documents\Python\master-thesis\PyMatching-add-on\PyMatching\python_build_stim\temp.win-amd64-cpython-311\Release\pymatching._cpp_pymatching\_deps\googletest-build\googlemock\gmock_main.vcxproj">
+      <Project>{C4CEE841-39AF-3EB7-ABAA-8BEE37DF1D2A}</Project>
+      <Name>gmock_main</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\cesar\Documents\Python\master-thesis\PyMatching-add-on\PyMatching\python_build_stim\temp.win-amd64-cpython-311\Release\pymatching._cpp_pymatching\_deps\googletest-build\googletest\gtest.vcxproj">
+      <Project>{65137D95-E051-314F-8B9E-BCC24BB398C0}</Project>
+      <Name>gtest</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\cesar\Documents\Python\master-thesis\PyMatching-add-on\PyMatching\python_build_stim\temp.win-amd64-cpython-311\Release\pymatching._cpp_pymatching\_deps\googletest-build\googletest\gtest_main.vcxproj">
+      <Project>{E9BEBA21-085C-3706-9C6B-AFEA2BDDBCA1}</Project>
+      <Name>gtest_main</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\cesar\Documents\Python\master-thesis\PyMatching-add-on\PyMatching\python_build_stim\temp.win-amd64-cpython-311\Release\pymatching._cpp_pymatching\_deps\stim-build\libstim.vcxproj">
+      <Project>{E3617568-6974-30A4-8797-9B078489F139}</Project>
+      <Name>libstim</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>

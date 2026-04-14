@@ -1,0 +1,13 @@
+{
+    "version": 1,
+    "revision": 0,
+    "rules": [
+        {
+            "primary-output": "_cpp_pymatching.dir\\Release\\search_graph.obj",
+            "outputs": [
+                "_cpp_pymatching.dir\\Release\\"
+            ],
+            "requires": []
+        }
+    ]
+}

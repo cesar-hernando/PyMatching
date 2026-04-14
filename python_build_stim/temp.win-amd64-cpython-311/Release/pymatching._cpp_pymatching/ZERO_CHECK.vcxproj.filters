@@ -1,0 +1,13 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="18.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <CustomBuild Include="C:\Users\cesar\Documents\Python\master-thesis\PyMatching-add-on\PyMatching\python_build_stim\temp.win-amd64-cpython-311\Release\pymatching._cpp_pymatching\CMakeFiles\67c4dc8545179cffafdfb89a9310eeff\generate.stamp.rule">
+      <Filter>CMake Rules</Filter>
+    </CustomBuild>
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="CMake Rules">
+      <UniqueIdentifier>{B6792DD0-C0D6-3D6A-ADCB-9191A99CB094}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+</Project>

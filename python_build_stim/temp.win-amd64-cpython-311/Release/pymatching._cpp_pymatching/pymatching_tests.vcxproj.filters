@@ -1,0 +1,133 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="18.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <ClCompile Include="C:\Users\cesar\Documents\Python\master-thesis\PyMatching-add-on\PyMatching\src\pymatching\sparse_blossom\driver\namespaced_main.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\cesar\Documents\Python\master-thesis\PyMatching-add-on\PyMatching\src\pymatching\sparse_blossom\driver\mwpm_decoding.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\cesar\Documents\Python\master-thesis\PyMatching-add-on\PyMatching\src\pymatching\sparse_blossom\flooder\graph.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\cesar\Documents\Python\master-thesis\PyMatching-add-on\PyMatching\src\pymatching\sparse_blossom\flooder\detector_node.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\cesar\Documents\Python\master-thesis\PyMatching-add-on\PyMatching\src\pymatching\sparse_blossom\flooder_matcher_interop\compressed_edge.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\cesar\Documents\Python\master-thesis\PyMatching-add-on\PyMatching\src\pymatching\sparse_blossom\flooder\graph_fill_region.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\cesar\Documents\Python\master-thesis\PyMatching-add-on\PyMatching\src\pymatching\sparse_blossom\flooder\match.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\cesar\Documents\Python\master-thesis\PyMatching-add-on\PyMatching\src\pymatching\sparse_blossom\flooder\graph_flooder.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\cesar\Documents\Python\master-thesis\PyMatching-add-on\PyMatching\src\pymatching\sparse_blossom\matcher\alternating_tree.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\cesar\Documents\Python\master-thesis\PyMatching-add-on\PyMatching\src\pymatching\sparse_blossom\matcher\mwpm.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\cesar\Documents\Python\master-thesis\PyMatching-add-on\PyMatching\src\pymatching\sparse_blossom\flooder_matcher_interop\region_edge.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\cesar\Documents\Python\master-thesis\PyMatching-add-on\PyMatching\src\pymatching\sparse_blossom\flooder_matcher_interop\mwpm_event.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\cesar\Documents\Python\master-thesis\PyMatching-add-on\PyMatching\src\pymatching\sparse_blossom\tracker\flood_check_event.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\cesar\Documents\Python\master-thesis\PyMatching-add-on\PyMatching\src\pymatching\sparse_blossom\diagram\animation_main.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\cesar\Documents\Python\master-thesis\PyMatching-add-on\PyMatching\src\pymatching\sparse_blossom\diagram\mwpm_diagram.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\cesar\Documents\Python\master-thesis\PyMatching-add-on\PyMatching\src\pymatching\sparse_blossom\search\search_graph.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\cesar\Documents\Python\master-thesis\PyMatching-add-on\PyMatching\src\pymatching\sparse_blossom\search\search_detector_node.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\cesar\Documents\Python\master-thesis\PyMatching-add-on\PyMatching\src\pymatching\sparse_blossom\search\search_flooder.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\cesar\Documents\Python\master-thesis\PyMatching-add-on\PyMatching\src\pymatching\sparse_blossom\driver\user_graph.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\cesar\Documents\Python\master-thesis\PyMatching-add-on\PyMatching\src\pymatching\rand\rand_gen.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\cesar\Documents\Python\master-thesis\PyMatching-add-on\PyMatching\src\pymatching\sparse_blossom\driver\namespaced_main.test.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\cesar\Documents\Python\master-thesis\PyMatching-add-on\PyMatching\src\pymatching\sparse_blossom\driver\mwpm_decoding.test.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\cesar\Documents\Python\master-thesis\PyMatching-add-on\PyMatching\src\pymatching\sparse_blossom\flooder_matcher_interop\varying.test.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\cesar\Documents\Python\master-thesis\PyMatching-add-on\PyMatching\src\pymatching\sparse_blossom\flooder\graph.test.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\cesar\Documents\Python\master-thesis\PyMatching-add-on\PyMatching\src\pymatching\sparse_blossom\flooder\detector_node.test.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\cesar\Documents\Python\master-thesis\PyMatching-add-on\PyMatching\src\pymatching\sparse_blossom\flooder_matcher_interop\compressed_edge.test.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\cesar\Documents\Python\master-thesis\PyMatching-add-on\PyMatching\src\pymatching\sparse_blossom\flooder\graph_fill_region.test.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\cesar\Documents\Python\master-thesis\PyMatching-add-on\PyMatching\src\pymatching\sparse_blossom\flooder\match.test.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\cesar\Documents\Python\master-thesis\PyMatching-add-on\PyMatching\src\pymatching\sparse_blossom\flooder\graph_flooder.test.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\cesar\Documents\Python\master-thesis\PyMatching-add-on\PyMatching\src\pymatching\sparse_blossom\matcher\alternating_tree.test.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\cesar\Documents\Python\master-thesis\PyMatching-add-on\PyMatching\src\pymatching\sparse_blossom\matcher\mwpm.test.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\cesar\Documents\Python\master-thesis\PyMatching-add-on\PyMatching\src\pymatching\sparse_blossom\tracker\flood_check_event.test.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\cesar\Documents\Python\master-thesis\PyMatching-add-on\PyMatching\src\pymatching\sparse_blossom\tracker\radix_heap_queue.test.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\cesar\Documents\Python\master-thesis\PyMatching-add-on\PyMatching\src\pymatching\sparse_blossom\flooder_matcher_interop\mwpm_event.test.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\cesar\Documents\Python\master-thesis\PyMatching-add-on\PyMatching\src\pymatching\sparse_blossom\tracker\queued_event_tracker.test.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\cesar\Documents\Python\master-thesis\PyMatching-add-on\PyMatching\src\pymatching\sparse_blossom\tracker\cyclic.test.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\cesar\Documents\Python\master-thesis\PyMatching-add-on\PyMatching\src\pymatching\sparse_blossom\diagram\mwpm_diagram.test.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\cesar\Documents\Python\master-thesis\PyMatching-add-on\PyMatching\src\pymatching\sparse_blossom\search\search_graph.test.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\cesar\Documents\Python\master-thesis\PyMatching-add-on\PyMatching\src\pymatching\sparse_blossom\search\search_flooder.test.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\cesar\Documents\Python\master-thesis\PyMatching-add-on\PyMatching\src\pymatching\sparse_blossom\driver\user_graph.test.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <CustomBuild Include="C:\Users\cesar\Documents\Python\master-thesis\PyMatching-add-on\PyMatching\CMakeLists.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{43D0C649-3E22-3D5E-9A8D-AAD1D70C4A75}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+</Project>

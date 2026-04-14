@@ -1,0 +1,14 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project>
+  <ProjectOutputs>
+    <ProjectOutput>
+      <FullPath>C:\Users\cesar\Documents\Python\master-thesis\PyMatching-add-on\PyMatching\python_build_stim\temp.win-amd64-cpython-311\Release\pymatching._cpp_pymatching\x64\Release\ZERO_CHECK</FullPath>
+    </ProjectOutput>
+    <ProjectOutput>
+      <FullPath>C:\Users\cesar\Documents\Python\master-thesis\PyMatching-add-on\PyMatching\python_build_stim\lib.win-amd64-cpython-311\pymatching\_cpp_pymatching.cp311-win_amd64.pyd</FullPath>
+    </ProjectOutput>
+  </ProjectOutputs>
+  <ContentFiles />
+  <SatelliteDlls />
+  <NonRecipeFileRefs />
+</Project>
