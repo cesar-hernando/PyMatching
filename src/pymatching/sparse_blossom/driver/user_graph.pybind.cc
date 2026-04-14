@@ -226,10 +226,30 @@ void pm_pybind::pybind_user_graph_methods(py::module &m, py::class_<pm::UserGrap
         "edge_reweights"_a = py::none());
     g.def(
         "decode_to_edges_array",
-        [](pm::UserGraph &self, const py::array_t<uint64_t> &detection_events, bool enable_correlations) {
+        [](pm::UserGraph &self,
+           const py::array_t<uint64_t> &detection_events,
+           bool enable_correlations,
+           py::object edge_reweights) {
             auto &mwpm = self.get_mwpm_with_search_graph();
             std::vector<uint64_t> detection_events_vec(
                 detection_events.data(), detection_events.data() + detection_events.size());
+
+            if (!edge_reweights.is_none()) {
+                auto rw_array = edge_reweights.cast<py::array_t<double>>();
+                if (rw_array.ndim() != 2 || rw_array.shape(1) != 3)
+                    throw std::invalid_argument("edge_reweights must be (N, 3)");
+                auto r = rw_array.unchecked<2>();
+                auto& reweights = mwpm.flooder.graph.reweight_buffer;
+                reweights.clear();
+                reweights.reserve(r.shape(0));
+                for (py::ssize_t i = 0; i < r.shape(0); i++) {
+                    reweights.emplace_back((size_t)r(i, 0), (int64_t)r(i, 1), r(i, 2));
+                }
+                mwpm.flooder.graph.apply_temp_reweights(reweights);
+                if (mwpm.search_flooder_available())
+                    mwpm.search_flooder.graph.apply_temp_reweights(reweights, mwpm.flooder.graph.normalising_constant);
+            }
+
             auto edges = new std::vector<int64_t>();
             edges->reserve(detection_events_vec.size() / 2);
             if (enable_correlations) {
@@ -237,13 +257,21 @@ void pm_pybind::pybind_user_graph_methods(py::module &m, py::class_<pm::UserGrap
             } else {
                 pm::decode_detection_events_to_edges(mwpm, detection_events_vec, *edges);
             }
+
+            if (!edge_reweights.is_none()) {
+                mwpm.flooder.graph.undo_reweights();
+                if (mwpm.search_flooder_available())
+                    mwpm.search_flooder.graph.undo_reweights();
+            }
+
             auto num_edges = edges->size() / 2;
             auto edges_arr = pm_pybind::vec_to_array<int64_t>(edges);
             edges_arr.resize({(py::ssize_t)num_edges, (py::ssize_t)2});
             return edges_arr;
         },
         "detection_events"_a,
-        "enable_correlations"_a = false);
+        "enable_correlations"_a = false,
+        "edge_reweights"_a = py::none());
     g.def(
         "decode_to_matched_detection_events_array",
         [](pm::UserGraph &self, const py::array_t<uint64_t> &detection_events) {

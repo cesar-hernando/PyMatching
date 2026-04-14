@@ -3,6 +3,10 @@ import pymatching
 import pytest
 
 
+def _normalized_undirected_edges(edges: np.ndarray) -> set[tuple[int, int]]:
+    return {tuple(sorted((int(u), int(v)))) for u, v in edges.tolist()}
+
+
 def test_decode_reweight():
     # Simple graph: 0 -- 1 -- 2
     # Edge (0, 1) weight 2
@@ -171,3 +175,44 @@ def test_reweight_negative_to_negative():
     # Verify restoration
     res, weight = m.decode(np.array([1, 0, 1]), return_weight=True)
     assert weight == 2.0
+
+
+def test_decode_to_edges_array_reweight_changes_solution_edges():
+    m = pymatching.Matching()
+    m.add_edge(0, 1, weight=1.0)
+    m.add_edge(1, 2, weight=1.0)
+    m.add_edge(0, 2, weight=3.0)
+
+    syndrome = np.array([0, 1, 0], dtype=np.uint8)
+    syndrome = np.array([1, 0, 1], dtype=np.uint8)
+
+    edges = m.decode_to_edges_array(syndrome)
+    assert _normalized_undirected_edges(edges) == {(0, 1), (1, 2)}
+
+    reweights = np.array([[0, 2, 0.5]])
+    edges_reweighted = m.decode_to_edges_array(syndrome, edge_reweights=reweights)
+    assert _normalized_undirected_edges(edges_reweighted) == {(0, 2)}
+
+
+def test_decode_to_edges_array_reweight_restores_weights():
+    m = pymatching.Matching()
+    m.add_edge(0, 1, weight=1.0)
+    m.add_edge(1, 2, weight=1.0)
+    m.add_edge(0, 2, weight=3.0)
+
+    syndrome = np.array([1, 0, 1], dtype=np.uint8)
+    reweights = np.array([[0, 2, 0.5]])
+
+    _ = m.decode_to_edges_array(syndrome, edge_reweights=reweights)
+    edges_after = m.decode_to_edges_array(syndrome)
+    assert _normalized_undirected_edges(edges_after) == {(0, 1), (1, 2)}
+
+
+def test_decode_to_edges_array_reweight_sign_flip_raises_error():
+    m = pymatching.Matching()
+    m.add_edge(0, 1, weight=2)
+    m.add_edge(1, 2, weight=1)
+
+    syndrome = np.array([1, 0, 1], dtype=np.uint8)
+    with pytest.raises(ValueError, match="sign flip not allowed"):
+        m.decode_to_edges_array(syndrome, edge_reweights=np.array([[0, 1, -2.0]]))

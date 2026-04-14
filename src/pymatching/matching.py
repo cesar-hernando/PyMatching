@@ -516,6 +516,7 @@ class Matching:
         syndrome: Union[np.ndarray, List[bool], List[int]],
         *,
         enable_correlations: bool = False,
+        edge_reweights: Optional[np.ndarray] = None,
     ) -> np.ndarray:
         """
         Decode the syndrome `syndrome` using minimum-weight perfect matching, returning the edges in the
@@ -542,6 +543,14 @@ class Matching:
             `stim.DetectorErrorModel` with `enable_correlations=True`. For a description
             of the correlated matching algorithm, see https://arxiv.org/abs/1310.0863.
             By default, False
+        edge_reweights: np.ndarray, optional
+            A 2D numpy array of edge reweights, of shape (N, 3). Each row of `edge_reweights`
+            specifies an edge to be temporarily reweighted for the duration of the decoding
+            of the shot `syndrome`. The first two columns of `edge_reweights` specify the node
+            endpoints of the edge to reweight, and the third column is the new edge weight.
+            For example, `edge_reweights[i, :] == np.array([4, 5, 2.4], dtype=np.float64)` means
+            "give edge (4, 5) a new weight of 2.4". For a boundary edge, the second node index is -1.
+            By default None.
 
         Returns
         -------
@@ -573,7 +582,9 @@ class Matching:
         """
         detection_events = self._syndrome_array_to_detection_events(syndrome)
         return self._matching_graph.decode_to_edges_array(
-            detection_events, enable_correlations=enable_correlations
+            detection_events,
+            enable_correlations=enable_correlations,
+            edge_reweights=edge_reweights,
         )
 
     def decode_to_matched_dets_array(
