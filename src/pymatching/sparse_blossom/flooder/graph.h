@@ -88,8 +88,8 @@ class MatchingGraph {
 
     void undo_reweights();
     void reweight(std::vector<ImpliedWeight>& implied_weights);
-    void reweight_for_edge(const int64_t& u, const int64_t& v);
-    void reweight_for_edges(const std::vector<int64_t>& edges);
+    void reweight_for_edge(const int64_t& u, const int64_t& v, double alpha = 1.0);
+    void reweight_for_edges(const std::vector<int64_t>& edges, double alpha = 1.0);
     void apply_temp_reweights(const std::vector<std::tuple<size_t, int64_t, double>>& reweights);
 };
 

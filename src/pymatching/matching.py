@@ -252,6 +252,7 @@ class Matching:
         return_weight: bool = False,
         enable_correlations: bool = False,
         edge_reweights: Optional[np.ndarray] = None,
+        alpha: float = 1.0,
         **kwargs,
     ) -> Union[np.ndarray, Tuple[np.ndarray, int]]:
         r"""
@@ -295,6 +296,15 @@ class Matching:
             "give edge (4, 5) a new weight of 2.4".
             For a boundary edge, the second node index is -1.
             By default None.
+        alpha : float, optional
+            Pearl's virtual (soft) evidence trust parameter for the correlated-matching reweight,
+            used only when `enable_correlations==True` (otherwise accepted but ignored). When a
+            selected edge `nu` triggers reweighting of a correlated edge `mu`, the implied
+            probability used to form `mu`'s new weight is the soft-evidence mixture
+            ``implied_p = alpha * P(mu | nu) + (1 - alpha) * P(mu | not nu)``.
+            `alpha=1.0` (the default) recovers hard Bayesian conditioning `P(mu | nu)`, i.e. the
+            original behaviour. `alpha<1.0` softens the reweight; `alpha>1.0` is a legal,
+            more-aggressive extrapolation. The value is not clamped. By default 1.0.
 
         Returns
         -------
@@ -382,6 +392,7 @@ class Matching:
             detection_events,
             enable_correlations=enable_correlations,
             edge_reweights=edge_reweights,
+            alpha=alpha,
         )
         if return_weight:
             return correction, weight
@@ -397,6 +408,7 @@ class Matching:
         bit_packed_predictions: bool = False,
         enable_correlations: bool = False,
         edge_reweights: Optional[List[Optional[np.ndarray]]] = None,
+        alpha: float = 1.0,
     ) -> Union[np.ndarray, Tuple[np.ndarray, np.ndarray]]:
         """
         Decode from a 2D `shots` array containing a batch of syndrome measurements. A faster
@@ -447,6 +459,11 @@ class Matching:
             where each row specifies an edge to reweight (see `Matching.decode` documentation for more details).
             The length of `edge_reweights` must equal the number of shots (the first dimension of `shots`).
             By default None.
+        alpha : float, optional
+            Pearl's virtual (soft) evidence trust parameter for the correlated-matching reweight,
+            used only when `enable_correlations==True` (otherwise accepted but ignored). See
+            `Matching.decode` for the full definition. `alpha=1.0` (the default) recovers the
+            original hard Bayesian conditioning behaviour. The value is not clamped. By default 1.0.
 
         Returns
         -------
@@ -505,6 +522,7 @@ class Matching:
             bit_packed_shots=bit_packed_shots,
             enable_correlations=enable_correlations,
             edge_reweights=edge_reweights,
+            alpha=alpha,
         )
         if return_weights:
             return predictions, weights
@@ -517,6 +535,7 @@ class Matching:
         *,
         enable_correlations: bool = False,
         edge_reweights: Optional[np.ndarray] = None,
+        alpha: float = 1.0,
     ) -> np.ndarray:
         """
         Decode the syndrome `syndrome` using minimum-weight perfect matching, returning the edges in the
@@ -551,6 +570,11 @@ class Matching:
             For example, `edge_reweights[i, :] == np.array([4, 5, 2.4], dtype=np.float64)` means
             "give edge (4, 5) a new weight of 2.4". For a boundary edge, the second node index is -1.
             By default None.
+        alpha : float, optional
+            Pearl's virtual (soft) evidence trust parameter for the correlated-matching reweight,
+            used only when `enable_correlations==True` (otherwise accepted but ignored). See
+            `Matching.decode` for the full definition. `alpha=1.0` (the default) recovers the
+            original hard Bayesian conditioning behaviour. The value is not clamped. By default 1.0.
 
         Returns
         -------
@@ -585,6 +609,7 @@ class Matching:
             detection_events,
             enable_correlations=enable_correlations,
             edge_reweights=edge_reweights,
+            alpha=alpha,
         )
 
     def decode_to_matched_dets_array(

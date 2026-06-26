@@ -22,7 +22,17 @@ namespace pm {
 struct ImpliedWeightUnconverted {
     size_t node1;
     size_t node2;
+    // The implied weight of the affected edge under hard Bayesian conditioning (alpha == 1.0),
+    // i.e. log((1 - p) / p) with p = min(0.5, P(mu | nu)). This is the value used by the
+    // (unchanged) fast path when alpha == 1.0.
     double implied_weight;
+    // The two endpoints of Pearl's soft-evidence (virtual evidence) mixture, used when alpha != 1.0
+    // to recompute the implied weight at decode time as
+    //   implied_p = alpha * implied_p_pos + (1 - alpha) * implied_p_neg.
+    // implied_p_pos = P(mu | nu)      (unclamped; the same quantity the alpha == 1.0 path clamps)
+    // implied_p_neg = P(mu | not nu)  (floored at 0).
+    double implied_p_pos = 0.0;
+    double implied_p_neg = 0.0;
     bool operator==(const ImpliedWeightUnconverted& other) const {
         return (this->node1 == other.node1) && (this->node2 == other.node2) &&
                (this->implied_weight == other.implied_weight);
