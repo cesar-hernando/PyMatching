@@ -16,6 +16,8 @@
 
 #include <gtest/gtest.h>
 
+#include <cmath>
+
 #include "pymatching/sparse_blossom/flooder/graph_fill_region.test.h"
 
 TEST(Graph, AddEdge) {
@@ -136,4 +138,51 @@ TEST(Graph, ApplyTempReweights) {
     reweights.clear();
     reweights.emplace_back(0, 1, -5.0);
     ASSERT_THROW(g.apply_temp_reweights(reweights), std::invalid_argument);
+}
+
+TEST(Graph, ReweightForEdgeSoftEvidenceAlpha) {
+    // Pearl soft-evidence reweight: an implied rule on edge (0, 1) reweights the correlated
+    // edge (2, 3) using implied_p = alpha * P(mu | nu) + (1 - alpha) * P(mu | not nu).
+    // We pick a positively-correlated pair (P(mu | nu) = 0.3 > P(mu | not nu) = 0.05) and a large
+    // original weight for (2, 3) so the reweight is always applied, then check the recomputed
+    // weight matches the mixture formula and is monotonic in alpha.
+    const double pos = 0.3;   // P(mu | nu)
+    const double neg = 0.05;  // P(mu | not nu)
+    const double c = 2000.0;  // normalising constant (large => fine-grained integer conversion)
+
+    auto expected_weight = [&](double alpha) {
+        double implied_p = std::min(0.5, alpha * pos + (1.0 - alpha) * neg);
+        return std::log((1.0 - implied_p) / implied_p);
+    };
+    auto reweighted = [&](double alpha) -> double {
+        pm::MatchingGraph g(4, 64);
+        // Edge (2, 3): the affected/reweighted edge. Large weight so the reweight always applies.
+        g.add_edge(2, 3, 1000000, {}, {});
+        // Edge (0, 1): the causal edge carrying the implied rule for (2, 3).
+        // The alpha == 1.0 fast path uses `implied_weight` = log((1 - min(0.5, pos)) / min(0.5, pos)).
+        double implied_weight_alpha1 = std::log((1.0 - std::min(0.5, pos)) / std::min(0.5, pos));
+        std::vector<pm::ImpliedWeightUnconverted> rules = {{2, 3, implied_weight_alpha1, pos, neg}};
+        g.add_edge(0, 1, 2, {}, rules);
+        g.normalising_constant = c;
+        g.convert_implied_weights(c);
+
+        g.reweight_for_edge(0, 1, alpha);
+        size_t idx = g.nodes[2].index_of_neighbor(&g.nodes[3]);
+        double w = (double)g.nodes[2].neighbor_weights[idx] / c;
+        g.undo_reweights();
+        return w;
+    };
+
+    double w_alpha_1 = reweighted(1.0);
+    double w_alpha_04 = reweighted(0.4);
+    double w_alpha_0 = reweighted(0.0);
+
+    // Matches the mixture formula (within integer-conversion rounding).
+    ASSERT_NEAR(w_alpha_1, expected_weight(1.0), 0.01);
+    ASSERT_NEAR(w_alpha_04, expected_weight(0.4), 0.01);
+    ASSERT_NEAR(w_alpha_0, expected_weight(0.0), 0.01);
+
+    // Monotonic in alpha: lower alpha trusts the correlation less, giving a higher weight.
+    ASSERT_LT(w_alpha_1, w_alpha_04);
+    ASSERT_LT(w_alpha_04, w_alpha_0);
 }

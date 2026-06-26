@@ -14,6 +14,7 @@
 
 #include "search_graph.h"
 
+#include <algorithm>
 #include <cassert>
 #include <cmath>
 
@@ -27,7 +28,9 @@ pm::SearchGraph::SearchGraph(size_t num_nodes) : num_nodes(num_nodes) {
 pm::SearchGraph::SearchGraph(pm::SearchGraph&& graph) noexcept
     : nodes(std::move(graph.nodes)),
       num_nodes(graph.num_nodes),
-      negative_weight_edges(std::move(graph.negative_weight_edges)) {
+      negative_weight_edges(std::move(graph.negative_weight_edges)),
+      previous_weights(std::move(graph.previous_weights)),
+      edges_to_implied_weights_unconverted(std::move(graph.edges_to_implied_weights_unconverted)) {
 }
 
 void pm::SearchGraph::add_edge(
@@ -99,18 +102,58 @@ void pm::SearchGraph::add_boundary_edge(
         edges_to_implied_weights_unconverted[u].begin(), 1, implied_weights_for_other_edges);
 }
 
-// Reweight assuming an error has occurred on a single edge u, v. When v == -1, assumes an edge from
-// u to the boundary.
-void pm::SearchGraph::reweight_for_edge(const int64_t& u, const int64_t& v) {
-    size_t z = nodes[u].index_of_neighbor(v == -1 ? nullptr : &nodes[v]);
-    reweight(nodes[u].neighbor_implied_weights[z]);
+namespace {
+
+// Convert an implied-weight rule to its integer representation using an explicitly supplied
+// (already log-domain) edge weight. Used by the Pearl soft-evidence path (alpha != 1.0).
+pm::ImpliedWeight convert_rule_with_log_weight(
+    std::vector<pm::SearchDetectorNode>& nodes,
+    const pm::ImpliedWeightUnconverted& rule,
+    const double normalising_constant,
+    double log_weight) {
+    const size_t& i = rule.node1;
+    const size_t& j = rule.node2;
+    pm::weight_int* weight_pointer_i =
+        &nodes[i].neighbor_weights[nodes[i].index_of_neighbor(j == SIZE_MAX ? nullptr : &nodes[j])];
+    pm::weight_int* weight_pointer_j =
+        j == SIZE_MAX ? nullptr : &nodes[j].neighbor_weights[nodes[j].index_of_neighbor(&nodes[i])];
+
+    double rescaled_normalising_constant = normalising_constant / 2;
+    pm::signed_weight_int w = (pm::signed_weight_int)round(log_weight * rescaled_normalising_constant);
+    w *= 2;
+    return pm::ImpliedWeight{weight_pointer_i, weight_pointer_j, static_cast<pm::weight_int>(std::abs(w))};
 }
 
-void pm::SearchGraph::reweight_for_edges(const std::vector<int64_t>& edges) {
+}  // namespace
+
+// Reweight assuming an error has occurred on a single edge u, v. When v == -1, assumes an edge from
+// u to the boundary.
+void pm::SearchGraph::reweight_for_edge(const int64_t& u, const int64_t& v, double alpha, double normalising_constant) {
+    size_t z = nodes[u].index_of_neighbor(v == -1 ? nullptr : &nodes[v]);
+    if (alpha == 1.0) {
+        reweight(nodes[u].neighbor_implied_weights[z]);
+        return;
+    }
+    // Soft-evidence (Pearl) path: see MatchingGraph::reweight_for_edge for the formula.
+    const std::vector<pm::ImpliedWeightUnconverted>& rules = edges_to_implied_weights_unconverted[u][z];
+    std::vector<pm::ImpliedWeight> recomputed;
+    recomputed.reserve(rules.size());
+    for (const auto& rule : rules) {
+        double implied_p = alpha * rule.implied_p_pos + (1.0 - alpha) * rule.implied_p_neg;
+        if (implied_p <= 0.0)
+            continue;
+        implied_p = std::min(0.5, implied_p);
+        double log_weight = std::log((1.0 - implied_p) / implied_p);
+        recomputed.push_back(convert_rule_with_log_weight(nodes, rule, normalising_constant, log_weight));
+    }
+    reweight(recomputed);
+}
+
+void pm::SearchGraph::reweight_for_edges(const std::vector<int64_t>& edges, double alpha, double normalising_constant) {
     for (size_t i = 0; i < edges.size() >> 1; ++i) {
         int64_t u = edges[2 * i];
         int64_t v = edges[2 * i + 1];
-        reweight_for_edge(u, v);
+        reweight_for_edge(u, v, alpha, normalising_constant);
     }
 }
 

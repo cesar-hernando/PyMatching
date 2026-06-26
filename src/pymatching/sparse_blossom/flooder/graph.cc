@@ -14,6 +14,7 @@
 
 #include "pymatching/sparse_blossom/flooder/graph.h"
 
+#include <algorithm>
 #include <cassert>
 #include <cmath>
 #include <map>
@@ -194,6 +195,26 @@ ImpliedWeight convert_rule(
     return ImpliedWeight{weight_pointer_i, weight_pointer_j, static_cast<pm::weight_int>(std::abs(w))};
 }
 
+// Convert an implied-weight rule to its integer representation using an explicitly supplied
+// (already log-domain) edge weight, rather than the rule's precomputed `implied_weight`. Used by
+// the Pearl soft-evidence path, which recomputes the log weight at decode time from `alpha`.
+ImpliedWeight convert_rule_with_log_weight(
+    std::vector<DetectorNode>& nodes, const ImpliedWeightUnconverted& rule, const double normalising_constant,
+    double log_weight) {
+    const size_t& i = rule.node1;
+    const size_t& j = rule.node2;
+    weight_int* weight_pointer_i =
+        &nodes[i].neighbor_weights[nodes[i].index_of_neighbor(j == SIZE_MAX ? nullptr : &nodes[j])];
+    weight_int* weight_pointer_j =
+        j == SIZE_MAX ? nullptr : &nodes[j].neighbor_weights[nodes[j].index_of_neighbor(&nodes[i])];
+
+    double rescaled_normalising_constant = normalising_constant / 2;
+    pm::signed_weight_int w = (pm::signed_weight_int)round(log_weight * rescaled_normalising_constant);
+    w *= 2;
+
+    return ImpliedWeight{weight_pointer_i, weight_pointer_j, static_cast<pm::weight_int>(std::abs(w))};
+}
+
 }  // namespace
 
 void MatchingGraph::convert_implied_weights(double normalising_constant) {
@@ -210,13 +231,34 @@ void MatchingGraph::convert_implied_weights(double normalising_constant) {
 }
 
 // Reweight assuming an error has occurred on a single edge u, v. When v == -1, assumes an edge from
-// u to the boundary.
-void MatchingGraph::reweight_for_edge(const int64_t& u, const int64_t& v) {
+// u to the boundary. `alpha` is Pearl's soft-evidence trust parameter: alpha == 1.0 recovers hard
+// Bayesian conditioning (the original behaviour) and uses the precomputed fast path.
+void MatchingGraph::reweight_for_edge(const int64_t& u, const int64_t& v, double alpha) {
     size_t z = nodes[u].index_of_neighbor(v == -1 ? nullptr : &nodes[v]);
-    reweight(nodes[u].neighbor_implied_weights[z]);
+    if (alpha == 1.0) {
+        reweight(nodes[u].neighbor_implied_weights[z]);
+        return;
+    }
+    // Soft-evidence (Pearl) path: recompute each implied weight from the stored mixture endpoints
+    //   implied_p = alpha * P(mu | nu) + (1 - alpha) * P(mu | not nu)
+    // reusing the hard-evidence path's clamping (min of 0.5) and integer conversion.
+    const std::vector<ImpliedWeightUnconverted>& rules = edges_to_implied_weights_unconverted[u][z];
+    std::vector<ImpliedWeight> recomputed;
+    recomputed.reserve(rules.size());
+    for (const auto& rule : rules) {
+        double implied_p = alpha * rule.implied_p_pos + (1.0 - alpha) * rule.implied_p_neg;
+        // Guard against a zero/negative implied probability (infinite weight, never selected),
+        // mirroring the existing `marginal_probability == 0` guard.
+        if (implied_p <= 0.0)
+            continue;
+        implied_p = std::min(0.5, implied_p);
+        double log_weight = std::log((1.0 - implied_p) / implied_p);
+        recomputed.push_back(convert_rule_with_log_weight(nodes, rule, normalising_constant, log_weight));
+    }
+    reweight(recomputed);
 }
 
-void MatchingGraph::reweight_for_edges(const std::vector<int64_t>& edges) {
+void MatchingGraph::reweight_for_edges(const std::vector<int64_t>& edges, double alpha) {
     if (loaded_from_dem_without_correlations) {
         throw std::invalid_argument(
             "Attempting to decode with `enable_correlations=True`, however the decoder has "
@@ -227,7 +269,7 @@ void MatchingGraph::reweight_for_edges(const std::vector<int64_t>& edges) {
     for (size_t i = 0; i < edges.size() >> 1; ++i) {
         int64_t u = edges[2 * i];
         int64_t v = edges[2 * i + 1];
-        reweight_for_edge(u, v);
+        reweight_for_edge(u, v, alpha);
     }
 }
 

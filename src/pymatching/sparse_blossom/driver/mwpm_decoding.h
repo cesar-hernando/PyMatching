@@ -53,19 +53,23 @@ Mwpm detector_error_model_to_mwpm(
     bool enable_correlations = false);
 
 MatchingResult decode_detection_events_for_up_to_64_observables(
-    pm::Mwpm& mwpm, const std::vector<uint64_t>& detection_events, bool edge_correlations);
+    pm::Mwpm& mwpm, const std::vector<uint64_t>& detection_events, bool edge_correlations, double alpha = 1.0);
 
 /// Used to decode detection events for an existing Mwpm object `mwpm', and a vector of
 /// detection event indices `detection_events'. The predicted observables are XOR-ed into an
 /// existing uint8_t array with at least `mwpm.flooder.graph.num_observables' elements,
 /// the pointer to the first element of which is passed as the `obs_begin_ptr' argument.
 /// The weight of the MWPM solution is added to the `weight' argument.
+/// `alpha' is Pearl's soft-evidence trust parameter for the correlated (`edge_correlations')
+/// reweight; it is ignored when `edge_correlations' is false. `alpha == 1.0' is the default and
+/// recovers hard Bayesian conditioning unchanged.
 void decode_detection_events(
     pm::Mwpm& mwpm,
     const std::vector<uint64_t>& detection_events,
     uint8_t* obs_begin_ptr,
     pm::total_weight_int& weight,
-    bool edge_correlations);
+    bool edge_correlations,
+    double alpha = 1.0);
 
 /// Decode detection events using a Mwpm object and vector of detection event indices
 /// Returns the compressed edges in the matching: the pairs of detection events that are
@@ -80,7 +84,7 @@ void decode_detection_events_to_edges(
     pm::Mwpm& mwpm, const std::vector<uint64_t>& detection_events, std::vector<int64_t>& edges);
 
 void decode_detection_events_to_edges_with_edge_correlations(
-    pm::Mwpm& mwpm, const std::vector<uint64_t>& detection_events, std::vector<int64_t>& edges);
+    pm::Mwpm& mwpm, const std::vector<uint64_t>& detection_events, std::vector<int64_t>& edges, double alpha = 1.0);
 
 }  // namespace pm
 
