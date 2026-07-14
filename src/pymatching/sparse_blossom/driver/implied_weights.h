@@ -26,13 +26,11 @@ struct ImpliedWeightUnconverted {
     // i.e. log((1 - p) / p) with p = min(0.5, P(mu | nu)). This is the value used by the
     // (unchanged) fast path when alpha == 1.0.
     double implied_weight;
-    // The two endpoints of Pearl's soft-evidence (virtual evidence) mixture, used when alpha != 1.0
-    // to recompute the implied weight at decode time as
-    //   implied_p = alpha * implied_p_pos + (1 - alpha) * implied_p_neg.
-    // implied_p_pos = P(mu | nu)      (unclamped; the same quantity the alpha == 1.0 path clamps)
-    // implied_p_neg = P(mu | not nu)  (floored at 0).
+    // The unclamped conditional probability P(mu | nu), used when alpha != 1.0 to recompute the
+    // implied weight at decode time under the regularized reweight
+    //   implied_p = alpha * implied_p_pos
+    // (the same quantity the alpha == 1.0 path clamps at 0.5).
     double implied_p_pos = 0.0;
-    double implied_p_neg = 0.0;
     bool operator==(const ImpliedWeightUnconverted& other) const {
         return (this->node1 == other.node1) && (this->node2 == other.node2) &&
                (this->implied_weight == other.implied_weight);

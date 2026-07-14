@@ -197,7 +197,7 @@ ImpliedWeight convert_rule(
 
 // Convert an implied-weight rule to its integer representation using an explicitly supplied
 // (already log-domain) edge weight, rather than the rule's precomputed `implied_weight`. Used by
-// the Pearl soft-evidence path, which recomputes the log weight at decode time from `alpha`.
+// the regularized reweight path, which recomputes the log weight at decode time from `alpha`.
 ImpliedWeight convert_rule_with_log_weight(
     std::vector<DetectorNode>& nodes, const ImpliedWeightUnconverted& rule, const double normalising_constant,
     double log_weight) {
@@ -231,7 +231,7 @@ void MatchingGraph::convert_implied_weights(double normalising_constant) {
 }
 
 // Reweight assuming an error has occurred on a single edge u, v. When v == -1, assumes an edge from
-// u to the boundary. `alpha` is Pearl's soft-evidence trust parameter: alpha == 1.0 recovers hard
+// u to the boundary. `alpha` is the regularization (trust) parameter: alpha == 1.0 recovers hard
 // Bayesian conditioning (the original behaviour) and uses the precomputed fast path.
 void MatchingGraph::reweight_for_edge(const int64_t& u, const int64_t& v, double alpha) {
     size_t z = nodes[u].index_of_neighbor(v == -1 ? nullptr : &nodes[v]);
@@ -239,14 +239,14 @@ void MatchingGraph::reweight_for_edge(const int64_t& u, const int64_t& v, double
         reweight(nodes[u].neighbor_implied_weights[z]);
         return;
     }
-    // Soft-evidence (Pearl) path: recompute each implied weight from the stored mixture endpoints
-    //   implied_p = alpha * P(mu | nu) + (1 - alpha) * P(mu | not nu)
+    // Regularized reweight path: recompute each implied weight from the stored conditional
+    //   implied_p = alpha * P(mu | nu)
     // reusing the hard-evidence path's clamping (min of 0.5) and integer conversion.
     const std::vector<ImpliedWeightUnconverted>& rules = edges_to_implied_weights_unconverted[u][z];
     std::vector<ImpliedWeight> recomputed;
     recomputed.reserve(rules.size());
     for (const auto& rule : rules) {
-        double implied_p = alpha * rule.implied_p_pos + (1.0 - alpha) * rule.implied_p_neg;
+        double implied_p = alpha * rule.implied_p_pos;
         // Guard against a zero/negative implied probability (infinite weight, never selected),
         // mirroring the existing `marginal_probability == 0` guard.
         if (implied_p <= 0.0)

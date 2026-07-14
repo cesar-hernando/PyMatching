@@ -538,21 +538,10 @@ void pm::UserGraph::populate_implied_edge_weights(
                     double corr = affected_edge_and_probability.second;
                     double occ_nu = marginal_probability;
 
-                    // Hard Bayesian conditioning: P(mu | nu) = P(mu, nu) / P(nu).
+                    // Hard Bayesian conditioning: P(mu | nu) = P(mu, nu) / P(nu). The regularized
+                    // reweight (alpha != 1.0) recomputes the implied weight at decode time from
+                    // this quantity as implied_p = alpha * P(mu | nu).
                     double implied_p_pos = corr / occ_nu;
-
-                    // Soft-evidence (Pearl) mixture endpoint for the "not nu" branch:
-                    // P(mu | not nu) = (P(mu) - P(mu, nu)) / (1 - P(nu)), floored at 0.
-                    // This is only used at decode time when alpha != 1.0.
-                    double occ_mu = 0.0;
-                    auto mu_it = joint_probabilites.find(affected_edge);
-                    if (mu_it != joint_probabilites.end()) {
-                        auto mu_marginal_it = mu_it->second.find(affected_edge);
-                        if (mu_marginal_it != mu_it->second.end())
-                            occ_mu = mu_marginal_it->second;
-                    }
-                    double denom_neg = 1.0 - occ_nu;
-                    double implied_p_neg = denom_neg > 0.0 ? std::max(0.0, (occ_mu - corr) / denom_neg) : 0.0;
 
                     // Since edge weights are computed as std::log((1-p)/p), a probability of more than 0.5 for an
                     // error, would lead to a negatively weighted error. We do not support this (yet), and use a
@@ -560,7 +549,7 @@ void pm::UserGraph::populate_implied_edge_weights(
                     double implied_probability_for_other_edge = std::min(0.5, implied_p_pos);
                     double w = pm::to_weight_for_correlations(implied_probability_for_other_edge);
                     ImpliedWeightUnconverted implied{
-                        affected_edge.first, affected_edge.second, w, implied_p_pos, implied_p_neg};
+                        affected_edge.first, affected_edge.second, w, implied_p_pos};
                     edge.implied_weights_for_other_edges.push_back(implied);
                 }
             }

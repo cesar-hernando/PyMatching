@@ -140,18 +140,18 @@ TEST(Graph, ApplyTempReweights) {
     ASSERT_THROW(g.apply_temp_reweights(reweights), std::invalid_argument);
 }
 
-TEST(Graph, ReweightForEdgeSoftEvidenceAlpha) {
-    // Pearl soft-evidence reweight: an implied rule on edge (0, 1) reweights the correlated
-    // edge (2, 3) using implied_p = alpha * P(mu | nu) + (1 - alpha) * P(mu | not nu).
-    // We pick a positively-correlated pair (P(mu | nu) = 0.3 > P(mu | not nu) = 0.05) and a large
-    // original weight for (2, 3) so the reweight is always applied, then check the recomputed
-    // weight matches the mixture formula and is monotonic in alpha.
+TEST(Graph, ReweightForEdgeRegularizedAlpha) {
+    // Regularized reweight: an implied rule on edge (0, 1) reweights the correlated edge (2, 3)
+    // using implied_p = alpha * P(mu | nu). We pick a positively-correlated pair (P(mu | nu) = 0.3)
+    // and a large original weight for (2, 3) so the reweight is always applied, then check the
+    // recomputed weight matches the regularized formula and is monotonic in alpha. alpha values are
+    // kept strictly positive: alpha == 0 gives implied_p == 0 (infinite weight), so the rule is
+    // skipped and the original weight is retained.
     const double pos = 0.3;   // P(mu | nu)
-    const double neg = 0.05;  // P(mu | not nu)
     const double c = 2000.0;  // normalising constant (large => fine-grained integer conversion)
 
     auto expected_weight = [&](double alpha) {
-        double implied_p = std::min(0.5, alpha * pos + (1.0 - alpha) * neg);
+        double implied_p = std::min(0.5, alpha * pos);
         return std::log((1.0 - implied_p) / implied_p);
     };
     auto reweighted = [&](double alpha) -> double {
@@ -161,7 +161,7 @@ TEST(Graph, ReweightForEdgeSoftEvidenceAlpha) {
         // Edge (0, 1): the causal edge carrying the implied rule for (2, 3).
         // The alpha == 1.0 fast path uses `implied_weight` = log((1 - min(0.5, pos)) / min(0.5, pos)).
         double implied_weight_alpha1 = std::log((1.0 - std::min(0.5, pos)) / std::min(0.5, pos));
-        std::vector<pm::ImpliedWeightUnconverted> rules = {{2, 3, implied_weight_alpha1, pos, neg}};
+        std::vector<pm::ImpliedWeightUnconverted> rules = {{2, 3, implied_weight_alpha1, pos}};
         g.add_edge(0, 1, 2, {}, rules);
         g.normalising_constant = c;
         g.convert_implied_weights(c);
@@ -175,14 +175,14 @@ TEST(Graph, ReweightForEdgeSoftEvidenceAlpha) {
 
     double w_alpha_1 = reweighted(1.0);
     double w_alpha_04 = reweighted(0.4);
-    double w_alpha_0 = reweighted(0.0);
+    double w_alpha_01 = reweighted(0.1);
 
-    // Matches the mixture formula (within integer-conversion rounding).
+    // Matches the regularized formula (within integer-conversion rounding).
     ASSERT_NEAR(w_alpha_1, expected_weight(1.0), 0.01);
     ASSERT_NEAR(w_alpha_04, expected_weight(0.4), 0.01);
-    ASSERT_NEAR(w_alpha_0, expected_weight(0.0), 0.01);
+    ASSERT_NEAR(w_alpha_01, expected_weight(0.1), 0.01);
 
     // Monotonic in alpha: lower alpha trusts the correlation less, giving a higher weight.
     ASSERT_LT(w_alpha_1, w_alpha_04);
-    ASSERT_LT(w_alpha_04, w_alpha_0);
+    ASSERT_LT(w_alpha_04, w_alpha_01);
 }

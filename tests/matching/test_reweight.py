@@ -19,7 +19,7 @@ def _bernoulli_xor(p1: float, p2: float) -> float:
 # The probabilities below are chosen so that the pair is *positively* correlated and the
 # hard-evidence conditional P(mu | nu) stays below 0.5 (so the reweight is not clamped):
 #   P(0,1) = P(2,3) = 0.2, P((0,1),(2,3)) = 0.08
-#   => P(mu | nu) = 0.08 / 0.2 = 0.4, P(mu | not nu) = (0.2 - 0.08) / (1 - 0.2) = 0.15
+#   => P(mu | nu) = 0.08 / 0.2 = 0.4
 _P_INDEP = 0.142857142857142857  # chosen so bernoulli_xor(_P_INDEP, _P_CORR) == 0.2
 _P_CORR = 0.08
 _CORR_DEM = stim.DetectorErrorModel(f"""
@@ -33,8 +33,11 @@ def _expected_reweighted_edge_weight(alpha: float) -> float:
     occ = _bernoulli_xor(_P_INDEP, _P_CORR)  # P(mu) = P(nu) = 0.2
     corr = _P_CORR  # P(mu, nu)
     p_pos = corr / occ  # P(mu | nu)
-    p_neg = (occ - corr) / (1 - occ)  # P(mu | not nu)
-    implied_p = min(0.5, alpha * p_pos + (1 - alpha) * p_neg)
+    # Regularized reweight: implied_p = alpha * P(mu | nu). alpha == 0 gives implied_p == 0
+    # (no reweight), so guard against the log of zero.
+    implied_p = min(0.5, alpha * p_pos)
+    if implied_p <= 0.0:
+        return np.log((1 - occ) / occ)
     w_reweight = np.log((1 - implied_p) / implied_p)
     w_original = np.log((1 - occ) / occ)
     # The reweight is only applied if it lowers the edge weight.
@@ -252,7 +255,7 @@ def test_decode_to_edges_array_reweight_sign_flip_raises_error():
         m.decode_to_edges_array(syndrome, edge_reweights=np.array([[0, 1, -2.0]]))
 
 
-# --- Pearl soft-evidence (alpha) tests ---------------------------------------------------------
+# --- Regularized reweight (alpha) tests --------------------------------------------------------
 
 
 def test_alpha_one_matches_baseline_correlated_decode():
@@ -306,11 +309,11 @@ def test_alpha_ignored_when_correlations_disabled():
     assert w_a == w_b == w_c
 
 
-def test_alpha_reweighted_weight_follows_mixture_formula():
+def test_alpha_reweighted_weight_follows_regularized_formula():
     # Correctness: on the tiny correlated DEM, the solution for syndrome [1,1,1,1] is exactly the
     # two correlated edges (0,1) and (2,3), each reweighted symmetrically. The reported solution
-    # weight is therefore 2 * (reweighted single-edge weight), which must follow the Pearl mixture
-    # formula for alpha in {0.0, 0.4, 1.0}.
+    # weight is therefore 2 * (reweighted single-edge weight), which must follow the regularized
+    # reweight formula for alpha in {0.0, 0.4, 1.0}.
     m = pymatching.Matching.from_detector_error_model(_CORR_DEM, enable_correlations=True)
     syndrome = np.array([1, 1, 1, 1], dtype=np.uint8)
 
@@ -324,17 +327,20 @@ def test_alpha_reweighted_weight_follows_mixture_formula():
 
 def test_alpha_monotonic_in_solution_weight():
     # The reported solution weight is monotonically non-increasing in alpha: a larger alpha trusts
-    # the correlation more, discounting the correlated edges more aggressively.
+    # the correlation more, discounting the correlated edges more aggressively. Under the
+    # regularized rule implied_p = alpha * P(mu | nu), the reweight only lowers the edge weight once
+    # implied_p exceeds the prior P(mu) (here at alpha = P(mu) / P(mu | nu) = 0.5), so alpha values
+    # in the active-boost regime are used to exercise the strict decrease.
     m = pymatching.Matching.from_detector_error_model(_CORR_DEM, enable_correlations=True)
     syndrome = np.array([1, 1, 1, 1], dtype=np.uint8)
 
     weights = []
-    for alpha in (0.0, 0.4, 1.0):
+    for alpha in (0.0, 0.6, 1.0):
         _, weight = m.decode(
             syndrome, return_weight=True, enable_correlations=True, alpha=alpha
         )
         weights.append(weight)
-    # weights are for alpha = 0.0, 0.4, 1.0 respectively => strictly decreasing
+    # weights are for alpha = 0.0, 0.6, 1.0 respectively => strictly decreasing
     assert weights[0] > weights[1] > weights[2]
 
 
