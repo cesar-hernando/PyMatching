@@ -54,7 +54,7 @@ class SearchGraph {
         const std::vector<ImpliedWeightUnconverted>& implied_weights = {});
     void convert_implied_weights(const double normalizing_constant);
     void reweight(std::vector<ImpliedWeight>& implied_weights);
-    // `normalising_constant` is only needed (and only used) on the Pearl soft-evidence path
+    // `normalising_constant` is only needed (and only used) on the regularized reweight path
     // (alpha != 1.0), which recomputes implied weights at decode time. The SearchGraph does not
     // store its own normalising constant, so the caller supplies it (the MatchingGraph's).
     void reweight_for_edge(const int64_t& u, const int64_t& v, double alpha = 1.0, double normalising_constant = 0.0);

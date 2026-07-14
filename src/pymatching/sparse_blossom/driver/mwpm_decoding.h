@@ -60,7 +60,7 @@ MatchingResult decode_detection_events_for_up_to_64_observables(
 /// existing uint8_t array with at least `mwpm.flooder.graph.num_observables' elements,
 /// the pointer to the first element of which is passed as the `obs_begin_ptr' argument.
 /// The weight of the MWPM solution is added to the `weight' argument.
-/// `alpha' is Pearl's soft-evidence trust parameter for the correlated (`edge_correlations')
+/// `alpha' is the regularization (trust) parameter for the correlated (`edge_correlations')
 /// reweight; it is ignored when `edge_correlations' is false. `alpha == 1.0' is the default and
 /// recovers hard Bayesian conditioning unchanged.
 void decode_detection_events(

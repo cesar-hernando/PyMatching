@@ -105,7 +105,7 @@ void pm::SearchGraph::add_boundary_edge(
 namespace {
 
 // Convert an implied-weight rule to its integer representation using an explicitly supplied
-// (already log-domain) edge weight. Used by the Pearl soft-evidence path (alpha != 1.0).
+// (already log-domain) edge weight. Used by the regularized reweight path (alpha != 1.0).
 pm::ImpliedWeight convert_rule_with_log_weight(
     std::vector<pm::SearchDetectorNode>& nodes,
     const pm::ImpliedWeightUnconverted& rule,
@@ -134,12 +134,12 @@ void pm::SearchGraph::reweight_for_edge(const int64_t& u, const int64_t& v, doub
         reweight(nodes[u].neighbor_implied_weights[z]);
         return;
     }
-    // Soft-evidence (Pearl) path: see MatchingGraph::reweight_for_edge for the formula.
+    // Regularized reweight path: see MatchingGraph::reweight_for_edge for the formula.
     const std::vector<pm::ImpliedWeightUnconverted>& rules = edges_to_implied_weights_unconverted[u][z];
     std::vector<pm::ImpliedWeight> recomputed;
     recomputed.reserve(rules.size());
     for (const auto& rule : rules) {
-        double implied_p = alpha * rule.implied_p_pos + (1.0 - alpha) * rule.implied_p_neg;
+        double implied_p = alpha * rule.implied_p_pos;
         if (implied_p <= 0.0)
             continue;
         implied_p = std::min(0.5, implied_p);

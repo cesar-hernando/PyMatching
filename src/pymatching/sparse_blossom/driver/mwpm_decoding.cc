@@ -170,7 +170,7 @@ pm::MatchingResult pm::decode_detection_events_for_up_to_64_observables(
         // Edge correlations might also be called 2-pass matching. This is the slowest and
         // highest-accuracy reweighting rule for correlated decoding in which we first decode to edges,
         // and then reweight the associated edges conditioned on the assumption that an error occurred
-        // at that edge. `alpha` controls Pearl's soft-evidence mixture for the reweight.
+        // at that edge. `alpha` is the regularization strength applied to the reweight.
         std::vector<int64_t> edges;
         decode_detection_events_to_edges(mwpm, detection_events, edges);
         mwpm.flooder.graph.reweight_for_edges(edges, alpha);
@@ -204,7 +204,7 @@ void pm::decode_detection_events(
         // Edge correlations might also be called 2-pass matching. This is the slowest and
         // highest-accuracy reweighting rule for correlated decoding in which we first decode to edges,
         // and then reweight the associated edges conditioned on the assumption that an error occurred
-        // at that edge. `alpha` controls Pearl's soft-evidence mixture for the reweight.
+        // at that edge. `alpha` is the regularization strength applied to the reweight.
         std::vector<int64_t> edges;
         decode_detection_events_to_edges(mwpm, detection_events, edges);
         mwpm.flooder.graph.reweight_for_edges(edges, alpha);
