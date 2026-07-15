@@ -297,11 +297,11 @@ class Matching:
             For a boundary edge, the second node index is -1.
             By default None.
         alpha : float, optional
-            Pearl's virtual (soft) evidence trust parameter for the correlated-matching reweight,
-            used only when `enable_correlations==True` (otherwise accepted but ignored). When a
-            selected edge `nu` triggers reweighting of a correlated edge `mu`, the implied
-            probability used to form `mu`'s new weight is the soft-evidence mixture
-            ``implied_p = alpha * P(mu | nu) + (1 - alpha) * P(mu | not nu)``.
+            Regularization (trust) parameter for the correlated-matching reweight, used only when
+            `enable_correlations==True` (otherwise accepted but ignored). When a selected edge `nu`
+            triggers reweighting of a correlated edge `mu`, the implied probability used to form
+            `mu`'s new weight is the regularized conditional
+            ``implied_p = alpha * P(mu | nu)``.
             `alpha=1.0` (the default) recovers hard Bayesian conditioning `P(mu | nu)`, i.e. the
             original behaviour. `alpha<1.0` softens the reweight; `alpha>1.0` is a legal,
             more-aggressive extrapolation. The value is not clamped. By default 1.0.
@@ -460,7 +460,7 @@ class Matching:
             The length of `edge_reweights` must equal the number of shots (the first dimension of `shots`).
             By default None.
         alpha : float, optional
-            Pearl's virtual (soft) evidence trust parameter for the correlated-matching reweight,
+            Regularization (trust) parameter for the correlated-matching reweight,
             used only when `enable_correlations==True` (otherwise accepted but ignored). See
             `Matching.decode` for the full definition. `alpha=1.0` (the default) recovers the
             original hard Bayesian conditioning behaviour. The value is not clamped. By default 1.0.
@@ -571,7 +571,7 @@ class Matching:
             "give edge (4, 5) a new weight of 2.4". For a boundary edge, the second node index is -1.
             By default None.
         alpha : float, optional
-            Pearl's virtual (soft) evidence trust parameter for the correlated-matching reweight,
+            Regularization (trust) parameter for the correlated-matching reweight,
             used only when `enable_correlations==True` (otherwise accepted but ignored). See
             `Matching.decode` for the full definition. `alpha=1.0` (the default) recovers the
             original hard Bayesian conditioning behaviour. The value is not clamped. By default 1.0.
