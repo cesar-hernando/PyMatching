@@ -30,7 +30,8 @@ pm::SearchGraph::SearchGraph(pm::SearchGraph&& graph) noexcept
       num_nodes(graph.num_nodes),
       negative_weight_edges(std::move(graph.negative_weight_edges)),
       previous_weights(std::move(graph.previous_weights)),
-      edges_to_implied_weights_unconverted(std::move(graph.edges_to_implied_weights_unconverted)) {
+      edges_to_implied_weights_unconverted(std::move(graph.edges_to_implied_weights_unconverted)),
+      implied_weights_alpha(graph.implied_weights_alpha) {
 }
 
 void pm::SearchGraph::add_edge(
@@ -127,26 +128,12 @@ pm::ImpliedWeight convert_rule_with_log_weight(
 }  // namespace
 
 // Reweight assuming an error has occurred on a single edge u, v. When v == -1, assumes an edge from
-// u to the boundary.
+// u to the boundary. Every alpha uses the same precomputed table, which is rebuilt only when alpha
+// changes.
 void pm::SearchGraph::reweight_for_edge(const int64_t& u, const int64_t& v, double alpha, double normalising_constant) {
+    ensure_implied_weights_for_alpha(alpha, normalising_constant);
     size_t z = nodes[u].index_of_neighbor(v == -1 ? nullptr : &nodes[v]);
-    if (alpha == 1.0) {
-        reweight(nodes[u].neighbor_implied_weights[z]);
-        return;
-    }
-    // Regularized reweight path: see MatchingGraph::reweight_for_edge for the formula.
-    const std::vector<pm::ImpliedWeightUnconverted>& rules = edges_to_implied_weights_unconverted[u][z];
-    std::vector<pm::ImpliedWeight> recomputed;
-    recomputed.reserve(rules.size());
-    for (const auto& rule : rules) {
-        double implied_p = alpha * rule.implied_p_pos;
-        if (implied_p <= 0.0)
-            continue;
-        implied_p = std::min(0.5, implied_p);
-        double log_weight = std::log((1.0 - implied_p) / implied_p);
-        recomputed.push_back(convert_rule_with_log_weight(nodes, rule, normalising_constant, log_weight));
-    }
-    reweight(recomputed);
+    reweight(nodes[u].neighbor_implied_weights[z]);
 }
 
 void pm::SearchGraph::reweight_for_edges(const std::vector<int64_t>& edges, double alpha, double normalising_constant) {
@@ -201,6 +188,35 @@ void pm::SearchGraph::convert_implied_weights(const double normalising_constant)
             }
         }
     }
+    implied_weights_alpha = 1.0;
+}
+
+void pm::SearchGraph::rebuild_implied_weights_for_alpha(double alpha, double normalising_constant) {
+    if (alpha == 1.0) {
+        for (size_t u = 0; u < nodes.size(); u++)
+            for (auto& converted_for_edge : nodes[u].neighbor_implied_weights)
+                converted_for_edge.clear();
+        convert_implied_weights(normalising_constant);
+        return;
+    }
+    for (size_t u = 0; u < nodes.size(); u++) {
+        const std::vector<std::vector<ImpliedWeightUnconverted>>& rules_for_node =
+            edges_to_implied_weights_unconverted[u];
+        for (size_t v = 0; v < nodes[u].neighbors.size(); v++) {
+            std::vector<ImpliedWeight>& converted_for_edge = nodes[u].neighbor_implied_weights[v];
+            converted_for_edge.clear();
+            for (const auto& rule : rules_for_node[v]) {
+                double implied_p = alpha * rule.implied_p_pos;
+                if (implied_p <= 0.0)
+                    continue;
+                implied_p = std::min(0.5, implied_p);
+                double log_weight = std::log((1.0 - implied_p) / implied_p);
+                converted_for_edge.push_back(
+                    convert_rule_with_log_weight(nodes, rule, normalising_constant, log_weight));
+            }
+        }
+    }
+    implied_weights_alpha = alpha;
 }
 
 void pm::SearchGraph::apply_temp_reweights(

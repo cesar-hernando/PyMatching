@@ -37,6 +37,9 @@ class SearchGraph {
     // Used to restore weights after reweighting.
     std::vector<PreviousWeight> previous_weights;
     std::map<size_t, std::vector<std::vector<ImpliedWeightUnconverted>>> edges_to_implied_weights_unconverted;
+    /// The regularization strength currently baked into `nodes[*].neighbor_implied_weights`. See
+    /// `MatchingGraph::implied_weights_alpha`.
+    double implied_weights_alpha = 1.0;
 
     SearchGraph();
     explicit SearchGraph(size_t num_nodes);
@@ -53,10 +56,18 @@ class SearchGraph {
         const std::vector<size_t>& observables,
         const std::vector<ImpliedWeightUnconverted>& implied_weights = {});
     void convert_implied_weights(const double normalizing_constant);
+    /// See `MatchingGraph::rebuild_implied_weights_for_alpha`. The SearchGraph does not store its
+    /// own normalising constant, so the caller supplies it (the MatchingGraph's).
+    void rebuild_implied_weights_for_alpha(double alpha, double normalising_constant);
+    /// See `MatchingGraph::ensure_implied_weights_for_alpha`.
+    void ensure_implied_weights_for_alpha(double alpha, double normalising_constant) {
+        if (alpha != implied_weights_alpha)
+            rebuild_implied_weights_for_alpha(alpha, normalising_constant);
+    }
     void reweight(std::vector<ImpliedWeight>& implied_weights);
-    // `normalising_constant` is only needed (and only used) on the regularized reweight path
-    // (alpha != 1.0), which recomputes implied weights at decode time. The SearchGraph does not
-    // store its own normalising constant, so the caller supplies it (the MatchingGraph's).
+    // `normalising_constant` is only needed (and only used) when the implied-weight table has to be
+    // rebuilt for a new alpha. The SearchGraph does not store its own normalising constant, so the
+    // caller supplies it (the MatchingGraph's).
     void reweight_for_edge(const int64_t& u, const int64_t& v, double alpha = 1.0, double normalising_constant = 0.0);
     void reweight_for_edges(const std::vector<int64_t>& edges, double alpha = 1.0, double normalising_constant = 0.0);
     void undo_reweights();

@@ -149,7 +149,8 @@ MatchingGraph::MatchingGraph(MatchingGraph&& graph) noexcept
       normalising_constant(graph.normalising_constant),
       previous_weights(graph.previous_weights),
       edges_to_implied_weights_unconverted(graph.edges_to_implied_weights_unconverted),
-      loaded_from_dem_without_correlations(graph.loaded_from_dem_without_correlations) {
+      loaded_from_dem_without_correlations(graph.loaded_from_dem_without_correlations),
+      implied_weights_alpha(graph.implied_weights_alpha) {
 }
 
 MatchingGraph::MatchingGraph() : negative_weight_sum(0), num_nodes(0), num_observables(0), normalising_constant(0) {
@@ -228,34 +229,47 @@ void MatchingGraph::convert_implied_weights(double normalising_constant) {
             }
         }
     }
+    implied_weights_alpha = 1.0;
+}
+
+void MatchingGraph::rebuild_implied_weights_for_alpha(double alpha) {
+    if (alpha == 1.0) {
+        for (size_t u = 0; u < nodes.size(); u++)
+            for (auto& converted_for_edge : nodes[u].neighbor_implied_weights)
+                converted_for_edge.clear();
+        convert_implied_weights(normalising_constant);
+        return;
+    }
+    for (size_t u = 0; u < nodes.size(); u++) {
+        const std::vector<std::vector<ImpliedWeightUnconverted>>& rules_for_node =
+            edges_to_implied_weights_unconverted[u];
+        for (size_t v = 0; v < nodes[u].neighbors.size(); v++) {
+            std::vector<ImpliedWeight>& converted_for_edge = nodes[u].neighbor_implied_weights[v];
+            converted_for_edge.clear();
+            for (const auto& rule : rules_for_node[v]) {
+                double implied_p = alpha * rule.implied_p_pos;
+                // Guard against a zero/negative implied probability (infinite weight, never selected),
+                // mirroring the existing `marginal_probability == 0` guard.
+                if (implied_p <= 0.0)
+                    continue;
+                implied_p = std::min(0.5, implied_p);
+                double log_weight = std::log((1.0 - implied_p) / implied_p);
+                converted_for_edge.push_back(
+                    convert_rule_with_log_weight(nodes, rule, normalising_constant, log_weight));
+            }
+        }
+    }
+    implied_weights_alpha = alpha;
 }
 
 // Reweight assuming an error has occurred on a single edge u, v. When v == -1, assumes an edge from
-// u to the boundary. `alpha` is the regularization (trust) parameter: alpha == 1.0 recovers hard
-// Bayesian conditioning (the original behaviour) and uses the precomputed fast path.
+// u to the boundary. `alpha` is the regularization (trust) parameter, with alpha == 1.0 recovering
+// hard Bayesian conditioning. Every alpha uses the same precomputed table, which is rebuilt only
+// when alpha changes.
 void MatchingGraph::reweight_for_edge(const int64_t& u, const int64_t& v, double alpha) {
+    ensure_implied_weights_for_alpha(alpha);
     size_t z = nodes[u].index_of_neighbor(v == -1 ? nullptr : &nodes[v]);
-    if (alpha == 1.0) {
-        reweight(nodes[u].neighbor_implied_weights[z]);
-        return;
-    }
-    // Regularized reweight path: recompute each implied weight from the stored conditional
-    //   implied_p = alpha * P(mu | nu)
-    // reusing the hard-evidence path's clamping (min of 0.5) and integer conversion.
-    const std::vector<ImpliedWeightUnconverted>& rules = edges_to_implied_weights_unconverted[u][z];
-    std::vector<ImpliedWeight> recomputed;
-    recomputed.reserve(rules.size());
-    for (const auto& rule : rules) {
-        double implied_p = alpha * rule.implied_p_pos;
-        // Guard against a zero/negative implied probability (infinite weight, never selected),
-        // mirroring the existing `marginal_probability == 0` guard.
-        if (implied_p <= 0.0)
-            continue;
-        implied_p = std::min(0.5, implied_p);
-        double log_weight = std::log((1.0 - implied_p) / implied_p);
-        recomputed.push_back(convert_rule_with_log_weight(nodes, rule, normalising_constant, log_weight));
-    }
-    reweight(recomputed);
+    reweight(nodes[u].neighbor_implied_weights[z]);
 }
 
 void MatchingGraph::reweight_for_edges(const std::vector<int64_t>& edges, double alpha) {
