@@ -66,6 +66,11 @@ class MatchingGraph {
     bool loaded_from_dem_without_correlations = false;
     pm::total_weight_int negative_weight_sum_delta = 0;
     std::vector<std::tuple<size_t, int64_t, double>> reweight_buffer;
+    /// The regularization strength currently baked into `nodes[*].neighbor_implied_weights`.
+    /// `convert_implied_weights` populates the table for alpha == 1.0 (hard Bayesian conditioning);
+    /// decoding with a different alpha rebuilds the table in place once, rather than recomputing
+    /// implied weights on every shot.
+    double implied_weights_alpha = 1.0;
 
     MatchingGraph();
     MatchingGraph(size_t num_nodes, size_t num_observables);
@@ -85,6 +90,18 @@ class MatchingGraph {
     void update_negative_weight_observables(const std::vector<size_t>& observables);
     void update_negative_weight_detection_events(size_t node_id);
     void convert_implied_weights(double normalising_constant);
+    /// Repopulate `nodes[*].neighbor_implied_weights` for the given regularization strength, using
+    /// implied_p = alpha * P(mu | nu) (alpha == 1.0 reproduces the values `convert_implied_weights`
+    /// computes from the precomputed `ImpliedWeightUnconverted::implied_weight`). O(total rules).
+    void rebuild_implied_weights_for_alpha(double alpha);
+    /// Rebuild the implied-weight table only if it isn't already built for `alpha`. Callers hit this
+    /// on every decode, so the steady state (alpha unchanged between shots) is a single comparison.
+    /// Alternating alpha between individual decodes would rebuild each time; sweeps should decode a
+    /// batch per alpha, which is how `decode_batch` is used.
+    void ensure_implied_weights_for_alpha(double alpha) {
+        if (alpha != implied_weights_alpha)
+            rebuild_implied_weights_for_alpha(alpha);
+    }
 
     void undo_reweights();
     void reweight(std::vector<ImpliedWeight>& implied_weights);
