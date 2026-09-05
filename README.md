@@ -13,7 +13,7 @@
 > become effectively free, and the decoder loses the code distance -- at `d = 5`,
 > `p = 1e-4`, correlated matching is *worse* than plain MWPM.
 >
-> The fix is to damp the update. Scaling the conditional probability by `alpha`
+> The fix is to damp the update. Scaling the conditional probability by an appropriately chosen physical-error-rate-dependent `alpha`
 > shifts every posterior weight up by the constant `log(1/alpha)`, closing the
 > gap between the two scales and restoring the expected distance scaling.
 >
