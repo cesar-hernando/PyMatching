@@ -1,11 +1,36 @@
-> ## This is a fork of PyMatching
+> ## Regularized Correlated Matching -- a fork of PyMatching
 >
-> It adds a **regularized reweight strength `alpha`** to PyMatching's correlated
-> matching. Where upstream applies hard Bayesian conditioning `P(mu | nu)`, this
-> fork applies `implied_p = alpha * P(mu | nu)`.
+> This fork adds a single **regularization strength `alpha`** to PyMatching's
+> correlated matching, implementing the *Regularized Correlated Matching* (RCM)
+> decoder.
 >
-> - `alpha=1.0` (the default) reproduces upstream behaviour exactly
-> - `alpha<1.0` softens the reweight; `alpha>1.0` is permitted and not clamped
+> ### Why
+>
+> Correlated matching reweights an edge using the conditional probability
+> `P(e_mu | e_nu)` obtained from a first decoding pass. Prior edge weights grow
+> as `log(1/p)` as the physical error rate falls, but these posterior weights
+> stay `O(1)`. Deep below threshold the two scales separate, reweighted edges
+> become effectively free, and the decoder loses the code distance -- at `d = 5`,
+> `p = 1e-4`, correlated matching is *worse* than plain MWPM.
+>
+> The fix is to damp the update. Scaling the conditional probability by `alpha`
+> shifts every posterior weight up by the constant `log(1/alpha)`, closing the
+> gap between the two scales and restoring the expected distance scaling.
+>
+> ### What is implemented
+>
+> ```
+> implied_p = alpha * P(e_mu | e_nu)      <=>      w = w_CM + log(1/alpha)
+> ```
+>
+> - `alpha = 1.0` (default) reproduces upstream correlated matching exactly
+> - `alpha -> 0` continuously reduces to plain MWPM (no updates applied)
+> - the paper explores `alpha` in `(0, 1]`; values above 1 are accepted and not clamped
+>
+> Cost is one multiply-add per correlated edge, so latency matches standard
+> correlated matching.
+>
+> ### Usage
 >
 > ```python
 > import pymatching
@@ -13,23 +38,29 @@
 > correction = matching.decode(syndrome, enable_correlations=True, alpha=0.5)
 > ```
 >
-> **Install:**
+> `alpha` is accepted by `decode`, `decode_batch` and `decode_to_edges_array`.
+>
+> ### Install
 >
 > ```bash
-> pip install "pymatching @ git+https://github.com/cesar-hernando/PyMatching.git@v2.3.1+rcm1"
+> pip install "pymatching @ git+https://github.com/cesar-hernando/PyMatching.git@v2.3.1+rcm.1"
 > ```
 >
-> The distribution keeps the name `PyMatching` so that packages depending on
-> `pymatching` resolve against it, but its version is `2.3.1+rcm1` -- a local
-> version identifier that PyPI cannot serve. If you see plain `2.3.1`, you have
-> stock upstream and `alpha` will not be available.
+> The distribution deliberately keeps the name `PyMatching` so packages that
+> depend on `pymatching` resolve against it. Its version is `2.3.1+rcm.1`, a
+> PEP 440 local version PyPI cannot serve. **If `pip show pymatching` reports a
+> plain `2.3.1`, you have stock upstream and `alpha` is not available.**
+>
+> ### Paper and analysis code
+>
+> Developed for *Correlated decoding loses the code distance deep below
+> threshold* (Applied Quantum Algorithms, Leiden University; in preparation).
+> Scripts, data and figures:
+> [cesar-hernando/regularized-correlated-decoding](https://github.com/cesar-hernando/regularized-correlated-decoding).
 >
 > Upstream is [oscarhiggott/PyMatching](https://github.com/oscarhiggott/PyMatching).
-> **The badges below refer to upstream, not to this fork.** See NOTICE for the
-> full list of changes.
->
-> Developed for the paper *Correlated decoding loses the code distance deep
-> below threshold*.
+> **The badges below refer to upstream, not to this fork.** See
+> [NOTICE](NOTICE) for the full list of changes.
 
 ---
 
