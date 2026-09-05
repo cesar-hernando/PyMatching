@@ -138,9 +138,13 @@ with open("README.md", "r", encoding="utf-8") as fh:
 setup(
     name="PyMatching",
     version=version['__version__'],
-    author="Oscar Higgott and Craig Gidney",
-    url="https://github.com/oscarhiggott/PyMatching",
-    description="A package for decoding quantum error correcting codes using minimum-weight perfect matching.",
+    author="Oscar Higgott and Craig Gidney; regularized fork by Cesar Hernando",
+    url="https://github.com/cesar-hernando/PyMatching",
+    description=(
+        "PyMatching with regularized correlated matching: adds a reweight "
+        "strength `alpha` on top of correlated MWPM decoding. Fork of "
+        "https://github.com/oscarhiggott/PyMatching."
+    ),
     long_description=long_description,
     long_description_content_type='text/markdown',
     license="Apache 2",

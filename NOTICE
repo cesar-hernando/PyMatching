@@ -1,0 +1,80 @@
+PyMatching -- regularized correlated matching fork
+Modifications Copyright 2026 Cesar Hernando
+
+This product is a MODIFIED version of PyMatching:
+
+  https://github.com/oscarhiggott/PyMatching
+  Copyright 2022 PyMatching Contributors
+  Licensed under the Apache License, Version 2.0 (see LICENSE).
+
+It is derived from the upstream branch
+`u/oscarhiggott/fast-edge-reweighting-issue172` (commit 5fb9461f), not
+from master. That branch already provided per-edge reweighting
+(`edge_reweights`) for `Matching.decode` and `Matching.decode_batch`,
+together with the initial tests in tests/matching/test_reweight.py.
+Those are the work of the upstream authors, not of this fork.
+
+--------------------------------------------------------------------------
+Changes from upstream
+--------------------------------------------------------------------------
+
+  - Added a regularized reweight strength `alpha` to correlated matching.
+    Where upstream applies hard Bayesian conditioning P(mu | nu), this fork
+    applies implied_p = alpha * P(mu | nu). alpha=1.0 (the default) recovers
+    the upstream behaviour exactly; alpha<1.0 softens the reweight and
+    alpha>1.0 is permitted and not clamped. (Commits 4564c7f0, 69d7c049.)
+  - Extended the existing per-edge reweighting (`edge_reweights`) to
+    `Matching.decode_to_edges_array`, which the base branch did not cover.
+    (Commit c581d641.)
+  - Cached the implied-weight table per alpha rather than recomputing it
+    per shot. (Commit 4b3d3720.)
+  - Extended tests/matching/test_reweight.py with cases covering alpha.
+
+Files carrying these modifications are annotated in their own headers.
+The full set of files changed relative to upstream master:
+
+  mod.   .github/workflows/ci.yml
+  mod.   src/pymatching/__init__.py
+  mod.   src/pymatching/_version.py
+  mod.   src/pymatching/matching.py
+  mod.   src/pymatching/sparse_blossom/driver/implied_weights.h
+  mod.   src/pymatching/sparse_blossom/driver/mwpm_decoding.cc
+  mod.   src/pymatching/sparse_blossom/driver/mwpm_decoding.h
+  mod.   src/pymatching/sparse_blossom/driver/mwpm_decoding.perf.cc
+  mod.   src/pymatching/sparse_blossom/driver/user_graph.cc
+  mod.   src/pymatching/sparse_blossom/driver/user_graph.perf.cc
+  mod.   src/pymatching/sparse_blossom/driver/user_graph.pybind.cc
+  mod.   src/pymatching/sparse_blossom/flooder/detector_node.h
+  mod.   src/pymatching/sparse_blossom/flooder/graph.cc
+  mod.   src/pymatching/sparse_blossom/flooder/graph.h
+  mod.   src/pymatching/sparse_blossom/flooder/graph.test.cc
+  mod.   src/pymatching/sparse_blossom/flooder_matcher_interop/varying.perf.cc
+  mod.   src/pymatching/sparse_blossom/matcher/mwpm.h
+  mod.   src/pymatching/sparse_blossom/search/search_detector_node.h
+  mod.   src/pymatching/sparse_blossom/search/search_graph.cc
+  mod.   src/pymatching/sparse_blossom/search/search_graph.h
+  mod.   src/pymatching/sparse_blossom/search/search_graph.test.cc
+  mod.   src/pymatching/sparse_blossom/tracker/radix_heap_queue.perf.cc
+  mod.   tests/cli_test.py
+  mod.   tests/matching/add_noise_test.py
+  mod.   tests/matching/decode_test.py
+  mod.   tests/matching/draw_test.py
+  mod.   tests/matching/edges_test.py
+  mod.   tests/matching/load_from_networkx_test.py
+  mod.   tests/matching/load_from_rustworkx_test.py
+  mod.   tests/matching/load_from_stim_test.py
+  mod.   tests/matching/output_graph_test.py
+  mod.   tests/matching/repr_test.py
+  added  tests/matching/test_reweight.py
+  mod.   tests/rand/rand_gen_test.py
+
+--------------------------------------------------------------------------
+Citation
+--------------------------------------------------------------------------
+
+This fork was developed for the paper "Correlated decoding loses the code
+distance deep below threshold". If you use it, please also cite upstream
+PyMatching:
+
+  O. Higgott and C. Gidney, "Sparse Blossom: correcting a million errors
+  per core second with minimum-weight matching", 2023. arXiv:2303.15933
