@@ -12,6 +12,9 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+// Modified 2026 by Cesar Hernando: added the regularized reweight
+// strength `alpha` to correlated matching. See the NOTICE file.
+
 #ifndef PYMATCHING2_SEARCH_GRAPH_H
 #define PYMATCHING2_SEARCH_GRAPH_H
 

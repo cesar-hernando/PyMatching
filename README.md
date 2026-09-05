@@ -1,3 +1,38 @@
+> ## This is a fork of PyMatching
+>
+> It adds a **regularized reweight strength `alpha`** to PyMatching's correlated
+> matching. Where upstream applies hard Bayesian conditioning `P(mu | nu)`, this
+> fork applies `implied_p = alpha * P(mu | nu)`.
+>
+> - `alpha=1.0` (the default) reproduces upstream behaviour exactly
+> - `alpha<1.0` softens the reweight; `alpha>1.0` is permitted and not clamped
+>
+> ```python
+> import pymatching
+> matching = pymatching.Matching.from_detector_error_model(dem)
+> correction = matching.decode(syndrome, enable_correlations=True, alpha=0.5)
+> ```
+>
+> **Install:**
+>
+> ```bash
+> pip install "pymatching @ git+https://github.com/cesar-hernando/PyMatching.git@v2.3.1+rcm1"
+> ```
+>
+> The distribution keeps the name `PyMatching` so that packages depending on
+> `pymatching` resolve against it, but its version is `2.3.1+rcm1` -- a local
+> version identifier that PyPI cannot serve. If you see plain `2.3.1`, you have
+> stock upstream and `alpha` will not be available.
+>
+> Upstream is [oscarhiggott/PyMatching](https://github.com/oscarhiggott/PyMatching).
+> **The badges below refer to upstream, not to this fork.** See NOTICE for the
+> full list of changes.
+>
+> Developed for the paper *Correlated decoding loses the code distance deep
+> below threshold*.
+
+---
+
 # PyMatching 2
 
 ![Continuous Integration](https://github.com/oscarhiggott/PyMatching/workflows/ci/badge.svg)
