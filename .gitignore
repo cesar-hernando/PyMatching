@@ -34,3 +34,10 @@ build.ninja
 .ninja_log
 .clwb
 .vscode
+
+# Build artifacts (setup.py sets build_base=python_build_stim on Windows)
+python_build_stim/
+*.pyd
+*.exp
+*.lib
+compile_commands.json
