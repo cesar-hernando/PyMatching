@@ -6,35 +6,54 @@
 >
 > ### Why
 >
-> Correlated matching reweights an edge using the conditional probability
-> `P(e_mu | e_nu)` obtained from a first decoding pass. Prior edge weights grow
-> as `log(1/p)` as the physical error rate falls, but these posterior weights
-> stay `O(1)`. Deep below threshold the two scales separate, reweighted edges
-> become effectively free, and the decoder loses the code distance -- at `d = 5`,
-> `p = 1e-4`, correlated matching is *worse* than plain MWPM.
+> Correlated matching decodes twice. After the first pass, every selected edge
+> `e_nu` lowers the weight of each edge `e_mu` it shares an error mechanism with,
+> using the conditional probability `P(e_mu | e_nu)`. Prior weights grow as
+> `log(1/p)` as the physical error rate `p` falls, but these posterior weights
+> stay `O(1)`. Under circuit-level noise one first-pass edge can discount several
+> edges at once, although explaining all of them together requires additional
+> independent faults, each of which should cost about `log(1/p)`. The second pass
+> can then prefer a correction made of such cheap edges and fail on fault
+> configurations of size `(d - 1)/2`: the decoder loses one unit of effective
+> distance, and the logical error rate scales as `p^((d-1)/2)` instead of
+> `p^((d+1)/2)`. Under SI1000 noise, correlated matching is worse than plain
+> MWPM below `p ~ 4e-4` at `d = 3` (about 4.4x worse at `p = 1e-5`) and below
+> `p ~ 4e-5` at `d = 5`.
 >
-> The fix is to damp the update. Scaling the conditional probability by an appropriately chosen physical-error-rate-dependent `alpha`
-> shifts every posterior weight up by the constant `log(1/alpha)`, closing the
-> gap between the two scales and restoring the expected distance scaling.
+> The fix is to damp the update with a regularization strength `alpha`, which
+> raises every posterior weight by about `log(1/alpha)`. With an
+> error-rate-dependent `alpha*(p) = alpha_0 / (1 + (p_0/p)^k)`, close to 1 near
+> threshold and about 0.03 at `p = 1e-5` (fitted values in the paper), the
+> decoder recovers the `p^((d+1)/2)` scaling and keeps a constant advantage over
+> plain MWPM.
 >
 > ### What is implemented
 >
 > ```
-> implied_p = alpha * P(e_mu | e_nu)      <=>      w = w_CM + log(1/alpha)
+> implied_p = min(0.5, alpha * P(e_mu | e_nu))
+> w = log((1 - implied_p) / implied_p)      # ~ w_CM + log(1/alpha) for small P(e_mu | e_nu)
 > ```
 >
-> - `alpha = 1.0` (default) reproduces upstream correlated matching exactly
-> - `alpha -> 0` continuously reduces to plain MWPM (no updates applied)
-> - the paper explores `alpha` in `(0, 1]`; values above 1 are accepted and not clamped
+> - As in upstream correlated matching, an edge is reweighted only if this lowers its weight.
+> - `alpha = 1.0` (default) reproduces upstream correlated matching exactly.
+> - A small enough `alpha` applies no reweighting at all, which is plain MWPM.
+> - The paper uses `alpha` in `(0, 1]`; values above 1 are accepted and not clamped.
 >
-> Cost is one multiply-add per correlated edge, so latency matches standard
-> correlated matching.
+> The implied weights are cached per `alpha`: decoding with a new value rebuilds
+> the table once, and every further shot costs the same as standard correlated
+> matching.
+>
+> The fork also lets `decode`, `decode_batch` and `decode_to_edges_array` take
+> `edge_reweights`, edges with new weights that apply to that call only. The
+> per-edge reweighting for `decode` and `decode_batch` comes from an upstream
+> development branch (see [NOTICE](NOTICE)); this fork extends it to
+> `decode_to_edges_array`.
 >
 > ### Usage
 >
 > ```python
 > import pymatching
-> matching = pymatching.Matching.from_detector_error_model(dem)
+> matching = pymatching.Matching.from_detector_error_model(dem, enable_correlations=True)
 > correction = matching.decode(syndrome, enable_correlations=True, alpha=0.5)
 > ```
 >
@@ -53,10 +72,10 @@
 >
 > ### Paper and analysis code
 >
-> Developed for *Correlated decoding loses the code distance deep below
-> threshold* (Applied Quantum Algorithms, Leiden University; in preparation).
-> Scripts, data and figures:
-> [cesar-hernando/regularized-correlated-decoding](https://github.com/cesar-hernando/regularized-correlated-decoding).
+> Developed for *Correlated decoding loses the surface code's effective distance
+> below threshold* by César Hernando-Fuente, Joonas Majaniemi, Evert van
+> Nieuwenburg and Felix Frohnert (arXiv: to be added). Code, data and figures:
+> [cesar-hernando/regularized-correlated-matching](https://github.com/cesar-hernando/regularized-correlated-matching).
 >
 > Upstream is [oscarhiggott/PyMatching](https://github.com/oscarhiggott/PyMatching).
 > **The badges below refer to upstream, not to this fork.** See
