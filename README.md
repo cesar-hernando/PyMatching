@@ -37,16 +37,18 @@
 > pass, the reweighted edge gets
 >
 > ```
-> implied_p = min(0.5, alpha * corr / occ_nu)
-> w         = log((1 - implied_p) / implied_p)
+> implied_p  = min(0.5, alpha * corr / occ_nu)
+> log_weight = log((1 - implied_p) / implied_p)
 > ```
 >
 > (`user_graph.cc` computes `corr / occ_nu` once; `graph.cc` and
-> `search_graph.cc` apply `alpha`, the cap and the log.) `corr / occ_nu` is the
-> conditional probability `P(e_nu | e_mu)` of the paper to leading order in `p`,
-> and for small values `w` is about the standard correlated-matching weight plus
-> `log(1/alpha)`. Note that the code's comments call the selected edge `nu` and
-> the reweighted edge `mu`, the reverse of the paper's notation.
+> `search_graph.cc` apply `alpha`, the cap and the natural log. As for every edge
+> in PyMatching, `log_weight` is then scaled and rounded to an integer weight.)
+> `corr / occ_nu` is the conditional probability `P(e_nu | e_mu)` of the paper to
+> leading order in `p`, and for small values `log_weight` is about the standard
+> correlated-matching weight plus `log(1/alpha)`. Note that the code's comments
+> call the selected edge `nu` and the reweighted edge `mu`, the reverse of the
+> paper's notation.
 >
 > - As in upstream correlated matching, an edge is reweighted only if this lowers its weight.
 > - `alpha = 1.0` (default) reproduces upstream correlated matching exactly.
