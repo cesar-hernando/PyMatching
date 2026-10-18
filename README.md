@@ -7,8 +7,8 @@
 > ### Why
 >
 > Correlated matching decodes twice. After the first pass, every selected edge
-> `e_nu` lowers the weight of each edge `e_mu` it shares an error mechanism with,
-> using the conditional probability `P(e_mu | e_nu)`. Prior weights grow as
+> `e_mu` lowers the weight of each edge `e_nu` it shares an error mechanism with,
+> using the conditional probability `P(e_nu | e_mu)`. Prior weights grow as
 > `log(1/p)` as the physical error rate `p` falls, but these posterior weights
 > stay `O(1)`. Under circuit-level noise one first-pass edge can discount several
 > edges at once, although explaining all of them together requires additional
@@ -29,10 +29,20 @@
 >
 > ### What is implemented
 >
+> When the graph is loaded with `enable_correlations=True`, PyMatching combines
+> the probabilities of the detector error model's mechanisms (the probability
+> that an odd number of them occur) into two quantities: `p_mu`, from every
+> mechanism containing the selected edge `e_mu`, and `p_mu_nu`, from the
+> mechanisms containing both `e_mu` and `e_nu`. In the second pass, `e_nu` gets
+>
 > ```
-> implied_p = min(0.5, alpha * P(e_mu | e_nu))
-> w = log((1 - implied_p) / implied_p)      # ~ w_CM + log(1/alpha) for small P(e_mu | e_nu)
+> implied_p = min(0.5, alpha * p_mu_nu / p_mu)
+> w_nu      = log((1 - implied_p) / implied_p)
 > ```
+>
+> `p_mu_nu / p_mu` is the conditional probability `P(e_nu | e_mu)` of the paper to
+> leading order in `p`, and for small values `w_nu` is about the standard
+> correlated-matching weight plus `log(1/alpha)`.
 >
 > - As in upstream correlated matching, an edge is reweighted only if this lowers its weight.
 > - `alpha = 1.0` (default) reproduces upstream correlated matching exactly.
