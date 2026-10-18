@@ -250,7 +250,7 @@ void MatchingGraph::rebuild_implied_weights_for_alpha(double alpha) {
             std::vector<ImpliedWeight>& converted_for_edge = nodes[u].neighbor_implied_weights[v];
             converted_for_edge.clear();
             for (const auto& rule : rules_for_node[v]) {
-                double implied_p = alpha * rule.implied_p_pos;
+                double implied_p = alpha * rule.implied_p;
                 // Guard against a zero/negative implied probability (infinite weight, never selected),
                 // mirroring the existing `marginal_probability == 0` guard.
                 if (implied_p <= 0.0)

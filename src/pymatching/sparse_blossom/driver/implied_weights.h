@@ -31,9 +31,9 @@ struct ImpliedWeightUnconverted {
     double implied_weight;
     // The unclamped conditional probability P(mu | nu), used when alpha != 1.0 to recompute the
     // implied weight at decode time under the regularized reweight
-    //   implied_p = alpha * implied_p_pos
+    //   min(0.5, alpha * implied_p)
     // (the same quantity the alpha == 1.0 path clamps at 0.5).
-    double implied_p_pos = 0.0;
+    double implied_p = 0.0;
     bool operator==(const ImpliedWeightUnconverted& other) const {
         return (this->node1 == other.node1) && (this->node2 == other.node2) &&
                (this->implied_weight == other.implied_weight);

@@ -544,15 +544,15 @@ void pm::UserGraph::populate_implied_edge_weights(
                     // Hard Bayesian conditioning: P(mu | nu) = P(mu, nu) / P(nu). The regularized
                     // reweight (alpha != 1.0) recomputes the implied weight at decode time from
                     // this quantity as implied_p = alpha * P(mu | nu).
-                    double implied_p_pos = corr / occ_nu;
+                    double implied_p = corr / occ_nu;
 
                     // Since edge weights are computed as std::log((1-p)/p), a probability of more than 0.5 for an
                     // error, would lead to a negatively weighted error. We do not support this (yet), and use a
                     // minimum of 0.5 as an implied probability for an edge to be reweighted.
-                    double implied_probability_for_other_edge = std::min(0.5, implied_p_pos);
+                    double implied_probability_for_other_edge = std::min(0.5, implied_p);
                     double w = pm::to_weight_for_correlations(implied_probability_for_other_edge);
                     ImpliedWeightUnconverted implied{
-                        affected_edge.first, affected_edge.second, w, implied_p_pos};
+                        affected_edge.first, affected_edge.second, w, implied_p};
                     edge.implied_weights_for_other_edges.push_back(implied);
                 }
             }

@@ -32,10 +32,9 @@ _CORR_DEM = stim.DetectorErrorModel(f"""
 def _expected_reweighted_edge_weight(alpha: float) -> float:
     occ = _bernoulli_xor(_P_INDEP, _P_CORR)  # P(mu) = P(nu) = 0.2
     corr = _P_CORR  # P(mu, nu)
-    p_pos = corr / occ  # P(mu | nu)
-    # Regularized reweight: implied_p = alpha * P(mu | nu). alpha == 0 gives implied_p == 0
-    # (no reweight), so guard against the log of zero.
-    implied_p = min(0.5, alpha * p_pos)
+    # Regularized reweight: implied_p = alpha * P(mu | nu), with P(mu | nu) = corr / occ.
+    # alpha == 0 gives implied_p == 0 (no reweight), so guard against the log of zero.
+    implied_p = min(0.5, alpha * corr / occ)
     if implied_p <= 0.0:
         return np.log((1 - occ) / occ)
     w_reweight = np.log((1 - implied_p) / implied_p)

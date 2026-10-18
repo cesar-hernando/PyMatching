@@ -209,7 +209,7 @@ void pm::SearchGraph::rebuild_implied_weights_for_alpha(double alpha, double nor
             std::vector<ImpliedWeight>& converted_for_edge = nodes[u].neighbor_implied_weights[v];
             converted_for_edge.clear();
             for (const auto& rule : rules_for_node[v]) {
-                double implied_p = alpha * rule.implied_p_pos;
+                double implied_p = alpha * rule.implied_p;
                 if (implied_p <= 0.0)
                     continue;
                 implied_p = std::min(0.5, implied_p);
