@@ -31,18 +31,22 @@
 >
 > When the graph is loaded with `enable_correlations=True`, PyMatching combines
 > the probabilities of the detector error model's mechanisms (the probability
-> that an odd number of them occur) into two quantities: `p_mu`, from every
-> mechanism containing the selected edge `e_mu`, and `p_mu_nu`, from the
-> mechanisms containing both `e_mu` and `e_nu`. In the second pass, `e_nu` gets
+> that an odd number of them occur) into two quantities: `occ_nu`, from every
+> mechanism containing the selected edge, and `corr`, from the mechanisms
+> containing both the selected edge and the edge being reweighted. In the second
+> pass, the reweighted edge gets
 >
 > ```
-> implied_p = min(0.5, alpha * p_mu_nu / p_mu)
-> w_nu      = log((1 - implied_p) / implied_p)
+> implied_p = min(0.5, alpha * corr / occ_nu)
+> w         = log((1 - implied_p) / implied_p)
 > ```
 >
-> `p_mu_nu / p_mu` is the conditional probability `P(e_nu | e_mu)` of the paper to
-> leading order in `p`, and for small values `w_nu` is about the standard
-> correlated-matching weight plus `log(1/alpha)`.
+> (`user_graph.cc` computes `corr / occ_nu` once; `graph.cc` and
+> `search_graph.cc` apply `alpha`, the cap and the log.) `corr / occ_nu` is the
+> conditional probability `P(e_nu | e_mu)` of the paper to leading order in `p`,
+> and for small values `w` is about the standard correlated-matching weight plus
+> `log(1/alpha)`. Note that the code's comments call the selected edge `nu` and
+> the reweighted edge `mu`, the reverse of the paper's notation.
 >
 > - As in upstream correlated matching, an edge is reweighted only if this lowers its weight.
 > - `alpha = 1.0` (default) reproduces upstream correlated matching exactly.
