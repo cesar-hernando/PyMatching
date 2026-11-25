@@ -215,12 +215,154 @@ class Matching:
             raise ValueError("The shape ({}) of the syndrome vector z is not valid.".format(z.shape))
         return detection_events
 
+    def set_global_reg_strength(self, global_reg_strength: Optional[float]) -> None:
+        """
+        Set the regularization strength used for every edge by correlated matching.
+
+        The strength is stored on the `Matching` object and used by `decode`, `decode_batch` and
+        `decode_to_edges_array` when `enable_correlations=True`, unless `global_reg_strength` or
+        `reg_strengths` is passed to that call. This replaces any strengths set earlier with
+        `set_global_reg_strength` or `set_reg_strengths`.
+
+        Parameters
+        ----------
+        global_reg_strength : float or None
+            A positive strength that multiplies the conditional probabilities correlated matching
+            uses to reweight edges after the first pass. 1.0 is standard correlated matching. None
+            resets to the default (1.0). See https://arxiv.org/abs/2610.26785 for more details.
+
+        Examples
+        --------
+        >>> import pymatching
+        >>> import stim
+        >>> dem = stim.DetectorErrorModel('''
+        ...     error(0.1) D0 D1
+        ...     error(0.1) D2 D3
+        ...     error(0.05) D0 D1 ^ D2 D3
+        ... ''')
+        >>> m = pymatching.Matching.from_detector_error_model(dem, enable_correlations=True)
+        >>> m.set_global_reg_strength(0.5)
+        >>> m.global_reg_strength
+        0.5
+        """
+        self._matching_graph.set_reg_strengths(global_reg_strength=global_reg_strength)
+
+    def set_reg_strengths(
+            self,
+            reg_strengths: Optional[Union[np.ndarray, List[float], Dict[Tuple[int, Optional[int]], float]]]
+    ) -> None:
+        """
+        Set per-edge regularization strengths for correlated matching.
+
+        When correlated matching reweights an edge after the first pass, the conditional probability
+        used for that edge is multiplied by the strength of that edge (the edge being reweighted, not
+        the edge that caused the reweighting). Per-edge strengths are useful when the noise is not
+        homogeneous across the device.
+
+        The strengths are stored on the `Matching` object and used by `decode`, `decode_batch` and
+        `decode_to_edges_array` when `enable_correlations=True`, unless `global_reg_strength` or
+        `reg_strengths` is passed to that call. This replaces any strengths set earlier with
+        `set_global_reg_strength` or `set_reg_strengths`. If edges are added to the graph afterwards,
+        call this method again.
+
+        Parameters
+        ----------
+        reg_strengths : dict, np.ndarray, list of float or None
+            The positive strengths, as either:
+
+            - a dict mapping edges to strengths. An edge is a tuple `(u, v)` of the node indices it
+              connects, in either order, or `(u, None)` for a boundary edge, as returned by
+              `Matching.edges()`. Edges not in the dict get a strength of 1.0.
+            - a 1D array or list with one strength per edge, in the order of `Matching.edges()`.
+            - None, which resets every edge to the default (1.0).
+
+        Examples
+        --------
+        >>> import pymatching
+        >>> import stim
+        >>> dem = stim.DetectorErrorModel('''
+        ...     error(0.1) D0 D1
+        ...     error(0.1) D2 D3
+        ...     error(0.05) D0 D1 ^ D2 D3
+        ...     error(0.1) D3
+        ... ''')
+        >>> m = pymatching.Matching.from_detector_error_model(dem, enable_correlations=True)
+        >>> m.set_reg_strengths({(1, 0): 0.5, (3, None): 0.8})
+        >>> m.reg_strengths
+        {(0, 1): 0.5, (2, 3): 1.0, (3, None): 0.8}
+        """
+        self._matching_graph.set_reg_strengths(reg_strengths=self._reg_strengths_to_list(reg_strengths))
+
+    @property
+    def global_reg_strength(self) -> float:
+        """
+        The regularization strength used for every edge by correlated matching, as set by
+        `Matching.set_global_reg_strength` (1.0 by default). Not used if per-edge strengths
+        were set with `Matching.set_reg_strengths`.
+        """
+        return self._matching_graph.get_global_reg_strength()
+
+    @property
+    def reg_strengths(self) -> Optional[Dict[Tuple[int, Optional[int]], float]]:
+        """
+        The per-edge regularization strengths set by `Matching.set_reg_strengths`, as a dict
+        mapping each edge `(u, v)` (`(u, None)` for a boundary edge) to its strength, or None
+        if no per-edge strengths are set.
+        """
+        strengths = self._matching_graph.get_reg_strengths()
+        if strengths is None:
+            return None
+        return {(u, v): s for (u, v, _), s in zip(self.edges(), strengths)}
+
+    def _reg_strengths_to_list(
+            self,
+            reg_strengths: Optional[Union[np.ndarray, List[float], Dict[Tuple[int, Optional[int]], float]]]
+    ) -> Optional[List[float]]:
+        """Converts per-edge regularization strengths to a list in `Matching.edges()` order."""
+        if reg_strengths is None:
+            return None
+        if isinstance(reg_strengths, dict):
+            return self._reg_strengths_dict_to_list(reg_strengths)
+        strengths = np.asarray(reg_strengths, dtype=np.float64)
+        if strengths.ndim != 1:
+            raise ValueError(
+                f"`reg_strengths` must be a dict or a one-dimensional array, but has shape {strengths.shape}."
+            )
+        return strengths.tolist()
+
+    def _reg_strengths_dict_to_list(self, reg_strengths: Dict[Tuple[int, Optional[int]], float]) -> List[float]:
+        def key(u, v):
+            # Boundary edges are (u, None); other edges are keyed with the smaller node first.
+            if u is None:
+                u, v = v, u
+            return (u, v) if v is None or u <= v else (v, u)
+
+        edge_indices = {key(u, v): i for i, (u, v, _) in enumerate(self.edges())}
+        strengths = [1.0] * len(edge_indices)
+        seen = {}
+        for edge, strength in reg_strengths.items():
+            try:
+                u, v = edge
+            except (TypeError, ValueError):
+                raise ValueError(
+                    f"`reg_strengths` keys must be edges `(u, v)` or `(u, None)`, but got {edge!r}."
+                ) from None
+            k = key(u, v)
+            if k not in edge_indices:
+                raise ValueError(f"`reg_strengths` contains {edge!r}, which is not an edge in the matching graph.")
+            if k in seen:
+                raise ValueError(f"`reg_strengths` contains both {seen[k]!r} and {edge!r}, which are the same edge.")
+            seen[k] = edge
+            strengths[edge_indices[k]] = float(strength)
+        return strengths
+
     def decode(self,
                z: Union[np.ndarray, List[bool], List[int]],
                *,
                return_weight: bool = False,
                enable_correlations: bool = False,
-               reweighting_strength: float = 1.0,
+               global_reg_strength: Optional[float] = None,
+               reg_strengths: Optional[Union[np.ndarray, List[float], Dict[Tuple[int, Optional[int]], float]]] = None,
                **kwargs
                ) -> Union[np.ndarray, Tuple[np.ndarray, int]]:
         r"""
@@ -255,12 +397,23 @@ class Matching:
             `stim.DetectorErrorModel` with `enable_correlations=True`. For a description
             of the correlated matching algorithm, see https://arxiv.org/abs/1310.0863.
             By default, False
-        reweighting_strength : float, optional
-            Only used when `enable_correlations==True`. Multiplies the conditional probabilities that
-            correlated matching uses to reweight edges after the first pass. The default, 1.0, is
-            standard correlated matching. Values below 1.0 weaken the reweighting, which has been shown
-            to be beneficial in the presence of circuit-level noise at low physical error rates, see
-            https://arxiv.org/abs/2610.26785 for more details.
+        global_reg_strength : float, optional
+            Only used when `enable_correlations==True`. Regularization strength that multiplies the
+            conditional probabilities correlated matching uses to reweight edges after the first pass.
+            1.0 is standard correlated matching. Values below 1.0 weaken the reweighting, which has been
+            shown to be beneficial in the presence of circuit-level noise at low physical error rates, see
+            https://arxiv.org/abs/2610.26785 for more details. Cannot be combined with `reg_strengths`.
+            By default, None (use the strengths stored with `Matching.set_global_reg_strength` or
+            `Matching.set_reg_strengths`, which default to 1.0 for every edge)
+        reg_strengths : dict, np.ndarray or list of float, optional
+            Only used when `enable_correlations==True`. Per-edge regularization strengths, useful when the
+            noise is not homogeneous across the device. When correlated matching reweights an edge after
+            the first pass, the conditional probability used for that edge is multiplied by the strength
+            of that edge (the edge being reweighted, not the edge that caused the reweighting). Either a
+            dict mapping edges `(u, v)` (or `(u, None)` for a boundary edge) to strengths, where edges not
+            in the dict get a strength of 1.0, or an array with one strength per edge in the order of
+            `Matching.edges()`. See `Matching.set_reg_strengths` for details. Cannot be combined with
+            `global_reg_strength`. By default, None (use the stored strengths)
 
         Returns
         -------
@@ -345,7 +498,10 @@ class Matching:
         """
         detection_events = self._syndrome_array_to_detection_events(z)
         correction, weight = self._matching_graph.decode(
-            detection_events, enable_correlations=enable_correlations, reweighting_strength=reweighting_strength
+            detection_events,
+            enable_correlations=enable_correlations,
+            global_reg_strength=global_reg_strength,
+            reg_strengths=self._reg_strengths_to_list(reg_strengths),
         )
         if return_weight:
             return correction, weight
@@ -360,7 +516,9 @@ class Matching:
             bit_packed_shots: bool = False,
             bit_packed_predictions: bool = False,
             enable_correlations: bool = False,
-            reweighting_strength: float = 1.0) -> Union[np.ndarray, Tuple[np.ndarray, np.ndarray]]:
+            global_reg_strength: Optional[float] = None,
+            reg_strengths: Optional[Union[np.ndarray, List[float], Dict[Tuple[int, Optional[int]], float]]] = None
+    ) -> Union[np.ndarray, Tuple[np.ndarray, np.ndarray]]:
         """
         Decode from a 2D `shots` array containing a batch of syndrome measurements. A faster
         alternative to using `pymatching.Matching.decode` and iterating over the shots in Python.
@@ -404,8 +562,12 @@ class Matching:
             `stim.DetectorErrorModel` with `enable_correlations=True`. For a description
             of the correlated matching algorithm, see https://arxiv.org/abs/1310.0863.
             By default, False
-        reweighting_strength : float, optional
-            Only used if `enable_correlations==True`. See `Matching.decode`. By default, 1.0
+        global_reg_strength : float, optional
+            Only used if `enable_correlations==True`. See `Matching.decode`. By default, None (use the
+            stored strengths)
+        reg_strengths : dict, np.ndarray or list of float, optional
+            Only used if `enable_correlations==True`. See `Matching.decode`. By default, None (use the
+            stored strengths)
 
         Returns
         -------
@@ -463,7 +625,8 @@ class Matching:
             bit_packed_predictions=bit_packed_predictions,
             bit_packed_shots=bit_packed_shots,
             enable_correlations=enable_correlations,
-            reweighting_strength=reweighting_strength
+            global_reg_strength=global_reg_strength,
+            reg_strengths=self._reg_strengths_to_list(reg_strengths)
         )
         if return_weights:
             return predictions, weights
@@ -474,7 +637,8 @@ class Matching:
                               syndrome: Union[np.ndarray, List[bool], List[int]],
                               *,
                               enable_correlations: bool = False,
-                              reweighting_strength: float = 1.0
+                              global_reg_strength: Optional[float] = None,
+                              reg_strengths: Optional[Union[np.ndarray, List[float], Dict[Tuple[int, Optional[int]], float]]] = None
                               ) -> np.ndarray:
         """
         Decode the syndrome `syndrome` using minimum-weight perfect matching, returning the edges in the
@@ -501,8 +665,12 @@ class Matching:
             `stim.DetectorErrorModel` with `enable_correlations=True`. For a description
             of the correlated matching algorithm, see https://arxiv.org/abs/1310.0863.
             By default, False
-        reweighting_strength : float, optional
-            Only used if `enable_correlations==True`. See `Matching.decode`. By default, 1.0
+        global_reg_strength : float, optional
+            Only used if `enable_correlations==True`. See `Matching.decode`. By default, None (use the
+            stored strengths)
+        reg_strengths : dict, np.ndarray or list of float, optional
+            Only used if `enable_correlations==True`. See `Matching.decode`. By default, None (use the
+            stored strengths)
 
         Returns
         -------
@@ -534,7 +702,10 @@ class Matching:
         """
         detection_events = self._syndrome_array_to_detection_events(syndrome)
         return self._matching_graph.decode_to_edges_array(
-            detection_events, enable_correlations=enable_correlations, reweighting_strength=reweighting_strength
+            detection_events,
+            enable_correlations=enable_correlations,
+            global_reg_strength=global_reg_strength,
+            reg_strengths=self._reg_strengths_to_list(reg_strengths),
         )
 
     def decode_to_matched_dets_array(self,

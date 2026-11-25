@@ -518,6 +518,14 @@ pm::UserGraph pm::detector_error_model_to_user_graph(
 
 void pm::UserGraph::populate_implied_edge_weights(
     std::map<std::pair<size_t, size_t>, std::map<std::pair<size_t, size_t>, double>>& joint_probabilites) {
+    // Index of each edge in `edges`, so that each implied weight rule can record which edge it updates
+    // (used to apply per-edge reweighting strengths).
+    std::map<std::pair<size_t, size_t>, size_t> edge_indices;
+    size_t edge_index = 0;
+    for (const auto& edge : edges) {
+        edge_indices[std::minmax(edge.node1, edge.node2)] = edge_index++;
+    }
+
     for (auto& edge : edges) {
         std::pair<size_t, size_t> current_edge_nodes = std::minmax(edge.node1, edge.node2);
         auto it = joint_probabilites.find(current_edge_nodes);
@@ -537,11 +545,13 @@ void pm::UserGraph::populate_implied_edge_weights(
                     double implied_probability_for_other_edge =
                         std::min(0.5, affected_edge_and_probability.second / marginal_probability);
                     double w = pm::to_weight_for_correlations(implied_probability_for_other_edge);
+                    auto affected_edge_it = edge_indices.find(affected_edge);
                     ImpliedWeightUnconverted implied{
                         affected_edge.first,
                         affected_edge.second,
                         w,
-                        affected_edge_and_probability.second / marginal_probability};
+                        affected_edge_and_probability.second / marginal_probability,
+                        affected_edge_it == edge_indices.end() ? SIZE_MAX : affected_edge_it->second};
                     edge.implied_weights_for_other_edges.push_back(implied);
                 }
             }

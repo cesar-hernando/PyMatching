@@ -156,10 +156,7 @@ void pm::SearchGraph::convert_implied_weights(const double normalising_constant)
         for (size_t v = 0; v < nodes[u].neighbors.size(); v++) {
             nodes[u].neighbor_implied_weights[v].clear();
             for (auto rule : rules_for_node[v]) {
-                if (reweighting_strength != 1.0) {
-                    double p = std::min(0.5, reweighting_strength * rule.implied_probability);
-                    rule.implied_weight = std::log((1 - p) / p);
-                }
+                rule.implied_weight = reweighting_strengths.implied_weight_for(rule);
                 ImpliedWeight converted = convert_rule(nodes, rule, normalising_constant);
                 nodes[u].neighbor_implied_weights[v].push_back(converted);
             }
@@ -167,9 +164,10 @@ void pm::SearchGraph::convert_implied_weights(const double normalising_constant)
     }
 }
 
-void pm::SearchGraph::set_reweighting_strength(double strength, double normalising_constant) {
-    if (strength != reweighting_strength) {
-        reweighting_strength = strength;
+void pm::SearchGraph::set_reweighting_strengths(
+    const ReweightingStrengths& strengths, double normalising_constant) {
+    if (strengths != reweighting_strengths) {
+        reweighting_strengths = strengths;
         convert_implied_weights(normalising_constant);
     }
 }

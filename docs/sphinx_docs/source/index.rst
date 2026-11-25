@@ -7,6 +7,7 @@
    :caption: Contents:
 
    toric-code-example
+   correlated-matching-reg-strengths
    api
 
 

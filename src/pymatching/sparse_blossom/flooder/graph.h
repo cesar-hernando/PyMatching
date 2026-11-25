@@ -62,7 +62,7 @@ class MatchingGraph {
     // alert a user if they try to decode with enable_correlations=true, but forgot to load from the
     // dem with enable_correlations=true.
     bool loaded_from_dem_without_correlations = false;
-    double reweighting_strength = 1.0;
+    ReweightingStrengths reweighting_strengths;
 
     MatchingGraph();
     MatchingGraph(size_t num_nodes, size_t num_observables);
@@ -82,7 +82,7 @@ class MatchingGraph {
     void update_negative_weight_observables(const std::vector<size_t>& observables);
     void update_negative_weight_detection_events(size_t node_id);
     void convert_implied_weights(double normalising_constant);
-    void set_reweighting_strength(double strength);
+    void set_reweighting_strengths(const ReweightingStrengths& strengths);
 
     void undo_reweights();
     void reweight(std::vector<ImpliedWeight>& implied_weights);

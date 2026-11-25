@@ -14,6 +14,8 @@
 
 #include "pymatching/sparse_blossom/driver/user_graph.pybind.h"
 
+#include <optional>
+
 #include "pybind11/pybind11.h"
 #include "pymatching/sparse_blossom/driver/mwpm_decoding.h"
 #include "pymatching/sparse_blossom/driver/user_graph.h"
@@ -84,9 +86,49 @@ pm::MERGE_STRATEGY merge_strategy_from_string(const std::string &merge_strategy)
     }
 }
 
-void set_reweighting_strength(pm::Mwpm &mwpm, double reweighting_strength) {
-    mwpm.flooder.graph.set_reweighting_strength(reweighting_strength);
-    mwpm.search_flooder.graph.set_reweighting_strength(reweighting_strength, mwpm.flooder.graph.normalising_constant);
+/// Builds the regularization strengths from `global_reg_strength` / `reg_strengths` (at most one may be given),
+/// checking that per-edge strengths have one entry per edge of `user_graph`.
+pm::ReweightingStrengths make_reg_strengths(
+    pm::UserGraph &user_graph,
+    const std::optional<double> &global_reg_strength,
+    const std::optional<std::vector<double>> &reg_strengths) {
+    if (global_reg_strength.has_value() && reg_strengths.has_value())
+        throw std::invalid_argument(
+            "`global_reg_strength` and `reg_strengths` cannot both be set. Use only `reg_strengths` to set a "
+            "strength for each edge.");
+    pm::ReweightingStrengths strengths{global_reg_strength.value_or(1.0), {}};
+    if (reg_strengths.has_value()) {
+        if (reg_strengths->size() != user_graph.get_num_edges())
+            throw std::invalid_argument(
+                "`reg_strengths` must contain one strength per edge in the matching graph (" +
+                std::to_string(user_graph.get_num_edges()) + "), but " + std::to_string(reg_strengths->size()) +
+                " were given.");
+        strengths.per_edge = *reg_strengths;
+    }
+    strengths.validate();
+    return strengths;
+}
+
+/// Applies the regularization strengths for a decode call: those passed to the call if any, otherwise the ones
+/// stored on the graph with `set_reg_strengths`.
+void apply_reg_strengths(
+    pm::UserGraph &user_graph,
+    pm::Mwpm &mwpm,
+    const std::optional<double> &global_reg_strength,
+    const std::optional<std::vector<double>> &reg_strengths) {
+    pm::ReweightingStrengths strengths;
+    if (global_reg_strength.has_value() || reg_strengths.has_value()) {
+        strengths = make_reg_strengths(user_graph, global_reg_strength, reg_strengths);
+    } else {
+        strengths = user_graph.reg_strengths;
+        if (!strengths.per_edge.empty() && strengths.per_edge.size() != user_graph.get_num_edges())
+            throw std::invalid_argument(
+                "The per-edge regularization strengths were set when the matching graph had " +
+                std::to_string(strengths.per_edge.size()) + " edges, but it now has " +
+                std::to_string(user_graph.get_num_edges()) + ". Call `set_reg_strengths` again.");
+    }
+    mwpm.flooder.graph.set_reweighting_strengths(strengths);
+    mwpm.search_flooder.graph.set_reweighting_strengths(strengths, mwpm.flooder.graph.normalising_constant);
 }
 
 void pm_pybind::pybind_user_graph_methods(py::module &m, py::class_<pm::UserGraph> &g) {
@@ -161,6 +203,23 @@ void pm_pybind::pybind_user_graph_methods(py::module &m, py::class_<pm::UserGrap
     g.def("set_min_num_observables", &pm::UserGraph::set_min_num_observables, "num_observables"_a);
     g.def("get_num_nodes", &pm::UserGraph::get_num_nodes);
     g.def("get_num_edges", &pm::UserGraph::get_num_edges);
+    g.def(
+        "set_reg_strengths",
+        [](pm::UserGraph &self,
+           const std::optional<double> &global_reg_strength,
+           const std::optional<std::vector<double>> &reg_strengths) {
+            self.reg_strengths = make_reg_strengths(self, global_reg_strength, reg_strengths);
+        },
+        "global_reg_strength"_a = py::none(),
+        "reg_strengths"_a = py::none());
+    g.def("get_global_reg_strength", [](const pm::UserGraph &self) {
+        return self.reg_strengths.global;
+    });
+    g.def("get_reg_strengths", [](const pm::UserGraph &self) -> std::optional<std::vector<double>> {
+        if (self.reg_strengths.per_edge.empty())
+            return std::nullopt;
+        return self.reg_strengths.per_edge;
+    });
     g.def("get_num_detectors", &pm::UserGraph::get_num_detectors);
     g.def("all_edges_have_error_probabilities", &pm::UserGraph::all_edges_have_error_probabilities);
     g.def("add_noise", [](pm::UserGraph &self) {
@@ -186,12 +245,13 @@ void pm_pybind::pybind_user_graph_methods(py::module &m, py::class_<pm::UserGrap
         [](pm::UserGraph &self,
            const py::array_t<uint64_t> &detection_events,
            bool enable_correlations,
-           double reweighting_strength) {
+           const std::optional<double> &global_reg_strength,
+           const std::optional<std::vector<double>> &reg_strengths) {
             std::vector<uint64_t> detection_events_vec(
                 detection_events.data(), detection_events.data() + detection_events.size());
             auto &mwpm = enable_correlations ? self.get_mwpm_with_search_graph() : self.get_mwpm();
             if (enable_correlations)
-                set_reweighting_strength(mwpm, reweighting_strength);
+                apply_reg_strengths(self, mwpm, global_reg_strength, reg_strengths);
             auto obs_crossed = new std::vector<uint8_t>(self.get_num_observables(), 0);
             pm::total_weight_int weight = 0;
             pm::decode_detection_events(mwpm, detection_events_vec, obs_crossed->data(), weight, enable_correlations);
@@ -207,16 +267,18 @@ void pm_pybind::pybind_user_graph_methods(py::module &m, py::class_<pm::UserGrap
         },
         "detection_events"_a,
         "enable_correlations"_a = false,
-        "reweighting_strength"_a = 1.0);
+        "global_reg_strength"_a = py::none(),
+        "reg_strengths"_a = py::none());
     g.def(
         "decode_to_edges_array",
         [](pm::UserGraph &self,
            const py::array_t<uint64_t> &detection_events,
            bool enable_correlations,
-           double reweighting_strength) {
+           const std::optional<double> &global_reg_strength,
+           const std::optional<std::vector<double>> &reg_strengths) {
             auto &mwpm = self.get_mwpm_with_search_graph();
             if (enable_correlations)
-                set_reweighting_strength(mwpm, reweighting_strength);
+                apply_reg_strengths(self, mwpm, global_reg_strength, reg_strengths);
             std::vector<uint64_t> detection_events_vec(
                 detection_events.data(), detection_events.data() + detection_events.size());
             auto edges = new std::vector<int64_t>();
@@ -233,7 +295,8 @@ void pm_pybind::pybind_user_graph_methods(py::module &m, py::class_<pm::UserGrap
         },
         "detection_events"_a,
         "enable_correlations"_a = false,
-        "reweighting_strength"_a = 1.0);
+        "global_reg_strength"_a = py::none(),
+        "reg_strengths"_a = py::none());
     g.def(
         "decode_to_matched_detection_events_array",
         [](pm::UserGraph &self, const py::array_t<uint64_t> &detection_events) {
@@ -268,7 +331,8 @@ void pm_pybind::pybind_user_graph_methods(py::module &m, py::class_<pm::UserGrap
            bool bit_packed_shots,
            bool bit_packed_predictions,
            bool enable_correlations,
-           double reweighting_strength) {
+           const std::optional<double> &global_reg_strength,
+           const std::optional<std::vector<double>> &reg_strengths) {
             if (shots.ndim() != 2)
                 throw std::invalid_argument(
                     "`shots` array should have two dimensions, not " + std::to_string(shots.ndim()));
@@ -305,7 +369,7 @@ void pm_pybind::pybind_user_graph_methods(py::module &m, py::class_<pm::UserGrap
 
             auto &mwpm = enable_correlations ? self.get_mwpm_with_search_graph() : self.get_mwpm();
             if (enable_correlations)
-                set_reweighting_strength(mwpm, reweighting_strength);
+                apply_reg_strengths(self, mwpm, global_reg_strength, reg_strengths);
             std::vector<uint64_t> detection_events;
 
             // Vector used to extract predicted observables when decoding if bit_packed_predictions is true
@@ -358,7 +422,8 @@ void pm_pybind::pybind_user_graph_methods(py::module &m, py::class_<pm::UserGrap
         "bit_packed_shots"_a = false,
         "bit_packed_predictions"_a = false,
         "enable_correlations"_a = false,
-        "reweighting_strength"_a = 1.0);
+        "global_reg_strength"_a = py::none(),
+        "reg_strengths"_a = py::none());
     g.def(
         "decode_to_matched_detection_events_dict",
         [](pm::UserGraph &self, const py::array_t<uint64_t> &detection_events) {

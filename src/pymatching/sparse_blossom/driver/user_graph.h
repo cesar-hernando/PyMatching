@@ -64,6 +64,9 @@ class UserGraph {
     std::list<UserEdge> edges;
     std::set<size_t> boundary_nodes;
     bool loaded_from_dem_without_correlations = false;
+    /// Regularization strengths used by correlated matching when none are given at decode time.
+    /// `per_edge`, if non-empty, is in `edges` order.
+    ReweightingStrengths reg_strengths;
 
     UserGraph();
     explicit UserGraph(size_t num_nodes);
